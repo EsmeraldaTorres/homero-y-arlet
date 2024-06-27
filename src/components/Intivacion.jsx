@@ -195,7 +195,7 @@ const Intivacion = () => {
   }, []);
 
   useEffect(() => {
-    const countDownDateAsistence = new Date("Jun 25, 2024 09:31").getTime();
+    const countDownDateAsistence = new Date("Jul 25, 2024 09:31").getTime();
 
     const countdownAsistence = () => {
       const now = new Date().getTime();
