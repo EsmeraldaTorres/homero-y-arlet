@@ -184,6 +184,7 @@ a {
   font-weight: 500;
 }
 .modal-dialog {
+  -webkit-overflow-scrolling: touch; /* Habilitar desplazamiento suave en iOS */
   width: 85%;
   background: white;
   padding: 2rem;
@@ -194,6 +195,7 @@ a {
 }
 .overflow-hidden {
   overflow: hidden;
+  position: fixed;
 }
 .principal-name-guest {
   padding-top: 2rem;
