@@ -189,7 +189,7 @@ a {
   padding: 2rem;
   height: max-content;
   max-height: 80vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-radius: 10px;
 }
 .overflow-hidden {
