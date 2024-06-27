@@ -127,11 +127,14 @@ const Intivacion = () => {
   useEffect(() => {
     if (openModal) {
       document.body.classList.add("overflow-hidden");
+      document.body.classList.add("postion-fixed");
     } else {
       document.body.classList.remove("overflow-hidden");
+      document.body.classList.remove("postion-fixed");
     }
     return () => {
       document.body.classList.remove("overflow-hidden");
+      document.body.classList.remove("postion-fixed");
     };
   }, [openModal]);
 
