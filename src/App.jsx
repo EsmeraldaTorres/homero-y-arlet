@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 import "aos/dist/aos.css";
-import AOS from "aos";
 import Invitacion from "./components/Intivacion";
+import Tickets from "./components/Tickets";
+import AllGuestPage from "./components/AllGuestPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,7 +15,16 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/:id" element={<Invitacion />} />
+          <Route path="/" element={<Invitacion />} />
+          <Route path="/:id/:code" element={<Invitacion />} />
+          <Route
+            path="/pases-boda-arturo-y-noemi/:id/:user/:code"
+            element={<Tickets />}
+          ></Route>
+          <Route
+            path="/all-guests-page-arturo-y-noemi-boda/j13kl"
+            element={<AllGuestPage />}
+          />
         </Routes>
       </Router>
     </>

@@ -3,10 +3,19 @@
   margin: 0;
   box-sizing: border-box;
 }
-
+a {
+  text-decoration: none;
+}
+.qr-images {
+  max-height: 200px;
+}
 .max-w-90 {
   max-width: 100vw;
 }
+.bg-red {
+  background-color: rgb(255, 174, 174);
+}
+
 .avoiding-scroll {
   height: 100%;
   overflow: hidden;
@@ -71,6 +80,139 @@
   vertical-align: middle;
   border-style: none;
 }
+
+.checkbox-wrapper-53 input[type="checkbox"] {
+  visibility: hidden;
+  display: none;
+}
+
+.checkbox-wrapper-53 .container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+.checkbox-wrapper-53 .checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 1.5em;
+  width: 1.5em;
+  background-color: #ccc;
+  border-radius: 100%;
+  background: #e8e8e8;
+  box-shadow: 3px 3px 5px #c5c5c5, -3px -3px 5px #ffffff;
+  margin-left: 3px;
+}
+
+.checkbox-wrapper-53 .container input:checked ~ .checkmark {
+  margin-left: 3px;
+  box-shadow: inset 3px 3px 5px #c5c5c5, inset -3px -3px 5px #ffffff;
+}
+
+.checkbox-wrapper-53 .checkmark:after {
+  content: "";
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox-wrapper-53 .container input:checked ~ .checkmark:after {
+  opacity: 1;
+}
+
+.checkbox-wrapper-53 .container .checkmark:after {
+  left: 0.45em;
+  top: 0.25em;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid #2d6233;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+  transition: all 250ms;
+}
+.btn-save {
+  font-weight: 500;
+  border-radius: 10px;
+  background: #ac9261;
+  font-size: 1.2em;
+  border: none;
+  padding: 0.7em;
+  color: white;
+}
+.btn-save-disabled {
+  font-weight: 500;
+  border-radius: 10px;
+  background: #b6a68d;
+  font-size: 20px;
+  border: none;
+  padding: 0.5em;
+  color: rgb(193 193 193);
+}
+.btn-descargar {
+  padding: 1rem;
+  border: solid 1px #c7c7c7;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.btn-descargar:hover {
+  background-color: rgb(210, 210, 210);
+}
+.btn-pases {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-size: 20px;
+  background: #c8c8c8;
+  border: none;
+  color: black;
+  font-weight: 500;
+}
+.f-w-700 {
+  font-weight: 700;
+}
+.btn-cerrar {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-size: 20px;
+  background: #ffffff;
+  border: none;
+  color: black;
+  font-weight: 500;
+}
+.modal-dialog {
+  width: 85%;
+  background: white;
+  padding: 2rem;
+  height: max-content;
+  overflow-y: scroll;
+  border-radius: 10px;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.principal-name-guest {
+  padding-top: 2rem;
+  font-size: 2.4rem;
+}
+
+.btn-no-asistir {
+  margin-top: 0.5rem;
+  width: 90%;
+  color: #515050 !important;
+  border: none;
+  background-color: #d7d7d7;
+  border-radius: 10px;
+  padding: 0.4rem;
+}
+td {
+  border-bottom: solid 1px;
+  padding: 0.5rem;
+  border-color: inherit;
+}
 .z-index-2 {
   position: absolute;
   bottom: 20vh;
@@ -133,7 +275,7 @@
   background-position: top;
 }
 .name {
-  width: 80%;
+  width: 60%;
   padding-right: 0;
 }
 /* audio */
@@ -161,6 +303,22 @@
 }
 .player-btn:hover {
   cursor: pointer;
+}
+.modal-pases {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #1313138c;
+  position: fixed;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 9;
 }
 /*  window-bg*/
 .second-section {
@@ -191,6 +349,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-size: cover;
 }
 .second-section .container3 {
   background-color: rgb(255, 255, 255);
@@ -270,7 +429,7 @@ hr {
       rgba(5, 7, 12, 0.277),
       rgba(5, 7, 12, 0.277)
     ),
-    url("../img/salon3.jpg");
+    url("../assets/img/pexels-milan-4639620.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
@@ -361,7 +520,6 @@ button:hover {
   -webkit-background-size: cover; /* Para Safari y Chrome (versiones antiguas) */
   -moz-background-size: cover; /* Para Firefox (versiones antiguas) */
   -o-background-size: cover; /* Para Opera (versiones antiguas) */
-  /* background-attachment: fixed; */
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -395,8 +553,12 @@ button:hover {
   width: 80%;
 }
 .text2 {
-  width: 50%;
+  width: 70%;
 }
+.nuestros-padrinos .carousel-indicators {
+  display: none;
+}
+
 .window-regalos {
   height: min-content;
   max-width: 100%;
@@ -428,21 +590,23 @@ a:hover {
 .bg-gray {
   background-color: rgba(189, 188, 188, 0.29);
 }
-
+.marca {
+  color: #dbdbdb;
+}
 /* last window back */
 .last-window-back {
   height: 100vh;
   max-width: 100%;
   background-image: url("../assets/img/pexels-olya-kobruseva-4630032.jpg");
   background-size: cover;
-  /* background-attachment: fixed; */
   background-repeat: no-repeat;
   background-position: center;
 }
 .last-container {
   height: 4vh;
   width: 100%;
-  background-color: rgb(255, 255, 255);
+  color: white;
+  background-color: rgb(51 51 51 / 74%);
   display: flex;
   justify-content: center;
   align-items: center;
