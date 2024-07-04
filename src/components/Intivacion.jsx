@@ -28,7 +28,7 @@ import AOS from "aos";
 import { useGuest } from "../Context/GuestContext";
 
 // React Router
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Intivacion = () => {
   const audioRef = useRef(null);
@@ -47,6 +47,8 @@ const Intivacion = () => {
   const [disabledBtn, setDisabledBtn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [reservationDeny, setReservationDeny] = useState(false);
+  const [ticketsConfirmados, setTicketsConfirmados] = useState();
+
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -127,16 +129,73 @@ const Intivacion = () => {
   useEffect(() => {
     if (openModal) {
       document.body.classList.add("overflow-hidden");
-      document.body.classList.add("postion-fixed");
+      // document.body.classList.add("postion-fixed");
     } else {
       document.body.classList.remove("overflow-hidden");
-      document.body.classList.remove("postion-fixed");
+      // document.body.classList.remove("postion-fixed");
     }
     return () => {
       document.body.classList.remove("overflow-hidden");
-      document.body.classList.remove("postion-fixed");
+      // document.body.classList.remove("postion-fixed");
     };
   }, [openModal]);
+  const handleDownloadPdf = async () => {
+    const pdf = new jsPDF("p", "pt", "letter");
+    const width = pdf.internal.pageSize.getWidth();
+    const height = pdf.internal.pageSize.getHeight();
+
+    // Tamaño de la imagen en el PDF
+    const imgWidth = width * 0.3;
+    const imgHeight = height * 0.3;
+    const margin = 20; // Margen entre elementos
+    const headerHeight = 100; // Altura reservada para el encabezado
+
+    // Variables de posición
+    let currentY = headerHeight;
+
+    // Filtrar acompañantes según la condición
+    const filteredAcompanist = guest.acompanist.filter(
+      (acomp) => acomp?.asist === true
+    );
+    setTicketsConfirmados(filteredAcompanist);
+
+    for (const [index, acomp] of filteredAcompanist.entries()) {
+      if (currentY + imgHeight + margin > height) {
+        pdf.addPage();
+        currentY = headerHeight; // Restablecer la posición Y al comienzo de una nueva página
+      }
+
+      if (index === 0) {
+        // Agregar el texto del h1 solo en la primera página
+        pdf.setFontSize(28);
+        pdf.text("Tickets", width / 2, 30, { align: "center" });
+
+        // Agregar el texto del h2 solo en la primera página
+        pdf.setFontSize(22);
+        pdf.text(guest.principalName, width / 2, 60, { align: "center" });
+      }
+
+      // Agregar el texto del p
+      pdf.setFontSize(16);
+      pdf.text(acomp.name, width / 2, currentY, { align: "center" });
+
+      const img = new Image();
+      img.src = acomp.qrImage;
+
+      // Esperar a que la imagen se cargue
+      await new Promise((resolve) => {
+        img.onload = () => {
+          const x = (width - imgWidth) / 2; // Centrar horizontalmente
+          const y = currentY + margin; // Espacio después del texto
+          pdf.addImage(img, "PNG", x, y, imgWidth, imgHeight);
+          currentY = y + imgHeight + margin; // Actualizar la posición Y
+          resolve();
+        };
+      });
+    }
+
+    pdf.save("download.pdf");
+  };
 
   useEffect(() => {
     const filterGuestNull = guest?.acompanist?.filter((g) => g.asist === null);
@@ -162,6 +221,15 @@ const Intivacion = () => {
     ) {
       setReservationDeny(true);
     }
+
+    if (guest) {
+      const filteredAcompanist = guest.acompanist.filter(
+        (acomp) => acomp?.asist === true
+      );
+      setTicketsConfirmados(filteredAcompanist);
+    }
+
+    console.log(guest, "guest");
   }, [guest]);
 
   useEffect(() => {
@@ -430,7 +498,119 @@ const Intivacion = () => {
                           reservationDone &&
                           reservationDeny === false ? (
                           <>
-                            <div>Pase de Entrada</div>
+                            <div className="">
+                              <div
+                                className="justify-content-center mt-4"
+                                // ref={printRef}
+                              >
+                                <div className="text-center">
+                                  <h2 className="font-paris font-gold mb-4">
+                                    Tickets {guest?.principalName}
+                                  </h2>
+                                  <h3 className="mb-0">
+                                    Favor de no escanear con ningún dispositivo
+                                  </h3>
+                                  {guest.acompanist.map(
+                                    (acomp, index) =>
+                                      acomp?.asist === true && (
+                                        <div
+                                          key={index}
+                                          className="w-100 d-flex justify-content-center flex-column"
+                                        >
+                                          <p className="mb-0 display-6 mt-4">
+                                            {acomp.name}
+                                          </p>
+                                          <div className="d-flex justify-content-center">
+                                            <img
+                                              className="qr-images px-4 pb-4"
+                                              src={acomp.qrImage}
+                                              alt=""
+                                            />
+                                          </div>
+                                        </div>
+                                      )
+                                  )}
+                                </div>
+
+                                {/* <div>Deja un mensaje para nosotros</div>
+                                <form onSubmit={handleSubmit}>
+                                  <label htmlFor="message">
+                                    Deja tu mensaje:
+                                  </label>
+                                  <textarea
+                                    id="message"
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    required
+                                  ></textarea>
+                                  <button type="submit">Enviar mensaje</button>
+                                </form>
+                              */}
+                              </div>
+                              <div className="mb-4">
+                                <h3>
+                                  Muestra tus códigos QR{" "}
+                                  <span className="font-weigth-bold">solo</span>{" "}
+                                  a los recepcionistas del evento para entrar al
+                                  salón.
+                                </h3>
+                                <p className="display-6 text-center my-4 p-0">
+                                  No compartas ésta invitación con nadie más ni
+                                  tus códigos QR.
+                                </p>
+
+                                <div className="pb-4 d-flex justify-content-center align-items-center">
+                                  <img
+                                    loading="lazy"
+                                    className="line"
+                                    src={decoration}
+                                    alt="linea"
+                                  />
+                                </div>
+                                <p className="lead text-center ">
+                                  Puedes descargar tus tickets o tomar una
+                                  captura de pantalla el día del evento para
+                                  tenerlos a la mano, también puedes acceder a
+                                  ellos desde el botón "ver mis pases" dentro de
+                                  ésta invitación.
+                                </p>
+                                <p className="lead text-center ">
+                                  No escanees los códigos antes del evento, solo
+                                  los recepcionistas del salón podrán hacerlo.
+                                </p>
+                                {guest && ticketsConfirmados?.length != 0 && (
+                                  <div className="w-100 justify-content-center d-flex align-items-center mb-4">
+                                    <button
+                                      className="btn-descargar"
+                                      onClick={handleDownloadPdf}
+                                    >
+                                      Descargar Tickets{" "}
+                                    </button>
+                                  </div>
+                                )}
+                                <p className="mb-2">
+                                  Si te gustó nuestra invitación, puedes
+                                  compartir el siguiente enlace sin riesgo de
+                                  que otros tomen tus pases:
+                                </p>
+                                <Link
+                                  target="_blank"
+                                  to="https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/"
+                                >
+                                  https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/{" "}
+                                </Link>
+                                <p className="mt-4">
+                                  Hecha por{" "}
+                                  <Link
+                                    target="_blank"
+                                    to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio"
+                                  >
+                                    Digital Invite by Esmeralda{" "}
+                                    <i className="bi bi-whatsapp"></i>
+                                  </Link>
+                                </p>
+                              </div>
+                            </div>
                           </>
                         ) : (
                           reservationDeny && (
@@ -543,7 +723,6 @@ const Intivacion = () => {
                         reservationDone === true &&
                         reservationDeny === false ? (
                         <>
-                          <div> QR</div>
                           <div className="modal-footer justify-content-between">
                             <button
                               onClick={() => {

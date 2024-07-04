@@ -12,7 +12,7 @@ const Tickets = () => {
   const [ticketsConfirmados, setTicketsConfirmados] = useState();
   const [message, setMessage] = useState("");
   const printRef = useRef();
-  let { id } = useParams();
+  let { id, code } = useParams();
 
   const handleDownloadPdf = async () => {
     const pdf = new jsPDF("p", "pt", "letter");
@@ -87,8 +87,9 @@ const Tickets = () => {
   };
 
   useEffect(() => {
+    console.log(id, "id");
     if (id) {
-      fetchDataByGuest(id);
+      fetchDataByGuest(id, code);
     }
     console.log(guest, "guest desde Tickets");
   }, [id]);
@@ -104,49 +105,17 @@ const Tickets = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-center font-paris font-gold display-4 mt-4 pt-4">
+      <h1 className="text-center font-paris font-gold lead mt-4 pt-4">
         {"Arturo & Noemi"}
       </h1>
       <p className="text-center display-5">Nuestra Boda</p>
 
-      <div className="display-6 text-center my-4">
-        ¡Gracias por ayudarnos a tener una mejor organización del evento! y
-        gracias por ayudarnos a cumplir los requisitos de este.
-      </div>
-      {guest && ticketsConfirmados?.length != 0 && (
-        <div className="w-100 justify-content-center d-flex align-items-center mb-4">
-          <button className="btn-descargar" onClick={handleDownloadPdf}>
-            Descargar Tickets{" "}
-          </button>
-        </div>
-      )}
-      <div className="mb-4">
-        <p className="lead text-center ">
-          Por favor, descarga tus tickets o toma una captura de pantalla para
-          tenerlos a la mano, también puedes acceder a esta página desde el
-          botón "ver mis pases" dentro de tu invitación. No los escanees los
-          tickets antes del evento.
-        </p>
-        <div className="pb-4 d-flex justify-content-center align-items-center">
-          <img loading="lazy" className="line" src={decoration} alt="linea" />
-        </div>
-        <p className="display-6 text-center ">
-          Solo podrán ingresar las personas con ticket QR. Por lo tanto, te
-          recomendamos que no compartas la invitación que es personalizada para
-          ti, ni compartas esta página de tickets.
-        </p>
-      </div>
-
       <div className="justify-content-center mt-4" ref={printRef}>
-        <p className="text-center font-paris display-4 mt-4 pt-4">
-          {"Arturo & Noemi"}
-        </p>
         {guest ? (
           <div className="text-center">
-            <h2 className="font-paris font-gold">
+            <h2 className="font-paris font-gold display-4">
               Tickets {guest?.principalName}
             </h2>
-            <h3>Favor de no escanear con ningun dispositivo</h3>
             {guest.acompanist.map(
               (acomp, index) =>
                 acomp?.asist === true && (
@@ -155,13 +124,6 @@ const Tickets = () => {
                     className="w-100 d-flex justify-content-center flex-column"
                   >
                     <p className="mb-0 display-6 mt-4">{acomp.name}</p>
-                    <div className="d-flex justify-content-center">
-                      <img
-                        className="qr-images px-4 pb-4"
-                        src={acomp.qrImage}
-                        alt=""
-                      />
-                    </div>
                   </div>
                 )
             )}
@@ -169,17 +131,6 @@ const Tickets = () => {
         ) : (
           <p>No hay información disponible</p>
         )}
-        <div>Deja un mensaje para nosotros</div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="message">Deja tu mensaje:</label>
-          <textarea
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-          ></textarea>
-          <button type="submit">Enviar mensaje</button>
-        </form>
       </div>
     </div>
   );

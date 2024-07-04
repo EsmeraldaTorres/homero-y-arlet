@@ -5,13 +5,11 @@ import "./invitacion.css";
 
 const AllGuestPage = () => {
   const [arrayPeople, setArrayPeople] = useState([]);
-  const [alPeople, setAlPeople] = useState([]);
 
   const [confirmedPeople, setConfirmedPeople] = useState([]);
   const [noConfirmados, setNoConfirmados] = useState([]);
   const [noAsistiran, setNoasistiran] = useState([]);
   const [etiqueta, setEtiqueta] = useState("todos");
-
   const [menu, setMenu] = useState("todos");
 
   const fetchData = async () => {
@@ -22,26 +20,27 @@ const AllGuestPage = () => {
         const data = JSON.parse(JSON.stringify(doc.data(), null, 2));
         people.push(data);
       });
-      const groups = people?.map((gruop) => gruop.acompanist);
-
+      console.log(people, "people");
+      const groups = people?.map((gruop) => gruop?.acompanist);
+      console.log(groups, "groups");
       let allPeople = [];
       const sacar = groups?.forEach((gruop) => {
-        gruop.map((person) => allPeople.push(person));
+        gruop?.map((person) => allPeople.push(person));
       });
       console.log(allPeople, "allPeople");
       allPeople.sort((a, b) => {
-        if (a.name < b.name) {
+        if (a.principalName < b.principalName) {
           return -1;
         }
-        if (a.name > b.name) {
+        if (a.principalName > b.principalName) {
           return 1;
         }
         return 0;
       });
 
-      let confirmados = allPeople?.filter((person) => person.asist === true);
-      let noConfirm = allPeople?.filter((person) => person.asist === null);
-      let noAsist = allPeople?.filter((person) => person.asist === false);
+      let confirmados = allPeople?.filter((person) => person?.asist === true);
+      let noConfirm = allPeople?.filter((person) => person?.asist === null);
+      let noAsist = allPeople?.filter((person) => person?.asist === false);
 
       setArrayPeople(allPeople);
       setConfirmedPeople(confirmados);
@@ -56,33 +55,10 @@ const AllGuestPage = () => {
     setMenu(value);
   };
 
-  // const handleFilterEtiqueta = (value) => {
-  //   setEtiqueta(value);
-  //   if (menu === "todos") {
-  //     const prueba = arrayPeople.filter((person) => person.etiqueta === value);
-  //     console.log(prueba, "menu todos", "value ->", value);
-  //     setArrayPeople(prueba);
-  //   } else if (menu === "confirmados") {
-  //     const prueba = confirmedPeople.filter(
-  //       (person) => person.etiqueta === value && person.asist === true
-  //     );
-  //     console.log(prueba, "menu confirmados", "value ->", value);
-  //     setConfirmedPeople(prueba);
-  //   } else if (menu === "sin confirmar") {
-  //     const prueba = noConfirmados.filter(
-  //       (person) => person.etiqueta === value && person.asist === null
-  //     );
-  //     console.log(prueba, "menu sin confirmar", "value ->", value);
-  //     setNoConfirmados(prueba);
-  //   } else {
-  //     const prueba = noAsistiran.filter(
-  //       (person) => person.etiqueta === value && person.asist === false
-  //     );
-  //     console.log(prueba, "menu no asisitra", "value ->", value);
-
-  //     setNoasistiran(prueba);
-  //   }
-  // };
+  const handleFilterEtiqueta = (value) => {
+    console.log(value, "value");
+    setEtiqueta(value);
+  };
 
   useEffect(() => {
     console.log(arrayPeople, "arrayPeople");
@@ -112,7 +88,7 @@ const AllGuestPage = () => {
           <h3>Invitados por confirmar {noConfirmados.length}</h3>
         )}
         <div>
-          <span>Filtrar</span>
+          <span>Filtrar por status</span>
           <select
             name="filter-guests"
             id=""
@@ -127,35 +103,77 @@ const AllGuestPage = () => {
             <option value="sin confirmar">Sin Confirmar</option>
           </select>
         </div>
+        <div>
+          <span>Filtrar por etiqueta</span>
+          <select
+            name="filter-guests"
+            id=""
+            onChange={(event) => {
+              event.preventDefault();
+              handleFilterEtiqueta(event.target.value);
+            }}
+          >
+            <option value="todos">Todos</option>
+            <option value="novia">Novia</option>
+            <option value="novio">Novio</option>
+          </select>
+        </div>
         {menu === "todos" ? (
           <>
             <table>
               <thead>
                 <tr>
+                  <th>Familia</th>
                   <th>Invitado</th>
                   <th>Asistirá</th>
                   <th>Etiqueta</th>
                 </tr>
               </thead>
-              <tbody>
-                {arrayPeople &&
-                  arrayPeople.map((person) => (
-                    <tr key={person.id}>
-                      <td>{person.name}</td>
-                      <td>
-                        {person.asist
-                          ? "confirmado"
-                          : person.asist === null
-                          ? "sin confirmar"
-                          : "No asistirá"}
-                      </td>
-                      <td>{person.etiqueta}</td>
-                    </tr>
-                  ))}
-              </tbody>
+
+              {etiqueta === "todos" ? (
+                <tbody>
+                  {arrayPeople &&
+                    arrayPeople.map((person, key) => (
+                      <tr key={key}>
+                        <td>{person.principalName}</td>
+                        <td>{person.name}</td>
+                        <td>
+                          {person.asist
+                            ? "confirmado"
+                            : person.asist === null
+                            ? "sin confirmar"
+                            : "No asistirá"}
+                        </td>
+                        <td>{person.etiqueta}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              ) : (
+                <tbody>
+                  {arrayPeople &&
+                    arrayPeople.map(
+                      (person) =>
+                        person.etiqueta === etiqueta && (
+                          <tr key={person.id}>
+                            <td>{person.principalName}</td>
+
+                            <td>{person.name}</td>
+                            <td>
+                              {person.asist
+                                ? "confirmado"
+                                : person.asist === null
+                                ? "sin confirmar"
+                                : "No asistirá"}
+                            </td>
+                            <td>{person.etiqueta}</td>
+                          </tr>
+                        )
+                    )}
+                </tbody>
+              )}
             </table>
-            <div>Total: {arrayPeople.length}</div>
-            <div>Total confirmardos: {confirmedPeople.length}</div>
+            <div>Total de Invitados: {arrayPeople.length}</div>
+            <div>Confirmardos: {confirmedPeople.length}</div>
             <div>No asisitirán: {noAsistiran.length}</div>
             <div>Faltan por confirmar: {noConfirmados.length}</div>
           </>
@@ -169,40 +187,44 @@ const AllGuestPage = () => {
                   <th>Etiqueta</th>
                 </tr>
               </thead>
-              <tbody>
-                {confirmedPeople &&
-                  confirmedPeople.map((person, key) => (
-                    <tr key={person.id}>
-                      <td>{person.name}</td>
-                      <td>{person.asist && "confirmado"}</td>
-                      <td>{person.etiqueta}</td>
-                    </tr>
-                  ))}
-              </tbody>
+              {etiqueta === "todos" ? (
+                <tbody>
+                  {confirmedPeople &&
+                    confirmedPeople.map((person, key) => (
+                      <>
+                        <tr key={person.id}>
+                          <td>{person.principalName}</td>
+
+                          <td>{person.name}</td>
+                          <td>{person.asist && "confirmado"}</td>
+                          <td>{person.etiqueta}</td>
+                        </tr>
+                      </>
+                    ))}
+                </tbody>
+              ) : (
+                <tbody>
+                  {confirmedPeople &&
+                    confirmedPeople.map(
+                      (person, key) =>
+                        person.etiqueta === etiqueta && (
+                          <>
+                            <tr key={person.id}>
+                              <td>{person.principalName}</td>
+
+                              <td>{person.name}</td>
+                              <td>{person.asist && "confirmado"}</td>
+                              <td>{person.etiqueta}</td>
+                            </tr>
+                          </>
+                        )
+                    )}
+                </tbody>
+              )}
             </table>
           </>
         ) : menu === "sin confirmar" ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Invitado</th>
-                <th>Asistirá</th>
-                <th>Etiqueta</th>
-              </tr>
-            </thead>
-            <tbody>
-              {noConfirmados &&
-                noConfirmados.map((person) => (
-                  <tr key={person.id}>
-                    <td>{person.name}</td>
-                    <td>{person.asist === null && "sin confirmar"}</td>
-                    <td>{person.etiqueta}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        ) : (
-          menu === "no asistira" && (
+          <>
             <table>
               <thead>
                 <tr>
@@ -211,17 +233,81 @@ const AllGuestPage = () => {
                   <th>Etiqueta</th>
                 </tr>
               </thead>
-              <tbody>
-                {noAsistiran &&
-                  noAsistiran.map((person) => (
-                    <tr key={person.id}>
-                      <td>{person.name}</td>
-                      <td>{person.asist === false && "no asistirá"}</td>
-                      <td>{person.etiqueta}</td>
-                    </tr>
-                  ))}
-              </tbody>
+              {etiqueta === "todos" ? (
+                <tbody>
+                  {noConfirmados &&
+                    noConfirmados.map((person) => (
+                      <tr key={person.id}>
+                        <td>{person.principalName}</td>
+
+                        <td>{person.name}</td>
+                        <td>{person.asist === null && "sin confirmar"}</td>
+                        <td>{person.etiqueta}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              ) : (
+                <tbody>
+                  {noConfirmados &&
+                    noConfirmados.map(
+                      (person) =>
+                        person.etiqueta === etiqueta && (
+                          <tr key={person.id}>
+                            <td>{person.principalName}</td>
+
+                            <td>{person.name}</td>
+                            <td>{person.asist === null && "sin confirmar"}</td>
+                            <td>{person.etiqueta}</td>
+                          </tr>
+                        )
+                    )}
+                </tbody>
+              )}
             </table>
+          </>
+        ) : (
+          menu === "no asistira" && (
+            <>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Invitado</th>
+                    <th>Asistirá</th>
+                    <th>Etiqueta</th>
+                  </tr>
+                </thead>
+                {etiqueta === "todos" ? (
+                  <tbody>
+                    {noAsistiran &&
+                      noAsistiran.map((person) => (
+                        <tr key={person.id}>
+                          <td>{person.principalName}</td>
+
+                          <td>{person.name}</td>
+                          <td>{person.asist === false && "no asistirá"}</td>
+                          <td>{person.etiqueta}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                ) : (
+                  <tbody>
+                    {noAsistiran &&
+                      noAsistiran.map(
+                        (person) =>
+                          person.etiqueta === etiqueta && (
+                            <tr key={person.id}>
+                              <td>{person.principalName}</td>
+
+                              <td>{person.name}</td>
+                              <td>{person.asist === false && "no asistirá"}</td>
+                              <td>{person.etiqueta}</td>
+                            </tr>
+                          )
+                      )}
+                  </tbody>
+                )}
+              </table>
+            </>
           )
         )}
       </div>

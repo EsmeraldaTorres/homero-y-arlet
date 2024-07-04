@@ -27,13 +27,13 @@ const LastPage = () => {
         </div>
         <div className="last-container">
           <p className="text-center m-0 p-0">
-            Digital Invite
+            Hecha por Digital Invite
             <a
               target="_blank"
               href="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio"
               className="marca"
             >
-              {""} by Esmeralda <i className="bi bi-whatsapp"></i>
+              {""} by Esmeralda<i className="bi bi-whatsapp"></i>
             </a>
           </p>
         </div>
