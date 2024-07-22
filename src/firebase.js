@@ -19,3 +19,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { db };
+
+const firebaseUrl = "https://invitaciones-55c1a.firebaseio.com"; // Reemplaza con tu URL de Firebase
+const apiKey = "AIzaSyDKoJ7TPLSXJGM5zr19LnTmgRiCxKLU4PI"; // Reemplaza con tu API Key de Firebase

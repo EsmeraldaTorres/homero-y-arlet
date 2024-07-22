@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, writeBatch, doc } from "firebase/firestore";
+
 import "./invitacion.css";
 
 const AllGuestPage = () => {
   const [arrayPeople, setArrayPeople] = useState([]);
-
   const [confirmedPeople, setConfirmedPeople] = useState([]);
   const [noConfirmados, setNoConfirmados] = useState([]);
   const [noAsistiran, setNoasistiran] = useState([]);
+  const [addTable, setAddTable] = useState(false);
   const [etiqueta, setEtiqueta] = useState("todos");
   const [menu, setMenu] = useState("todos");
+  const [guests, setGuests] = useState([]);
+  const mesas = [1, 3, 5];
 
   const fetchData = async () => {
     try {
@@ -21,6 +24,7 @@ const AllGuestPage = () => {
         people.push(data);
       });
       console.log(people, "people");
+      setGuests(people);
       const groups = people?.map((gruop) => gruop?.acompanist);
       console.log(groups, "groups");
       let allPeople = [];
@@ -56,16 +60,50 @@ const AllGuestPage = () => {
   };
 
   const handleFilterEtiqueta = (value) => {
-    console.log(value, "value");
     setEtiqueta(value);
   };
 
-  useEffect(() => {
-    console.log(arrayPeople, "arrayPeople");
-    console.log(confirmedPeople, "confirmedPeople");
-    console.log(noAsistiran, "noAsistiran");
-    console.log(noConfirmados, "noConfirmados");
-  }, [etiqueta]);
+  const handleAssignTables = async () => {
+    try {
+      const batch = writeBatch(db);
+
+      // Actualiza los acompañantes en `guests` con los datos de `confirmedPeople`
+      confirmedPeople.forEach((simpleObj) => {
+        guests.forEach((nestedObj) => {
+          nestedObj.acompanist = nestedObj?.acompanist?.map((acompanistObj) => {
+            if (acompanistObj.name === simpleObj.name) {
+              // Modifica los valores del objeto que hizo match
+              return {
+                ...acompanistObj,
+              };
+            } else {
+              return acompanistObj;
+            }
+          });
+
+          // Prepara la actualización en el batch
+          const guestRef = doc(db, "people", nestedObj.id);
+          batch.update(guestRef, { acompanist: nestedObj.acompanist });
+        });
+      });
+
+      // Commit the batch
+      await batch.commit();
+
+      console.log("Documentos actualizados correctamente en Firestore.");
+    } catch (error) {
+      console.error("Error actualizando documentos: ", error);
+    }
+  };
+
+  const handleTableChange = (index, table) => {
+    console.log(index);
+    const updatedAccompanist = [...confirmedPeople];
+    console.log(updatedAccompanist, "updatedAccompanist");
+    updatedAccompanist[index].table = table;
+    console.log(updatedAccompanist, "updatedAccompanist");
+    setConfirmedPeople(updatedAccompanist);
+  };
 
   useEffect(() => {
     fetchData();
@@ -179,29 +217,67 @@ const AllGuestPage = () => {
           </>
         ) : menu === "confirmados" ? (
           <>
+            {etiqueta === "todos" && (
+              <>
+                {" "}
+                <p className="mt-4">
+                  Cuando estén listos para organizar a los invitados en mesas,
+                  da click en el siguiente botón:
+                </p>
+                <button
+                  onClick={() => {
+                    setAddTable(true);
+                  }}
+                >
+                  Agregar mesa
+                </button>
+              </>
+            )}
             <table>
               <thead>
                 <tr>
+                  <th>Familia</th>
                   <th>Invitado</th>
                   <th>Asistirá</th>
                   <th>Etiqueta</th>
+                  {addTable && <th>Mesa</th>}
                 </tr>
               </thead>
               {etiqueta === "todos" ? (
-                <tbody>
-                  {confirmedPeople &&
-                    confirmedPeople.map((person, key) => (
-                      <>
-                        <tr key={person.id}>
-                          <td>{person.principalName}</td>
-
-                          <td>{person.name}</td>
-                          <td>{person.asist && "confirmado"}</td>
-                          <td>{person.etiqueta}</td>
-                        </tr>
-                      </>
-                    ))}
-                </tbody>
+                <>
+                  <tbody>
+                    {confirmedPeople &&
+                      confirmedPeople?.map((person, key) => (
+                        <>
+                          <tr key={key}>
+                            <td>{person.principalName}</td>
+                            <td>{person.name}</td>
+                            <td>{person.asist && "confirmado"}</td>
+                            <td>{person.etiqueta}</td>
+                            {/* {addTable && ( */}
+                            <>
+                              <select
+                                value={person.table || ""}
+                                onChange={(e) =>
+                                  handleTableChange(key, e.target.value)
+                                }
+                              >
+                                <option value="">Selecciona mesa...</option>
+                                {mesas.map((num) => (
+                                  <option
+                                    key={num}
+                                    value={num}
+                                  >{`Mesa ${num}`}</option>
+                                ))}
+                              </select>
+                            </>
+                            {/* )} */}
+                          </tr>
+                        </>
+                      ))}
+                  </tbody>
+                  <button onClick={handleAssignTables}>Asignar Mesas</button>
+                </>
               ) : (
                 <tbody>
                   {confirmedPeople &&
@@ -228,6 +304,8 @@ const AllGuestPage = () => {
             <table>
               <thead>
                 <tr>
+                  <th>Familia</th>
+
                   <th>Invitado</th>
                   <th>Asistirá</th>
                   <th>Etiqueta</th>
@@ -271,6 +349,8 @@ const AllGuestPage = () => {
               <table>
                 <thead>
                   <tr>
+                    <th>Familia</th>
+
                     <th>Invitado</th>
                     <th>Asistirá</th>
                     <th>Etiqueta</th>

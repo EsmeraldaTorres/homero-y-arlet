@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { createContext, useContext, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -27,6 +26,9 @@ export const GuestProvider = ({ children }) => {
       if (notConfirmation && notConfirmation.length != 0) {
         setReservationDone(false);
       } else setReservationDone(true);
+      console.log(person[0], "person");
+      console.log(uniquecode, "uniquecode");
+      console.log(code, "code");
 
       if (uniquecode === code) {
         setGuest(person[0]);

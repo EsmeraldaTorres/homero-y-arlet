@@ -95,8 +95,10 @@ const Tickets = () => {
   }, [id]);
 
   useEffect(() => {
+    console.log(guest, "guest desde Tickets");
+
     if (guest) {
-      const filteredAcompanist = guest.acompanist.filter(
+      const filteredAcompanist = guest?.acompanist.filter(
         (acomp) => acomp?.asist === true
       );
       setTicketsConfirmados(filteredAcompanist);
@@ -105,7 +107,7 @@ const Tickets = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-center font-paris font-gold lead mt-4 pt-4">
+      <h1 className="text-center font-paris font-gold display-5 mt-4 pt-4">
         {"Arturo & Noemi"}
       </h1>
       <p className="text-center display-5">Nuestra Boda</p>
@@ -116,14 +118,17 @@ const Tickets = () => {
             <h2 className="font-paris font-gold display-4">
               Tickets {guest?.principalName}
             </h2>
-            {guest.acompanist.map(
+            {guest?.acompanist?.map(
               (acomp, index) =>
                 acomp?.asist === true && (
                   <div
                     key={index}
                     className="w-100 d-flex justify-content-center flex-column"
                   >
-                    <p className="mb-0 display-6 mt-4">{acomp.name}</p>
+                    <p className="mb-0 display-6 mt-4">{acomp?.name}</p>
+                    {acomp.table && (
+                      <p className="mb-0 display-6">Mesa: {acomp?.table}</p>
+                    )}
                   </div>
                 )
             )}

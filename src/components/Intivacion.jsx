@@ -11,6 +11,7 @@ import GiftSection from "./invitacion/GiftSection";
 import PhotoGallerySection from "./invitacion/PhotoGallerySection";
 import Sobre from "./invitacion/Sobre";
 import LastPage from "./invitacion/LastPage";
+import QRCode from "qrcode.react";
 
 // Libraries
 import { doc, updateDoc } from "firebase/firestore";
@@ -56,6 +57,7 @@ const Intivacion = () => {
     seconds: 0,
     expired: false,
   });
+
   const [text, setText] = useState({
     firstText:
       " Por favor confirma tu asistencia al evento antes del 15 de Junio, después de esta fecha la confirmación no podrá realizarse.",
@@ -139,6 +141,7 @@ const Intivacion = () => {
       // document.body.classList.remove("postion-fixed");
     };
   }, [openModal]);
+
   const handleDownloadPdf = async () => {
     const pdf = new jsPDF("p", "pt", "letter");
     const width = pdf.internal.pageSize.getWidth();
@@ -198,6 +201,7 @@ const Intivacion = () => {
   };
 
   useEffect(() => {
+    console.log(guest, "gurst ");
     const filterGuestNull = guest?.acompanist?.filter((g) => g.asist === null);
     const filterGuestFalse = guest?.acompanist?.filter(
       (g) => g.asist === false
@@ -228,12 +232,13 @@ const Intivacion = () => {
       );
       setTicketsConfirmados(filteredAcompanist);
     }
-
-    console.log(guest, "guest");
   }, [guest]);
 
   useEffect(() => {
     AOS.init();
+    console.log(id, "id");
+    console.log(code, "code");
+
     if (id) {
       fetchDataByGuest(id, code);
     }
@@ -504,50 +509,44 @@ const Intivacion = () => {
                                 // ref={printRef}
                               >
                                 <div className="text-center">
-                                  <h2 className="font-paris font-gold mb-4">
+                                  <h2 className="font-paris font-gold mb-4 display-5">
                                     Tickets {guest?.principalName}
                                   </h2>
-                                  <h3 className="mb-0">
+                                  <h3 className="mb-4 ">
                                     Favor de no escanear con ningún dispositivo
                                   </h3>
-                                  {guest.acompanist.map(
+                                  <div className="d-flex justify-content-center mt-4 mb-4">
+                                    <QRCode
+                                      value={
+                                        "https://arturo-y-noemi-nuestra-boda-muestra.vercel.app" +
+                                        guest?.qrUrl
+                                      }
+                                    />
+
+                                    {/* <img
+                                      className="qr-images px-4 pb-4"
+                                      src={
+                                        "http://localhost:5173/" + guest?.qrUrl
+                                      }
+                                      alt=""
+                                    /> */}
+                                  </div>
+                                  {guest?.acompanist?.map(
                                     (acomp, index) =>
                                       acomp?.asist === true && (
                                         <div
                                           key={index}
                                           className="w-100 d-flex justify-content-center flex-column"
                                         >
-                                          <p className="mb-0 display-6 mt-4">
+                                          <p className="mb-1 display-6 ">
                                             {acomp.name}
                                           </p>
-                                          <div className="d-flex justify-content-center">
-                                            <img
-                                              className="qr-images px-4 pb-4"
-                                              src={acomp.qrImage}
-                                              alt=""
-                                            />
-                                          </div>
                                         </div>
                                       )
                                   )}
                                 </div>
-
-                                {/* <div>Deja un mensaje para nosotros</div>
-                                <form onSubmit={handleSubmit}>
-                                  <label htmlFor="message">
-                                    Deja tu mensaje:
-                                  </label>
-                                  <textarea
-                                    id="message"
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    required
-                                  ></textarea>
-                                  <button type="submit">Enviar mensaje</button>
-                                </form>
-                              */}
                               </div>
-                              <div className="mb-4">
+                              <div className="mb-4 mt-4">
                                 <h3>
                                   Muestra tus códigos QR{" "}
                                   <span className="font-weigth-bold">solo</span>{" "}

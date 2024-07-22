@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./App.css";
+import InviteForm from "./components/InviteForm";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
           <Route
             path="/all-guests-page-arturo-y-noemi-boda/j13kl"
             element={<AllGuestPage />}
+          />
+          <Route
+            path="/invite-form/access:digital-invite-by-esmeralda-01"
+            element={<InviteForm />}
           />
         </Routes>
       </Router>
