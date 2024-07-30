@@ -518,7 +518,7 @@ const Intivacion = () => {
                                   <div className="d-flex justify-content-center mt-4 mb-4">
                                     <QRCode
                                       value={
-                                        "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app" +
+                                        "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
                                         guest?.qrUrl
                                       }
                                     />

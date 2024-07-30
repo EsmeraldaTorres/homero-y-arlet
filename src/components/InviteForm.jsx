@@ -1,4 +1,3 @@
-// InviteForm.js
 import React, { useState } from "react";
 import { db } from "../firebase";
 import { collection, setDoc, doc } from "firebase/firestore";
@@ -9,15 +8,27 @@ const InviteForm = () => {
     code: "",
     principalName: "",
     qrUrl: "",
-    acompanist: [{ name: "", asist: null, etiqueta: "" }],
+    acompanist: [{ name: "", asist: null, etiqueta: "", principalName: "" }],
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "principalName") {
+      const updatedAcompanists = formData.acompanist.map((acomp) => ({
+        ...acomp,
+        principalName: value,
+      }));
+      setFormData({
+        ...formData,
+        [name]: value,
+        acompanist: updatedAcompanists,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleAcompanistChange = (index, e) => {
@@ -36,7 +47,12 @@ const InviteForm = () => {
         ...formData,
         acompanist: [
           ...formData.acompanist,
-          { name: "", asist: null, etiqueta: "" },
+          {
+            name: "",
+            asist: null,
+            etiqueta: "",
+            principalName: formData.principalName,
+          },
         ],
       });
     }
@@ -53,9 +69,17 @@ const InviteForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(db); // Verificar la instancia de Firestore
-      const docRef = doc(db, "people", formData.id); // Crear referencia al documento con el ID especificado
-      await setDoc(docRef, formData); // Guardar el documento con el ID especificado
+      const docRef = doc(db, "people", formData.id);
+      await setDoc(docRef, formData);
+      setFormData({
+        id: "",
+        code: "",
+        principalName: "",
+        qrUrl: "",
+        acompanist: [
+          { name: "", asist: null, etiqueta: "", principalName: "" },
+        ],
+      });
       alert("Data successfully added!");
     } catch (error) {
       console.error("Error adding document: ", error);

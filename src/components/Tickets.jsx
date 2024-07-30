@@ -126,8 +126,14 @@ const Tickets = () => {
                     className="w-100 d-flex justify-content-center flex-column"
                   >
                     <p className="mb-0 display-6 mt-4">{acomp?.name}</p>
-                    {acomp.table && (
-                      <p className="mb-0 display-6">Mesa: {acomp?.table}</p>
+                    {acomp.table ? (
+                      <p className="mb-0 display-6 f-w-700">
+                        Mesa: {acomp?.table}
+                      </p>
+                    ) : (
+                      <p className="mb-0 display-6">
+                        Pronto se asignará tu número de mesa
+                      </p>
                     )}
                   </div>
                 )

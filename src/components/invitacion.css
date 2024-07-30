@@ -3,6 +3,19 @@
   margin: 0;
   box-sizing: border-box;
 }
+select {
+  outline: none; /* Quita el borde del select en estado normal */
+}
+
+select:focus {
+  outline: none; /* Quita el borde del select cuando está enfocado */
+  box-shadow: none; /* Quita cualquier sombra del select cuando está enfocado */
+}
+
+select:active {
+  outline: none; /* Quita el borde del select cuando está activo */
+  box-shadow: none; /* Quita cualquier sombra del select cuando está activo */
+}
 a {
   text-decoration: none;
 }
@@ -184,7 +197,7 @@ a {
   font-weight: 500;
 }
 .modal-dialog {
-  -webkit-overflow-scrolling: touch; /* Habilitar desplazamiento suave en iOS */
+  -webkit-overflow-scrolling: touch;
   width: 85%;
   background: white;
   padding: 2rem;
@@ -544,11 +557,27 @@ button:hover {
 .nuestro-inicio {
   background-color: rgb(197, 166, 119);
 }
+.select-mesas {
+  border: solid 1px #a5a5a5;
+  padding: 0.2rem;
+  text-align: center;
+  color: #7d775a;
+  font-weight: 600;
+  border-radius: 7px;
+}
+.btn-min-w {
+  margin-right: 1rem;
+}
 .nuestro-inicio img {
   width: 250;
   height: 180px;
   border: solid 2px whitesmoke;
   border-radius: 5px;
+}
+.label-and-select {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .text {
   width: 80%;
@@ -598,6 +627,9 @@ a:hover {
 .marca {
   color: #dbdbdb;
 }
+.table-width {
+  font-size: 0.9rem;
+}
 /* last window back */
 .last-window-back {
   height: 100vh;
@@ -623,6 +655,10 @@ a:hover {
 }
 .display-2 {
   font-size: 2.8rem;
+}
+.box-add-table {
+  flex-direction: column;
+  margin-bottom: 2rem;
 }
 @media (min-width: 470px) {
   .title-principal {
@@ -661,6 +697,9 @@ a:hover {
   .title-principal {
     font-size: 5.5rem;
   }
+  .btn-min-w {
+    max-width: 200px;
+  }
   .btn-open img {
     height: 55%;
     width: 55%;
@@ -668,7 +707,10 @@ a:hover {
   .display-4 {
     font-size: 3.6rem;
   }
-
+  .table-width {
+    font-size: 1.1rem;
+    width: 100%;
+  }
   .cuenta-regresiva {
     font-size: 1.3rem;
   }
@@ -685,12 +727,17 @@ a:hover {
   .card-regalos {
     width: 80%;
   }
+
   .logo-liverpool {
     width: 250px;
     margin-bottom: 2rem;
   }
   .w-90 {
     width: 60%;
+  }
+  .label-and-select {
+    width: 100%;
+    display: block;
   }
   .display-2 {
     font-size: 4.5rem;
@@ -703,6 +750,9 @@ a:hover {
   .name {
     width: 70%;
     padding-right: 0 !important;
+  }
+  .box-add-table {
+    flex-direction: row;
   }
   .z-index-3 {
     position: absolute;
