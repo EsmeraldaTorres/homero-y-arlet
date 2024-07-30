@@ -271,7 +271,7 @@ const Intivacion = () => {
   }, []);
 
   useEffect(() => {
-    const countDownDateAsistence = new Date("Jul 25, 2024 09:31").getTime();
+    const countDownDateAsistence = new Date("Aug 25, 2024 09:31").getTime();
 
     const countdownAsistence = () => {
       const now = new Date().getTime();
@@ -522,7 +522,11 @@ const Intivacion = () => {
                                         guest?.qrUrl
                                       }
                                     />
-
+                                    {console.log(
+                                      "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
+                                        guest?.qrUrl,
+                                      "qr"
+                                    )}
                                     {/* <img
                                       className="qr-images px-4 pb-4"
                                       src={
