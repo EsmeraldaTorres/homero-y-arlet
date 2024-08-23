@@ -608,7 +608,15 @@ button:hover {
 a:hover {
   text-decoration: none;
 }
-
+.btn-agendar {
+  font-family: cursive;
+  margin: 1rem;
+  border: none;
+  background: #f4f4f4;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 1.3rem;
+}
 .card-regalos {
   margin: 2rem 0;
   height: 80%;
@@ -720,6 +728,10 @@ a:hover {
   .text {
     width: 50%;
   }
+  .modal-dialog-cerrar {
+    max-width: 30vw !important;
+  }
+
   .nuestro-inicio img {
     width: 600px;
     height: 500px;

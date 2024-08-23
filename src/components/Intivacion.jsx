@@ -12,6 +12,10 @@ import PhotoGallerySection from "./invitacion/PhotoGallerySection";
 import Sobre from "./invitacion/Sobre";
 import LastPage from "./invitacion/LastPage";
 import QRCode from "qrcode.react";
+import AddToMobileCalendar from "./invitacion/AddToMobileCalendar";
+import AddToGoogleCalendar from "./invitacion/AddToGoogleCalendar";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 // Libraries
 import { doc, updateDoc } from "firebase/firestore";
@@ -49,6 +53,7 @@ const Intivacion = () => {
   const [loading, setLoading] = useState(false);
   const [reservationDeny, setReservationDeny] = useState(false);
   const [ticketsConfirmados, setTicketsConfirmados] = useState();
+  const printRef = useRef();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -143,61 +148,36 @@ const Intivacion = () => {
   }, [openModal]);
 
   const handleDownloadPdf = async () => {
-    const pdf = new jsPDF("p", "pt", "letter");
-    const width = pdf.internal.pageSize.getWidth();
-    const height = pdf.internal.pageSize.getHeight();
+    const input = printRef.current;
+    if (input) {
+      html2canvas(input, { scale: 2 }) // Aumenta la escala para mejor calidad
+        .then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "pt",
+            format: "a4",
+          });
 
-    // Tamaño de la imagen en el PDF
-    const imgWidth = width * 0.3;
-    const imgHeight = height * 0.3;
-    const margin = 20; // Margen entre elementos
-    const headerHeight = 100; // Altura reservada para el encabezado
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const imgProps = pdf.getImageProperties(imgData);
+          const imageHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-    // Variables de posición
-    let currentY = headerHeight;
+          // Agrega el título directamente en el PDF
+          pdf.text("Tickets boda Arturo y Noemí", pdfWidth / 2, 40, {
+            align: "center",
+            fontSize: "1.5rem",
+          });
 
-    // Filtrar acompañantes según la condición
-    const filteredAcompanist = guest.acompanist.filter(
-      (acomp) => acomp?.asist === true
-    );
-    setTicketsConfirmados(filteredAcompanist);
+          // Ajusta la posición de la imagen para dejar espacio al título
+          pdf.addImage(imgData, "PNG", 40, 60, pdfWidth - 80, imageHeight);
 
-    for (const [index, acomp] of filteredAcompanist.entries()) {
-      if (currentY + imgHeight + margin > height) {
-        pdf.addPage();
-        currentY = headerHeight; // Restablecer la posición Y al comienzo de una nueva página
-      }
-
-      if (index === 0) {
-        // Agregar el texto del h1 solo en la primera página
-        pdf.setFontSize(28);
-        pdf.text("Tickets", width / 2, 30, { align: "center" });
-
-        // Agregar el texto del h2 solo en la primera página
-        pdf.setFontSize(22);
-        pdf.text(guest.principalName, width / 2, 60, { align: "center" });
-      }
-
-      // Agregar el texto del p
-      pdf.setFontSize(16);
-      pdf.text(acomp.name, width / 2, currentY, { align: "center" });
-
-      const img = new Image();
-      img.src = acomp.qrImage;
-
-      // Esperar a que la imagen se cargue
-      await new Promise((resolve) => {
-        img.onload = () => {
-          const x = (width - imgWidth) / 2; // Centrar horizontalmente
-          const y = currentY + margin; // Espacio después del texto
-          pdf.addImage(img, "PNG", x, y, imgWidth, imgHeight);
-          currentY = y + imgHeight + margin; // Actualizar la posición Y
-          resolve();
-        };
-      });
+          pdf.save("tickets_boda_arturo_noemi.pdf");
+        })
+        .catch((err) => {
+          console.error("Error al generar el PDF", err);
+        });
     }
-
-    pdf.save("download.pdf");
   };
 
   useEffect(() => {
@@ -515,44 +495,34 @@ const Intivacion = () => {
                                   <h3 className="mb-4 ">
                                     Favor de no escanear con ningún dispositivo
                                   </h3>
-                                  <div className="d-flex justify-content-center mt-4 mb-4">
-                                    <QRCode
-                                      value={
-                                        "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
-                                        guest?.qrUrl
-                                      }
-                                    />
-                                    {console.log(
-                                      "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
-                                        guest?.qrUrl,
-                                      "qr"
+                                  <div ref={printRef}>
+                                    <div className="d-flex justify-content-center mt-4 mb-4">
+                                      <QRCode
+                                        value={
+                                          "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
+                                          guest?.qrUrl
+                                        }
+                                      />
+                                    </div>
+                                    {guest?.acompanist?.map(
+                                      (acomp, index) =>
+                                        acomp?.asist === true && (
+                                          <div
+                                            key={index}
+                                            className="w-100 d-flex justify-content-center flex-column"
+                                          >
+                                            <p className="mb-1 display-6 ">
+                                              {acomp.name}
+                                            </p>
+                                          </div>
+                                        )
                                     )}
-                                    {/* <img
-                                      className="qr-images px-4 pb-4"
-                                      src={
-                                        "http://localhost:5173/" + guest?.qrUrl
-                                      }
-                                      alt=""
-                                    /> */}
                                   </div>
-                                  {guest?.acompanist?.map(
-                                    (acomp, index) =>
-                                      acomp?.asist === true && (
-                                        <div
-                                          key={index}
-                                          className="w-100 d-flex justify-content-center flex-column"
-                                        >
-                                          <p className="mb-1 display-6 ">
-                                            {acomp.name}
-                                          </p>
-                                        </div>
-                                      )
-                                  )}
                                 </div>
                               </div>
                               <div className="mb-4 mt-4">
-                                <h3>
-                                  Muestra tus códigos QR{" "}
+                                <h3 className="font-gold">
+                                  Muestra tu CÓDIGO QR{" "}
                                   <span className="font-weigth-bold">solo</span>{" "}
                                   a los recepcionistas del evento para entrar al
                                   salón.
@@ -561,7 +531,9 @@ const Intivacion = () => {
                                   No compartas ésta invitación con nadie más ni
                                   tus códigos QR.
                                 </p>
-
+                                <h1>Agendar Evento</h1>
+                                <AddToGoogleCalendar />
+                                <AddToMobileCalendar />
                                 <div className="pb-4 d-flex justify-content-center align-items-center">
                                   <img
                                     loading="lazy"
@@ -584,7 +556,7 @@ const Intivacion = () => {
                                 {guest && ticketsConfirmados?.length != 0 && (
                                   <div className="w-100 justify-content-center d-flex align-items-center mb-4">
                                     <button
-                                      className="btn-descargar"
+                                      className="btn-descargar btn-agendar"
                                       onClick={handleDownloadPdf}
                                     >
                                       Descargar Tickets{" "}

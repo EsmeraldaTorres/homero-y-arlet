@@ -390,9 +390,9 @@ const AllGuestPage = () => {
                   <tr>
                     <th>Familia</th>
                     <th>Invitado</th>
+                    {addTable && <th>Mesa</th>}
                     <th>Status</th>
                     <th>Etiqueta</th>
-                    {addTable && <th>Mesa</th>}
                   </tr>
                 </thead>
                 {etiqueta === "Todos" ? (
@@ -404,8 +404,6 @@ const AllGuestPage = () => {
                             <tr key={key}>
                               <td>{person.principalName}</td>
                               <td>{person.name}</td>
-                              <td>{person.asist && "confirmado"}</td>
-                              <td>{person.etiqueta}</td>
                               {addTable && (
                                 <td className="">
                                   <select
@@ -425,6 +423,8 @@ const AllGuestPage = () => {
                                   </select>
                                 </td>
                               )}
+                              <td>{person.asist && "confirmado"}</td>
+                              <td>{person.etiqueta}</td>
                             </tr>
                           </>
                         ))}
@@ -562,11 +562,11 @@ const AllGuestPage = () => {
       </div>
       {openModal && (
         <div className="modal-pases" tabindex="-1">
-          <div className="modal-dialog">
+          <div className="modal-dialog modal-dialog-cerrar ">
             <div className="modal-content">
               <div className="modal-header"></div>
-              <div className="modal-body">
-                ¡datos actualizados!
+              <div className="modal-body text-center font-paris display-5">
+                ¡Datos actualizados!
                 <div className="modal-footer justify-content-between">
                   <button
                     onClick={() => {
