@@ -44,11 +44,12 @@ const SecondPage = ({ timeLeft }) => {
               </div>
             </div>
             <div
-              className="d-flex justify-content-center align-items-center"
+              className="d-flex flex-column justify-content-center align-items-center"
               data-aos="zoom-in"
               data-aos-duration="1000"
               data-aos-delay="1000"
             >
+              <p className="text-white display-5 font-paris">Faltan</p>
               <div id="demo" className="cuenta-regresiva m-0">
                 {timeLeft.expired ? (
                   <p>EXPIRED</p>

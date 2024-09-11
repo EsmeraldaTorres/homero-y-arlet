@@ -573,7 +573,7 @@ const AllGuestPage = () => {
                       setOpenModal(false);
                     }}
                     type="button"
-                    className="btn-cerrar justify-content-center w-100"
+                    className="btn-cerrar justify-content-center "
                     data-bs-dismiss="modal"
                   >
                     Cerrar

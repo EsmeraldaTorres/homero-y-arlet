@@ -15,7 +15,6 @@ import QRCode from "qrcode.react";
 import AddToMobileCalendar from "./invitacion/AddToMobileCalendar";
 import AddToGoogleCalendar from "./invitacion/AddToGoogleCalendar";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
 // Libraries
 import { doc, updateDoc } from "firebase/firestore";
@@ -147,39 +146,46 @@ const Intivacion = () => {
     };
   }, [openModal]);
 
+  const qrRef = useRef(null);
+
   const handleDownloadPdf = async () => {
-    const input = printRef.current;
-    if (input) {
-      html2canvas(input, { scale: 2 }) // Aumenta la escala para mejor calidad
-        .then((canvas) => {
-          const imgData = canvas.toDataURL("image/png");
-          const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "pt",
-            format: "a4",
-          });
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "pt",
+      format: "a4",
+    });
 
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const imgProps = pdf.getImageProperties(imgData);
-          const imageHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
 
-          // Agrega el título directamente en el PDF
-          pdf.text("Tickets boda Arturo y Noemí", pdfWidth / 2, 40, {
-            align: "center",
-            fontSize: "1.5rem",
-          });
+    // Cargar la imagen de fondo
+    const backgroundImageUrl =
+      "https://images.pexels.com/photos/27060172/pexels-photo-27060172/free-photo-of-blanco-y-negro-naturaleza-pareja-amor.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
+    const backgroundImage = new Image();
+    backgroundImage.src = backgroundImageUrl;
 
-          // Ajusta la posición de la imagen para dejar espacio al título
-          pdf.addImage(imgData, "PNG", 40, 60, pdfWidth - 80, imageHeight);
+    backgroundImage.onload = () => {
+      // Agregar la imagen de fondo en todo el tamaño de la hoja
+      pdf.addImage(backgroundImage, "JPEG", 0, 0, pdfWidth, pdfHeight);
 
-          pdf.save("tickets_boda_arturo_noemi.pdf");
-        })
-        .catch((err) => {
-          console.error("Error al generar el PDF", err);
-        });
-    }
+      // Posicionar el título encima de la imagen
+      pdf.setFontSize(24);
+      pdf.setTextColor(255, 255, 255); // Color blanco para el texto
+      pdf.text("Tickets Boda Arturo y Noemí", pdfWidth / 2, 100, {
+        align: "center",
+      });
+
+      // Renderizar el QR desde el canvas y agregarlo al PDF
+      const qrCanvas = qrRef.current.querySelector("canvas");
+      if (qrCanvas) {
+        const qrImageData = qrCanvas.toDataURL("image/png");
+        pdf.addImage(qrImageData, "PNG", pdfWidth / 2 - 50, 120, 100, 100);
+      }
+
+      // Guardar el PDF
+      pdf.save("tickets_boda_arturo_noemi.pdf");
+    };
   };
-
   useEffect(() => {
     console.log(guest, "gurst ");
     const filterGuestNull = guest?.acompanist?.filter((g) => g.asist === null);
@@ -222,7 +228,7 @@ const Intivacion = () => {
     if (id) {
       fetchDataByGuest(id, code);
     }
-    const countDownDate = new Date("Jul 26, 2024 09:30").getTime();
+    const countDownDate = new Date("Dec 26, 2024 09:30").getTime();
     const updateCountdown = () => {
       const now = new Date().getTime();
       const distance = countDownDate - now;
@@ -251,7 +257,7 @@ const Intivacion = () => {
   }, []);
 
   useEffect(() => {
-    const countDownDateAsistence = new Date("Aug 25, 2024 09:31").getTime();
+    const countDownDateAsistence = new Date("Sep 15, 2024 09:31").getTime();
 
     const countdownAsistence = () => {
       const now = new Date().getTime();
@@ -391,7 +397,7 @@ const Intivacion = () => {
           </div>
           <div className="d-flex flex-column overflow-hidden">
             {reservationDone && reservationDeny === false ? (
-              <>
+              <><div className="d-flex justify-content-center">
                 <button
                   className="mb-3 btn-save"
                   onClick={() => {
@@ -399,7 +405,7 @@ const Intivacion = () => {
                   }}
                 >
                   Ver mis pases <i className="bi bi-ticket font-icon"></i>
-                </button>
+                </button></div>
               </>
             ) : reservationDone && reservationDeny ? (
               <div className="overflow-hidden">
@@ -412,6 +418,7 @@ const Intivacion = () => {
               </div>
             ) : text?.firstText != "" ? (
               <>
+              <div className="d-flex justify-content-center">
                 <button
                   className="mb-3 btn-save "
                   onClick={() => {
@@ -422,6 +429,7 @@ const Intivacion = () => {
                     <i className="bi bi-check text-white"></i> Confirmar
                   </p>
                 </button>
+                </div>
                 <div className="d-flex justify-content-center">
                   <button
                     onClick={(event) => {
@@ -484,10 +492,7 @@ const Intivacion = () => {
                           reservationDeny === false ? (
                           <>
                             <div className="">
-                              <div
-                                className="justify-content-center mt-4"
-                                // ref={printRef}
-                              >
+                              <div className="justify-content-center mt-4">
                                 <div className="text-center">
                                   <h2 className="font-paris font-gold mb-4 display-5">
                                     Tickets {guest?.principalName}
@@ -496,7 +501,10 @@ const Intivacion = () => {
                                     Favor de no escanear con ningún dispositivo
                                   </h3>
                                   <div ref={printRef}>
-                                    <div className="d-flex justify-content-center mt-4 mb-4">
+                                    <div
+                                      ref={qrRef}
+                                      className="d-flex justify-content-center mt-4 mb-4"
+                                    >
                                       <QRCode
                                         value={
                                           "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
@@ -666,28 +674,31 @@ const Intivacion = () => {
                               </>
                             ))}
                             <div className="d-flex flex-column">
+                            <div className="d-flex justify-content-center w-100">
+
                               <button
                                 disabled={disabledBtn}
                                 className={`${
-                                  disabledBtn ? "btn-save-disabled" : "btn-save"
+                                  disabledBtn ? "btn-save-disabled w-50" : "btn-save w-50"
                                 }`}
                                 type="submit"
                               >
                                 Continuar
-                              </button>
+                              </button></div>
                             </div>
                           </form>
                           <div className="modal-footer justify-content-between">
+                            <div className="d-flex justify-content-center w-100">
                             <button
                               onClick={() => {
                                 setOpenModal(false);
                               }}
                               type="button"
-                              className="btn-cerrar justify-content-center w-100"
+                              className="btn-cerrar justify-content-center w-50"
                               data-bs-dismiss="modal"
                             >
                               Confirmar más tarde
-                            </button>
+                            </button></div>
                           </div>
                         </>
                       ) : id && loading ? (
@@ -704,7 +715,7 @@ const Intivacion = () => {
                                 setOpenModal(false);
                               }}
                               type="button"
-                              className="btn-cerrar justify-content-center w-100"
+                              className="btn-cerrar justify-content-center"
                               data-bs-dismiss="modal"
                             >
                               Cerrar
@@ -715,17 +726,19 @@ const Intivacion = () => {
                         id &&
                         reservationDeny && (
                           <>
-                            <div className="modal-footer justify-content-between">
+                            <div className="modal-footer justify-content-center d-flex">
+                            <div className="d-flex justify-content-center">
+
                               <button
                                 onClick={() => {
                                   setOpenModal(false);
                                 }}
                                 type="button"
-                                className="btn-cerrar justify-content-center w-100"
+                                className="btn-cerrar justify-content-center w-50"
                                 data-bs-dismiss="modal"
                               >
                                 Cerrar
-                              </button>
+                              </button></div>
                             </div>
                           </>
                         )

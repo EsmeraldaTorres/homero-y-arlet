@@ -146,6 +146,7 @@ a {
   transition: all 250ms;
 }
 .btn-save {
+  width: max-content;
   font-weight: 500;
   border-radius: 10px;
   background: #ac9261;
@@ -187,6 +188,7 @@ a {
   font-weight: 700;
 }
 .btn-cerrar {
+  width: max-content;
   margin-top: 1rem;
   padding: 0.8rem;
   border-radius: 10px;
@@ -219,7 +221,7 @@ a {
 
 .btn-no-asistir {
   margin-top: 0.5rem;
-  width: 90%;
+  width: max-content;
   color: #515050 !important;
   border: none;
   background-color: #d7d7d7;
@@ -262,8 +264,8 @@ td {
   outline: none;
 }
 .btn-open img {
-  height: 40%;
-  width: 40%;
+  height: 30%;
+  width: 30%;
   padding-bottom: 4rem;
 }
 .hide {
@@ -673,8 +675,8 @@ a:hover {
     font-size: 3.5rem;
   }
   .btn-open img {
-    height: 50%;
-    width: 50%;
+    height: 30%;
+    width: 30%;
   }
   .nuestro-inicio img {
     width: 450px;
@@ -708,10 +710,7 @@ a:hover {
   .btn-min-w {
     max-width: 200px;
   }
-  .btn-open img {
-    height: 55%;
-    width: 55%;
-  }
+
   .display-4 {
     font-size: 3.6rem;
   }
@@ -731,7 +730,11 @@ a:hover {
   .modal-dialog-cerrar {
     max-width: 30vw !important;
   }
-
+  .container-ubicaciones {
+    width: 50%;
+    padding: 1rem;
+    margin-top: 2rem;
+  }
   .nuestro-inicio img {
     width: 600px;
     height: 500px;
@@ -790,10 +793,7 @@ a:hover {
     vertical-align: middle;
     border-style: none;
   }
-  .btn-open img {
-    height: 70%;
-    width: 70%;
-  }
+
   .card {
     height: 45vh;
   }
