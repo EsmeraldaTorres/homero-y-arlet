@@ -598,13 +598,17 @@ button:hover {
   background-repeat: no-repeat;
   background-position: center;
 }
-.window-back2{
+.carousel-indicators button {
+  box-shadow: none !important;
+}
+.window-back2 {
   position: relative;
 }
 .dinamic-galery {
-  height: 40vh;
+  height: 60vh;
   width: 100%;
-  background-image: url("../assets/img/pexels-barbara-ribeiro-8506039.jpg");
+  background-image: linear-gradient(rgba(5, 7, 12, 0.37), rgba(5, 7, 12, 0.514)),
+    url("../assets/img/collage.png");
   background-size: cover;
   -webkit-background-size: cover; /* Para Safari y Chrome (versiones antiguas) */
   -moz-background-size: cover; /* Para Firefox (versiones antiguas) */

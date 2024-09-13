@@ -72,20 +72,6 @@ const Tickets = () => {
     pdf.save("download.pdf");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const guestDocRef = doc(db, "people", id);
-      await updateDoc(guestDocRef, {
-        messageGuest: message,
-      });
-      alert("Mensaje enviado con éxito!");
-    } catch (error) {
-      console.error("Error al enviar el mensaje: ", error);
-      alert("Error al enviar el mensaje");
-    }
-  };
-
   useEffect(() => {
     console.log(id, "id");
     if (id) {

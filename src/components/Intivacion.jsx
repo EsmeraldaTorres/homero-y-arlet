@@ -17,7 +17,14 @@ import AddToGoogleCalendar from "./invitacion/AddToGoogleCalendar";
 import jsPDF from "jspdf";
 
 // Libraries
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+
 import { db } from "../firebase";
 import { useState, useRef } from "react";
 import decoration from "../assets/img/Untitled design (3).png";
@@ -101,9 +108,42 @@ const Intivacion = () => {
     setGuest({ ...guest, acompanist: updatedAccompanist });
   };
 
+  // const handleSubmit = async (event, boolean) => {
+  //   event.preventDefault();
+  //   let invitados;
+
+  //   if (boolean) {
+  //     const denyAsistence = guest?.acompanist.map((person) => ({
+  //       ...person,
+  //       asist: false,
+  //     }));
+
+  //     invitados = { ...guest, acompanist: denyAsistence };
+  //   }
+
+  //   // Guardar los datos actualizados en Firestore
+  //   setLoading(true);
+  //   const guestDoc = doc(db, "people", id);
+  //   await updateDoc(guestDoc, boolean ? invitados : guest)
+  //     .then(() => {
+  //       if (boolean) {
+  //         setOpenModal(true);
+  //         setReservationDone(true);
+  //         setReservationDeny(true);
+  //         setLoading(false);
+  //       } else
+  //         setTimeout(() => {
+  //           setLoading(false);
+  //           setReservationDone(true);
+  //         }, 4000);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error actualizando los datos: ", error);
+  //     });
+  // };
+
   const handleSubmit = async (event, boolean) => {
     event.preventDefault();
-    console.log("hola");
     let invitados;
 
     if (boolean) {
@@ -115,25 +155,37 @@ const Intivacion = () => {
       invitados = { ...guest, acompanist: denyAsistence };
     }
 
-    // Guardar los datos actualizados en Firestore
     setLoading(true);
-    const guestDoc = doc(db, "people", id);
-    await updateDoc(guestDoc, boolean ? invitados : guest)
-      .then(() => {
+
+    try {
+      // Hacer una consulta para obtener el documento basado en el campo 'id'
+      const q = query(collection(db, "people"), where("id", "==", id));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // Si se encuentra el documento, actualízalo
+        querySnapshot.forEach(async (docSnapshot) => {
+          const guestDoc = docSnapshot.ref;
+          await updateDoc(guestDoc, boolean ? invitados : guest);
+        });
+
         if (boolean) {
           setOpenModal(true);
           setReservationDone(true);
           setReservationDeny(true);
           setLoading(false);
-        } else
+        } else {
           setTimeout(() => {
             setLoading(false);
             setReservationDone(true);
           }, 4000);
-      })
-      .catch((error) => {
-        console.error("Error actualizando los datos: ", error);
-      });
+        }
+      } else {
+        console.error("No se encontró un documento con ese id");
+      }
+    } catch (error) {
+      console.error("Error actualizando los datos: ", error);
+    }
   };
 
   useEffect(() => {
@@ -309,6 +361,11 @@ const Intivacion = () => {
         <Location />
         <PhotoSection />
         <GiftSection />
+        <section class="bg-gray p-3">
+          <p class="text-center p-0 m-0">
+            <i class="bi bi-hearts"></i>¡Gracias por tus muestras de cariño!
+          </p>
+        </section>
         <HotelSection />
 
         <section class="pase bg-gold p-4">

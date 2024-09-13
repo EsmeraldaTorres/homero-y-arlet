@@ -27,7 +27,7 @@ export const GuestProvider = ({ children }) => {
         setReservationDone(false);
       } else setReservationDone(true);
       console.log(person[0], "person");
-      console.log(uniquecode, "uniquecode");
+      console.log(Number(uniquecode), "uniquecode");
       console.log(code, "code");
 
       if (uniquecode === code) {
