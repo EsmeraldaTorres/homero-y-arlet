@@ -8,7 +8,7 @@ import GodparentsSection from "./invitacion/GodparentsSection";
 import Itinerary from "./invitacion/Itinerary";
 import Location from "./invitacion/Location";
 import GiftSection from "./invitacion/GiftSection";
-import PhotoGallerySection from "./invitacion/PhotoGallerySection";
+import PhotoSection from "./invitacion/PhotoSection";
 import Sobre from "./invitacion/Sobre";
 import LastPage from "./invitacion/LastPage";
 import QRCode from "qrcode.react";
@@ -33,6 +33,10 @@ import { useGuest } from "../Context/GuestContext";
 
 // React Router
 import { Link, useParams } from "react-router-dom";
+import HotelSection from "./invitacion/HotelSection";
+import DinamicGallerySection from "./invitacion/DinamicGallerySection";
+import DressCode from "./invitacion/DressCode";
+import PhotoGallerySection from "./invitacion/PhotoGallerySection";
 
 const Intivacion = () => {
   const audioRef = useRef(null);
@@ -303,18 +307,33 @@ const Intivacion = () => {
         </section>
         <Itinerary />
         <Location />
-        <PhotoGallerySection />
+        <PhotoSection />
         <GiftSection />
+        <HotelSection />
+
+        <section class="pase bg-gold p-4">
+          <p class="text-white text-center display-6">
+            Este día será muy especial y que asistas ¡lo hará aún más!
+          </p>
+        </section>
+        <DinamicGallerySection />
+        <section class="bg-gray p-3">
+          <p class="text-center p-0 m-0">
+            <i class="bi bi-hearts"></i>Respetuosamente NO NIÑOS
+          </p>
+        </section>
+        <DressCode />
+        <PhotoGallerySection />
         <section className="pase bg-gold p-4">
           <p className="text-white text-center display-6">
             Este día es muy especial y que vayas ¡lo hace aún más!
           </p>
         </section>
-        <section className="bg-gray p-3">
+        {/* <section className="bg-gray p-3">
           <p className="text-center p-0 m-0">
             <i className="bi bi-hearts"></i>Respetuosamente NO NIÑOS
           </p>
-        </section>
+        </section> */}
         <section className="text-center p-4 lead overflow-hidden">
           <h3
             className="font-paris principal-name-guest "
@@ -397,15 +416,17 @@ const Intivacion = () => {
           </div>
           <div className="d-flex flex-column overflow-hidden">
             {reservationDone && reservationDeny === false ? (
-              <><div className="d-flex justify-content-center">
-                <button
-                  className="mb-3 btn-save"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                >
-                  Ver mis pases <i className="bi bi-ticket font-icon"></i>
-                </button></div>
+              <>
+                <div className="d-flex justify-content-center">
+                  <button
+                    className="mb-3 btn-save"
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
+                  >
+                    Ver mis pases <i className="bi bi-ticket font-icon"></i>
+                  </button>
+                </div>
               </>
             ) : reservationDone && reservationDeny ? (
               <div className="overflow-hidden">
@@ -418,17 +439,17 @@ const Intivacion = () => {
               </div>
             ) : text?.firstText != "" ? (
               <>
-              <div className="d-flex justify-content-center">
-                <button
-                  className="mb-3 btn-save "
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                >
-                  <p className="animate__animated animate__pulse animate__infinite mb-0">
-                    <i className="bi bi-check text-white"></i> Confirmar
-                  </p>
-                </button>
+                <div className="d-flex justify-content-center">
+                  <button
+                    className="mb-3 btn-save "
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
+                  >
+                    <p className="animate__animated animate__pulse animate__infinite mb-0">
+                      <i className="bi bi-check text-white"></i> Confirmar
+                    </p>
+                  </button>
                 </div>
                 <div className="d-flex justify-content-center">
                   <button
@@ -674,31 +695,34 @@ const Intivacion = () => {
                               </>
                             ))}
                             <div className="d-flex flex-column">
-                            <div className="d-flex justify-content-center w-100">
-
-                              <button
-                                disabled={disabledBtn}
-                                className={`${
-                                  disabledBtn ? "btn-save-disabled w-50" : "btn-save w-50"
-                                }`}
-                                type="submit"
-                              >
-                                Continuar
-                              </button></div>
+                              <div className="d-flex justify-content-center w-100">
+                                <button
+                                  disabled={disabledBtn}
+                                  className={`${
+                                    disabledBtn
+                                      ? "btn-save-disabled w-50"
+                                      : "btn-save w-50"
+                                  }`}
+                                  type="submit"
+                                >
+                                  Continuar
+                                </button>
+                              </div>
                             </div>
                           </form>
                           <div className="modal-footer justify-content-between">
                             <div className="d-flex justify-content-center w-100">
-                            <button
-                              onClick={() => {
-                                setOpenModal(false);
-                              }}
-                              type="button"
-                              className="btn-cerrar justify-content-center w-50"
-                              data-bs-dismiss="modal"
-                            >
-                              Confirmar más tarde
-                            </button></div>
+                              <button
+                                onClick={() => {
+                                  setOpenModal(false);
+                                }}
+                                type="button"
+                                className="btn-cerrar justify-content-center w-50"
+                                data-bs-dismiss="modal"
+                              >
+                                Confirmar más tarde
+                              </button>
+                            </div>
                           </div>
                         </>
                       ) : id && loading ? (
@@ -727,18 +751,18 @@ const Intivacion = () => {
                         reservationDeny && (
                           <>
                             <div className="modal-footer justify-content-center d-flex">
-                            <div className="d-flex justify-content-center">
-
-                              <button
-                                onClick={() => {
-                                  setOpenModal(false);
-                                }}
-                                type="button"
-                                className="btn-cerrar justify-content-center w-50"
-                                data-bs-dismiss="modal"
-                              >
-                                Cerrar
-                              </button></div>
+                              <div className="d-flex justify-content-center">
+                                <button
+                                  onClick={() => {
+                                    setOpenModal(false);
+                                  }}
+                                  type="button"
+                                  className="btn-cerrar justify-content-center w-50"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Cerrar
+                                </button>
+                              </div>
                             </div>
                           </>
                         )

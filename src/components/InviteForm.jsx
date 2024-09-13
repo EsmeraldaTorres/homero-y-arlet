@@ -68,9 +68,20 @@ const InviteForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData, "formData en el submit");
+    // setFormData({
+    //   ...formData,
+    //   qrUrl: `pases-boda-arturo-y-noemi/${
+    //     formData?.id
+    //   }/${formData?.principalName.replace("", "%20")}/${formData?.code}`,
+    // });
     try {
       const docRef = doc(db, "people", formData.id);
-      await setDoc(docRef, formData);
+      console.log(formData, "formData en el try");
+      await setDoc(docRef, {
+        ...formData,
+        qrUrl: `pases-boda-arturo-y-noemi/${formData?.id}/${formData?.principalName}/${formData?.code}`,
+      });
       setFormData({
         id: "",
         code: "",
@@ -112,14 +123,17 @@ const InviteForm = () => {
         placeholder="Principal Name"
         required
       />
-      <input
-        type="text"
-        name="qrUrl"
-        value={formData.qrUrl}
-        onChange={handleChange}
-        placeholder="url de QR"
-        required
-      />
+      {/* <div className="w-100">
+        <select
+          onChange={(e) => handleChange(e.target.value)}
+          name="etiqueta"
+          id="etiqueta"
+        >
+          <option value="novio">novio</option>
+          <option value="novia">novia</option>
+        </select>
+      </div> */}
+
       <h4>Acompanist</h4>
       {formData.acompanist.map((acomp, index) => (
         <div key={index}>
@@ -132,6 +146,7 @@ const InviteForm = () => {
             required
           />
           <input
+            className="d-none"
             type="checkbox"
             name="asist"
             checked={acomp.asist}

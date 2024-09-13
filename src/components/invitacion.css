@@ -39,7 +39,62 @@ a {
 .justify-content-space-evenly a {
   color: rgb(168, 143, 105);
 }
-
+.foto-1,
+.foto-2,
+.foto-3,
+.foto-4,
+.foto-5,
+.foto-6 {
+  height: 70vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+}
+.foto-1 {
+  background-image: linear-gradient(
+      rgba(5, 7, 12, 0.308),
+      rgba(5, 7, 12, 0.335)
+    ),
+    url("../assets/img/foto-1.jpg");
+}
+.foto-2 {
+  background-image: linear-gradient(
+      rgba(5, 7, 12, 0.308),
+      rgba(5, 7, 12, 0.335)
+    ),
+    url("../assets/img/foto-2.jpg");
+}
+.foto-3 {
+  background-image: linear-gradient(
+      rgba(5, 7, 12, 0.308),
+      rgba(5, 7, 12, 0.335)
+    ),
+    url("../assets/img/foto-3.jpg");
+}
+.foto-4 {
+  background-image: linear-gradient(
+      rgba(5, 7, 12, 0.308),
+      rgba(5, 7, 12, 0.335)
+    ),
+    url("../assets/img/foto-4.jpg");
+}
+.foto-5 {
+  background-image: linear-gradient(
+      rgba(5, 7, 12, 0.308),
+      rgba(5, 7, 12, 0.335)
+    ),
+    url("../assets/img/foto-5.jpg");
+}
+.foto-6 {
+  background-image: linear-gradient(
+      rgba(5, 7, 12, 0.308),
+      rgba(5, 7, 12, 0.335)
+    ),
+    url("../assets/img/foto-6.jpg");
+}
 .font-paris {
   font-family: "Parisienne", cursive;
 }
@@ -543,6 +598,21 @@ button:hover {
   background-repeat: no-repeat;
   background-position: center;
 }
+.window-back2{
+  position: relative;
+}
+.dinamic-galery {
+  height: 40vh;
+  width: 100%;
+  background-image: url("../assets/img/pexels-barbara-ribeiro-8506039.jpg");
+  background-size: cover;
+  -webkit-background-size: cover; /* Para Safari y Chrome (versiones antiguas) */
+  -moz-background-size: cover; /* Para Firefox (versiones antiguas) */
+  -o-background-size: cover; /* Para Opera (versiones antiguas) */
+  /* background-attachment: fixed; */
+  background-repeat: no-repeat;
+  background-position: center;
+}
 .window {
   height: 40vh;
   margin: 0;
@@ -706,6 +776,9 @@ a:hover {
 @media (min-width: 760px) {
   .title-principal {
     font-size: 5.5rem;
+  }
+  .dress-code-img {
+    width: 30%;
   }
   .btn-min-w {
     max-width: 200px;
