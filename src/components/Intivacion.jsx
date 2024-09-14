@@ -18,6 +18,7 @@ import jsPDF from "jspdf";
 
 // Libraries
 import {
+  doc,
   collection,
   query,
   where,
@@ -108,40 +109,6 @@ const Intivacion = () => {
     setGuest({ ...guest, acompanist: updatedAccompanist });
   };
 
-  // const handleSubmit = async (event, boolean) => {
-  //   event.preventDefault();
-  //   let invitados;
-
-  //   if (boolean) {
-  //     const denyAsistence = guest?.acompanist.map((person) => ({
-  //       ...person,
-  //       asist: false,
-  //     }));
-
-  //     invitados = { ...guest, acompanist: denyAsistence };
-  //   }
-
-  //   // Guardar los datos actualizados en Firestore
-  //   setLoading(true);
-  //   const guestDoc = doc(db, "people", id);
-  //   await updateDoc(guestDoc, boolean ? invitados : guest)
-  //     .then(() => {
-  //       if (boolean) {
-  //         setOpenModal(true);
-  //         setReservationDone(true);
-  //         setReservationDeny(true);
-  //         setLoading(false);
-  //       } else
-  //         setTimeout(() => {
-  //           setLoading(false);
-  //           setReservationDone(true);
-  //         }, 4000);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error actualizando los datos: ", error);
-  //     });
-  // };
-
   const handleSubmit = async (event, boolean) => {
     event.preventDefault();
     let invitados;
@@ -155,38 +122,73 @@ const Intivacion = () => {
       invitados = { ...guest, acompanist: denyAsistence };
     }
 
+    // Guardar los datos actualizados en Firestore
     setLoading(true);
-
-    try {
-      // Hacer una consulta para obtener el documento basado en el campo 'id'
-      const q = query(collection(db, "people"), where("id", "==", id));
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        // Si se encuentra el documento, actualízalo
-        querySnapshot.forEach(async (docSnapshot) => {
-          const guestDoc = docSnapshot.ref;
-          await updateDoc(guestDoc, boolean ? invitados : guest);
-        });
-
+    const guestDoc = doc(db, "people", id);
+    await updateDoc(guestDoc, boolean ? invitados : guest)
+      .then(() => {
         if (boolean) {
           setOpenModal(true);
           setReservationDone(true);
           setReservationDeny(true);
           setLoading(false);
-        } else {
+        } else
           setTimeout(() => {
             setLoading(false);
             setReservationDone(true);
           }, 4000);
-        }
-      } else {
-        console.error("No se encontró un documento con ese id");
-      }
-    } catch (error) {
-      console.error("Error actualizando los datos: ", error);
-    }
+      })
+      .catch((error) => {
+        console.error("Error actualizando los datos: ", error);
+      });
   };
+
+  // FUNCION NOMBRE DE DOCUMENTO DIFERENTE A ID
+  // const handleSubmit = async (event, boolean) => {
+  //   event.preventDefault();
+  //   let invitados;
+
+  //   if (boolean) {
+  //     const denyAsistence = guest?.acompanist.map((person) => ({
+  //       ...person,
+  //       asist: false,
+  //     }));
+
+  //     invitados = { ...guest, acompanist: denyAsistence };
+  //   }
+
+  //   setLoading(true);
+
+  //   try {
+  //     // Hacer una consulta para obtener el documento basado en el campo 'id'
+  //     const q = query(collection(db, "people"), where("id", "==", id));
+  //     const querySnapshot = await getDocs(q);
+
+  //     if (!querySnapshot.empty) {
+  //       // Si se encuentra el documento, actualízalo
+  //       querySnapshot.forEach(async (docSnapshot) => {
+  //         const guestDoc = docSnapshot.ref;
+  //         await updateDoc(guestDoc, boolean ? invitados : guest);
+  //       });
+
+  //       if (boolean) {
+  //         setOpenModal(true);
+  //         setReservationDone(true);
+  //         setReservationDeny(true);
+  //         setLoading(false);
+  //       } else {
+  //         setTimeout(() => {
+  //           setLoading(false);
+  //           setReservationDone(true);
+  //         }, 4000);
+  //       }
+  //     } else {
+  //       console.error("No se encontró un documento con ese id");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error actualizando los datos: ", error);
+  //   }
+  // };
 
   useEffect(() => {
     if (openModal) {

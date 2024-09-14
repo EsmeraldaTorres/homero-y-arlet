@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { db } from "../firebase";
-import { collection, getDocs, writeBatch, doc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  writeBatch,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import "jspdf-autotable";
@@ -74,6 +82,7 @@ const AllGuestPage = () => {
     setEtiqueta(value);
   };
 
+  // FUNCION PRIMERA
   const handleAssignTables = async () => {
     try {
       const batch = writeBatch(db);
