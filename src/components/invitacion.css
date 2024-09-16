@@ -263,6 +263,7 @@ a {
   height: max-content;
   max-height: 80vh;
   overflow-y: auto;
+  overflow: scroll;
   border-radius: 10px;
 }
 .overflow-hidden {
