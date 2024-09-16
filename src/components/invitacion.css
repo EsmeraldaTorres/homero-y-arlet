@@ -397,6 +397,8 @@ td {
   font-size: 1rem;
   cursor: pointer;
   z-index: 9;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 /*  window-bg*/
 .second-section {
