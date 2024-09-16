@@ -315,7 +315,7 @@ const Intivacion = () => {
   }, []);
 
   useEffect(() => {
-    const countDownDateAsistence = new Date("Sep 15, 2024 09:31").getTime();
+    const countDownDateAsistence = new Date("Dec 15, 2024 09:31").getTime();
 
     const countdownAsistence = () => {
       const now = new Date().getTime();
@@ -529,6 +529,9 @@ const Intivacion = () => {
                 <div>
                   <p data-aos="zoom-out" data-aos-duration="2000">
                     El tiempo de confirmación de asistencia ha pasado.
+                  </p>
+                  <p data-aos="zoom-out" data-aos-duration="2000">
+                    Tus pases han sido cancelados.
                   </p>
                 </div>
               )
