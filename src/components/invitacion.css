@@ -128,7 +128,9 @@ a {
 .bg-dark-black {
   background-color: #242321;
 }
-
+.overflow-hide {
+  overflow: hidden;
+}
 .animate__animated.animate__fadeOut {
   --animate-duration: 0.05s;
 }

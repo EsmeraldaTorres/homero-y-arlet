@@ -3,13 +3,13 @@ import sobreArriba from "../../assets/img/sobrearriba.png";
 import sobreAbajo from "../../assets/img/sobreabajo.png";
 import logo from "../../assets/img/logo.png";
 
-const Sobre = ({ abrir, openInvitation, hide }) => {
+const Sobre = ({ abrir, openInvitation, hide, openModal }) => {
   return (
     <>
       <div
         className={`bg-dark-black d-flex justify-content-center align-items-center  ${
           !openInvitation && "test-className"
-        }`}
+        } ${openModal && "overflow-hide"}`}
         id="parent-div"
       >
         <div id="hoja-principal" className={`sobre ${!hide && "hide"}`}>

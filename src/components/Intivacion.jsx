@@ -335,7 +335,12 @@ const Intivacion = () => {
   return (
     <div className={` w-100 ${!openInvitation && "avoiding-scroll"}`}>
       {/* Sobre */}
-      <Sobre abrir={abrir} openInvitation={openInvitation} hide={hide} />
+      <Sobre
+        abrir={abrir}
+        openInvitation={openInvitation}
+        hide={hide}
+        openModal={openModal}
+      />
       {/* <!-- Invitacion --> */}
       <div id="invitacion" className={`invitacion ${hide ? "hide" : ""}`}>
         <FirstPage isPlaying={isPlaying} togglePlayPause={togglePlayPause} />
