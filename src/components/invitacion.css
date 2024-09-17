@@ -261,6 +261,10 @@ a {
 .h-80 {
   height: 80vh;
 }
+.border-1{
+  border: none;
+  border-radius: 10px;
+}
 .modal-content {
   max-height: 90vh;
   overflow-y: scroll;

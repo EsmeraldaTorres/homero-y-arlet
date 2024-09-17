@@ -574,9 +574,9 @@ const AllGuestPage = () => {
           <div className="modal-dialog modal-dialog-cerrar ">
             <div className="modal-content">
               <div className="modal-header"></div>
-              <div className="modal-body text-center font-paris display-5">
+              <div className="modal-body text-center font-paris display-5 bg-white p-4 border-1">
                 ¡Datos actualizados!
-                <div className="modal-footer justify-content-between">
+                <div className="modal-footer justify-content-center">
                   <button
                     onClick={() => {
                       setOpenModal(false);
