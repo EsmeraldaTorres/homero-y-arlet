@@ -845,7 +845,7 @@ const Intivacion = () => {
                           </div>
                         </form>
                         <div className="modal-foote justify-content-between">
-                          <div className="d-flex justify-content-center w-100">
+                          <div className="d-flex justify-content-center w-100 mb-4">
                             <button
                               onClick={() => {
                                 setOpenModal(false);

@@ -262,6 +262,7 @@ a {
   height: 80vh;
 }
 .modal-content {
+  max-height: 90vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
