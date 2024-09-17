@@ -27,7 +27,7 @@ const LastPage = () => {
         </div>
         <div className="last-container">
           <p className="text-center m-0 p-0">
-            Hecha por Digital Invite
+            Invitación Hecha por Digital Invite
             <a
               target="_blank"
               href="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio"

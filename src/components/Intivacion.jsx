@@ -577,7 +577,7 @@ const Intivacion = () => {
                   >
                     <div className="d-flex flex-column justify-content-center align-items-center">
                       {reservationDeny === false ? (
-                        <p className="font-paris display-3 text-center padding-4-rem pt-4">
+                        <p className="font-paris display-3 text-center padding-4-rem pt-4 px-0">
                           ¡Gracias por darnos el sí!
                         </p>
                       ) : (
@@ -606,7 +606,7 @@ const Intivacion = () => {
                           <div className="">
                             <div className="justify-content-center mt-4">
                               <div className="text-center">
-                                <h2 className="font-paris font-gold mb-4 display-5">
+                                <h2 className="font-paris font-gold mb-4 ">
                                   Tickets {guest?.principalName}
                                 </h2>
                                 <h3 className="mb-4 ">
@@ -684,12 +684,12 @@ const Intivacion = () => {
                                   </button>
                                 </div>
                               )}
-                              <p className="mb-2 text-center">
+                              {/* <p className="mb-2 text-center">
                                 Si te gustó nuestra invitación, puedes compartir
                                 el siguiente enlace sin riesgo de que otros
                                 tomen tus pases:
-                              </p>
-                              <div className="d-flex justify-content-center align-items-center">
+                              </p> */}
+                              {/* <div className="d-flex justify-content-center align-items-center">
                                 <Link
                                   className="text-center"
                                   target="_blank"
@@ -697,17 +697,53 @@ const Intivacion = () => {
                                 >
                                   https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/{" "}
                                 </Link>
-                              </div>
+                              </div> */}
+
                               <p className="mt-4 text-center">
-                                Hecha por{" "}
+                                Invitación hecha por{" "}
                                 <Link
+                                  className="font-gold"
                                   target="_blank"
-                                  to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio"
+                                  to="https://digital-invite-by-esmeralda.vercel.app/"
                                 >
                                   Digital Invite by Esmeralda{" "}
-                                  <i className="bi bi-whatsapp"></i>
                                 </Link>
                               </p>
+                              <div className="w-100 d-flex flex-column justify-content-center align-items-center">
+                                Contacto
+                                <div className="d-flex justify-content-evenly w-80">
+                                  <Link
+                                    target="_blank"
+                                    to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio. Necesito una invitación para (especifica tu evento)"
+                                  >
+                                    <i className="bi bi-whatsapp display-5 font-gold mx-2"></i>
+                                  </Link>
+                                  <Link
+                                    target="_blank"
+                                    to="https://www.facebook.com/digitalInviteByEsmeralda"
+                                  >
+                                    <i className="bi bi-facebook display-5 font-gold mx-2"></i>
+                                  </Link>
+                                  <Link
+                                    target="_blank"
+                                    to="https://www.instagram.com/digital_invite_by_esmeralda/"
+                                  >
+                                    <i className="bi bi-instagram display-5 font-gold mx-2"></i>
+                                  </Link>
+                                  <Link
+                                    target="_blank"
+                                    to="estorresag2019@gmail.com?subject=Información sobre invitación página web&body=Hola Esmeralda, mi nombre es (escribe tu nombre) y mi evento es (boda, XV años, graduación, etc). Me interesa que me envíes información sobre tus paquetes y costos."
+                                  >
+                                    <i className="bi bi-envelope display-5 font-gold mx-2"></i>
+                                  </Link>
+                                  <Link
+                                    target="_blank"
+                                    to="tel:+524426147355"
+                                  >
+                                    <i className="bi bi-telephone-forward display-5 font-gold mx-2"></i>
+                                  </Link>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </>
@@ -835,7 +871,7 @@ const Intivacion = () => {
                               setOpenModal(false);
                             }}
                             type="button"
-                            className="btn-cerrar justify-content-center mb-4"
+                            className="btn-cerrar justify-content-center mb-4 w-50"
                             data-bs-dismiss="modal"
                           >
                             Cerrar
@@ -844,7 +880,7 @@ const Intivacion = () => {
                       </>
                     ) : (
                       id &&
-                      reservationDeny && ( 
+                      reservationDeny && (
                         <>
                           <div className="modal-foote align-items-center justify-content-center d-flex">
                             <div className="d-flex justify-content-center mb-4">
