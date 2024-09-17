@@ -206,6 +206,21 @@ const Intivacion = () => {
     };
   }, [openModal]);
 
+  // useEffect(() => {
+  //   if (  id && reservationDone && reservationDeny === false
+  //     ) {
+  //     document.body.classList.add("overflow-hidden");
+  //     // document.body.classList.add("postion-fixed");
+  //   } else {
+  //     document.body.classList.remove("overflow-hidden");
+  //     // document.body.classList.remove("postion-fixed");
+  //   }
+  //   return () => {
+  //     document.body.classList.remove("overflow-hidden");
+  //     // document.body.classList.remove("postion-fixed");
+  //   };
+  // }, [reservationDone, reservationDeny]);
+
   const qrRef = useRef(null);
 
   const handleDownloadPdf = async () => {
@@ -395,11 +410,6 @@ const Intivacion = () => {
             Este día es muy especial y que vayas ¡lo hace aún más!
           </p>
         </section>
-        {/* <section className="bg-gray p-3">
-          <p className="text-center p-0 m-0">
-            <i className="bi bi-hearts"></i>Respetuosamente NO NIÑOS
-          </p>
-        </section> */}
         <section className="text-center p-4 lead overflow-hidden">
           <h3
             className="font-paris principal-name-guest "
@@ -545,56 +555,316 @@ const Intivacion = () => {
             )}
           </div>
           {openModal && (
-            <>
+            <div className={``}>
               <Modal
                 show={openModal}
+                className="w-100 h-100 d-flex justify-content-center align-items-center"
                 onHide={() => setOpenModal(false)}
-                dialogClassName="modal-90w"
                 aria-labelledby="example-custom-modal-styling-title"
               >
-                <Modal.Header closeButton>
-                  <Modal.Title id="example-custom-modal-styling-title">
-                    Custom Modal Styling
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <p>
-                    Ipsum molestiae natus adipisci modi eligendi? Debitis amet
-                    quae unde commodi aspernatur enim, consectetur. Cumque
-                    deleniti temporibus ipsam atque a dolores quisquam quisquam
-                    adipisci possimus laboriosam. Quibusdam facilis doloribus
-                    debitis! Sit quasi quod accusamus eos quod. Ab quos
-                    consequuntur eaque quo rem! Mollitia reiciendis porro quo
-                    magni incidunt dolore amet atque facilis ipsum deleniti rem!
-                  </p>
-                  <p>
-                    Ipsum molestiae natus adipisci modi eligendi? Debitis amet
-                    quae unde commodi aspernatur enim, consectetur. Cumque
-                    deleniti temporibus ipsam atque a dolores quisquam quisquam
-                    adipisci possimus laboriosam. Quibusdam facilis doloribus
-                    debitis! Sit quasi quod accusamus eos quod. Ab quos
-                    consequuntur eaque quo rem! Mollitia reiciendis porro quo
-                    magni incidunt dolore amet atque facilis ipsum deleniti rem!
-                  </p>
-                  <p>
-                    Ipsum molestiae natus adipisci modi eligendi? Debitis amet
-                    quae unde commodi aspernatur enim, consectetur. Cumque
-                    deleniti temporibus ipsam atque a dolores quisquam quisquam
-                    adipisci possimus laboriosam. Quibusdam facilis doloribus
-                    debitis! Sit quasi quod accusamus eos quod. Ab quos
-                    consequuntur eaque quo rem! Mollitia reiciendis porro quo
-                    magni incidunt dolore amet atque facilis ipsum deleniti rem!
-                  </p>
-                  <p>
-                    Ipsum molestiae natus adipisci modi eligendi? Debitis amet
-                    quae unde commodi aspernatur enim, consectetur. Cumque
-                    deleniti temporibus ipsam atque a dolores quisquam quisquam
-                    adipisci possimus laboriosam. Quibusdam facilis doloribus
-                    debitis! Sit quasi quod accusamus eos quod. Ab quos
-                    consequuntur eaque quo rem! Mollitia reiciendis porro quo
-                    magni incidunt dolore amet atque facilis ipsum deleniti rem!
-                  </p>
-                </Modal.Body>
+                <div
+                  className={`modal-content ${
+                    id && reservationDone && reservationDeny === false && "h-80"
+                  }`}
+                >
+                  <Modal.Body
+                    className={`${
+                      id &&
+                      reservationDone &&
+                      reservationDeny === false &&
+                      "p-1 w-90v"
+                    }`}
+                  >
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+                      {reservationDeny === false ? (
+                        <p className="font-paris display-3 text-center padding-4-rem pt-4">
+                          ¡Gracias por darnos el sí!
+                        </p>
+                      ) : (
+                        <p className="font-paris display-3 text-center mt-4">
+                          ¡Te extrañaremos!
+                        </p>
+                      )}
+                      {id && loading && reservationDeny === false ? (
+                        <>
+                          <p>Tus pases se están generando</p>
+                        </>
+                      ) : id &&
+                        loading === false &&
+                        !reservationDone &&
+                        reservationDeny === false ? (
+                        <div className="padding-4-rem text-center">
+                          <p>
+                            Por favor, marca una respuesta por cada invitado y
+                            después presiona en el botón{" "}
+                            <span className="f-w-700">Continuar</span> para que
+                            puedas generar tu pase al evento .
+                          </p>
+                        </div>
+                      ) : id && reservationDone && reservationDeny === false ? (
+                        <>
+                          <div className="">
+                            <div className="justify-content-center mt-4">
+                              <div className="text-center">
+                                <h2 className="font-paris font-gold mb-4 display-5">
+                                  Tickets {guest?.principalName}
+                                </h2>
+                                <h3 className="mb-4 ">
+                                  Favor de no escanear con ningún dispositivo
+                                </h3>
+                                <div ref={printRef}>
+                                  <div
+                                    ref={qrRef}
+                                    className="d-flex justify-content-center mt-4 mb-4"
+                                  >
+                                    <QRCode
+                                      value={
+                                        "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
+                                        guest?.qrUrl
+                                      }
+                                    />
+                                  </div>
+                                  {guest?.acompanist?.map(
+                                    (acomp, index) =>
+                                      acomp?.asist === true && (
+                                        <div
+                                          key={index}
+                                          className="w-100 d-flex justify-content-center flex-column"
+                                        >
+                                          <p className="mb-1 display-6 ">
+                                            {acomp.name}
+                                          </p>
+                                        </div>
+                                      )
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="mb-4 mt-4">
+                              <h3 className="font-gold text-center">
+                                Muestra tu CÓDIGO QR{" "}
+                                <span className="font-weigth-bold">solo</span> a
+                                los recepcionistas del evento para entrar al
+                                salón.
+                              </h3>
+                              <p className="display-6 text-center my-4 p-0">
+                                No compartas ésta invitación con nadie más ni
+                                tus códigos QR.
+                              </p>
+                              <h1 className="text-center">Agendar Evento</h1>
+                              <div className="text-center d-flex flex-column">
+                                <AddToGoogleCalendar />
+                                <AddToMobileCalendar />
+                              </div>
+                              <div className="pb-4 d-flex justify-content-center align-items-center">
+                                <img
+                                  loading="lazy"
+                                  className="line"
+                                  src={decoration}
+                                  alt="linea"
+                                />
+                              </div>
+                              <p className="lead text-center ">
+                                Puedes descargar tus tickets o tomar una captura
+                                de pantalla el día del evento para tenerlos a la
+                                mano, también puedes acceder a ellos desde el
+                                botón "ver mis pases" dentro de ésta invitación.
+                              </p>
+                              <p className="lead text-center ">
+                                No escanees los códigos antes del evento, solo
+                                los recepcionistas del salón podrán hacerlo.
+                              </p>
+                              {guest && ticketsConfirmados?.length != 0 && (
+                                <div className="w-100 justify-content-center d-flex align-items-center mb-4">
+                                  <button
+                                    className="btn-descargar btn-agendar"
+                                    onClick={handleDownloadPdf}
+                                  >
+                                    Descargar Tickets{" "}
+                                  </button>
+                                </div>
+                              )}
+                              <p className="mb-2 text-center">
+                                Si te gustó nuestra invitación, puedes compartir
+                                el siguiente enlace sin riesgo de que otros
+                                tomen tus pases:
+                              </p>
+                              <div className="d-flex justify-content-center align-items-center">
+                                <Link
+                                  className="text-center"
+                                  target="_blank"
+                                  to="https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/"
+                                >
+                                  https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/{" "}
+                                </Link>
+                              </div>
+                              <p className="mt-4 text-center">
+                                Hecha por{" "}
+                                <Link
+                                  target="_blank"
+                                  to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio"
+                                >
+                                  Digital Invite by Esmeralda{" "}
+                                  <i className="bi bi-whatsapp"></i>
+                                </Link>
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        reservationDeny && (
+                          <div className="text-center">
+                            <h3 className="text-center">
+                              Lamentamos que no puedas acompañarnos en este
+                              momento
+                            </h3>
+                            <p></p>
+                            Entendemos si no te es posible asistir y te
+                            agradecemos tu honestidad. Esperamos celebrar
+                            contigo o con ustedes en otro momento.
+                            <p className="mt-3">Tus pases serán reasignados.</p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                    {id &&
+                    loading === false &&
+                    reservationDone === false &&
+                    reservationDeny === false ? (
+                      <>
+                        <form
+                          className="d-flex flex-column align-items-center"
+                          onSubmit={(event) => {
+                            handleSubmit(event, false);
+                          }}
+                        >
+                          {guest?.acompanist?.map((accomp, index) => (
+                            <>
+                              <p
+                                id={index}
+                                className="mb-0 font-paris display-5"
+                              >
+                                {accomp.name}
+                              </p>
+                              <div className="d-flex mb-4 justify-content-center">
+                                <div
+                                  key={index}
+                                  className="checkbox-wrapper-53"
+                                >
+                                  <label className="container">
+                                    <div className="d-flex">
+                                      <p className="mb-0">sí asistiré</p>
+                                      <input
+                                        id={index}
+                                        type="checkbox"
+                                        checked={accomp.asist}
+                                        onChange={() =>
+                                          handleCheckboxChange(index, true)
+                                        }
+                                      />
+                                      <div className="checkmark"></div>
+                                    </div>
+                                  </label>
+                                </div>
+                                <div
+                                  key={index}
+                                  className="checkbox-wrapper-53"
+                                >
+                                  <label className="container">
+                                    <div className="d-flex">
+                                      <p className="mb-0">no podré asistir</p>
+                                      <input
+                                        id={index}
+                                        type="checkbox"
+                                        checked={accomp.asist === false}
+                                        onChange={() =>
+                                          handleCheckboxChange(index, false)
+                                        }
+                                      />
+                                      <div className="checkmark"></div>
+                                    </div>
+                                  </label>
+                                </div>
+                              </div>
+                            </>
+                          ))}
+                          <div className="d-flex flex-column">
+                            <div className="d-flex justify-content-center w-100">
+                              <button
+                                disabled={disabledBtn}
+                                className={`${
+                                  disabledBtn
+                                    ? "btn-save-disabled "
+                                    : "btn-save w-100"
+                                }`}
+                                type="submit"
+                              >
+                                Continuar
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        <div className="modal-foote justify-content-between">
+                          <div className="d-flex justify-content-center w-100">
+                            <button
+                              onClick={() => {
+                                setOpenModal(false);
+                              }}
+                              type="button"
+                              className="btn-cerrar justify-content-center w-5"
+                              data-bs-dismiss="modal"
+                            >
+                              Confirmar más tarde
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    ) : id && loading ? (
+                      <div className="d-flex justify-content-center align-items-center">
+                        <div className="spinner-grow" role="status">
+                          <span className="sr-only"></span>
+                        </div>
+                      </div>
+                    ) : id &&
+                      reservationDone === true &&
+                      reservationDeny === false ? (
+                      <>
+                        <div className="modal-foote mb-4 d-flex flex-column align-items-center justify-content-between">
+                          <button
+                            onClick={() => {
+                              setOpenModal(false);
+                            }}
+                            type="button"
+                            className="btn-cerrar justify-content-center mb-4"
+                            data-bs-dismiss="modal"
+                          >
+                            Cerrar
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      id &&
+                      reservationDeny && ( 
+                        <>
+                          <div className="modal-foote align-items-center justify-content-center d-flex">
+                            <div className="d-flex justify-content-center mb-4">
+                              <button
+                                onClick={() => {
+                                  setOpenModal(false);
+                                }}
+                                type="button"
+                                className="btn-cerrar justify-content-center w-5 "
+                                data-bs-dismiss="modal"
+                              >
+                                Cerrar
+                              </button>
+                            </div>
+                          </div>
+                        </>
+                      )
+                    )}
+                  </Modal.Body>
+                </div>
               </Modal>
               {/* <div className="modal-pases" tabindex="-1">
                 <div className="modal-dialog">
@@ -891,7 +1161,7 @@ const Intivacion = () => {
                 </div>
               </div>
             */}
-            </>
+            </div>
           )}
         </section>
         <LastPage reservationDeny={reservationDeny} />
