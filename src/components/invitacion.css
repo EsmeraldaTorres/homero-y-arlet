@@ -3,6 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 select {
   outline: none; /* Quita el borde del select en estado normal */
 }

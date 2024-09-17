@@ -89,8 +89,11 @@ const Intivacion = () => {
 
   const togglePlayPause = () => {
     if (isPlaying) {
+      console.log("Entro a este");
       audioRef.current.audioEl.current.pause();
     } else {
+      console.log("Entro a este otro");
+
       audioRef.current.audioEl.current.play();
     }
     setIsPlaying(!isPlaying);
@@ -360,7 +363,11 @@ const Intivacion = () => {
       />
       {/* <!-- Invitacion --> */}
       <div id="invitacion" className={`invitacion ${hide ? "hide" : ""}`}>
-        <FirstPage isPlaying={isPlaying} togglePlayPause={togglePlayPause} />
+        <FirstPage
+          isPlaying={isPlaying}
+          togglePlayPause={togglePlayPause}
+          audioRef={audioRef}
+        />
         <SecondPage timeLeft={timeLeft} />
         <section className="pase">
           <p className="m-0 display-6">El inicio de la familia Juárez Macías</p>
@@ -385,22 +392,22 @@ const Intivacion = () => {
         <Location />
         <PhotoSection />
         <GiftSection />
-        <section class="bg-gray p-3">
-          <p class="text-center p-0 m-0">
-            <i class="bi bi-hearts"></i>¡Gracias por tus muestras de cariño!
+        <section className="bg-gray p-3">
+          <p className="text-center p-0 m-0">
+            <i className="bi bi-hearts"></i>¡Gracias por tus muestras de cariño!
           </p>
         </section>
         <HotelSection />
 
-        <section class="pase bg-gold p-4">
-          <p class="text-white text-center display-6">
+        <section className="pase bg-gold p-4">
+          <p className="text-white text-center display-6">
             Este día será muy especial y que asistas ¡lo hará aún más!
           </p>
         </section>
         <DinamicGallerySection />
-        <section class="bg-gray p-3">
-          <p class="text-center p-0 m-0">
-            <i class="bi bi-hearts"></i>Respetuosamente NO NIÑOS
+        <section className="bg-gray p-3">
+          <p className="text-center p-0 m-0">
+            <i className="bi bi-hearts"></i>Respetuosamente NO NIÑOS
           </p>
         </section>
         <DressCode />
@@ -677,7 +684,7 @@ const Intivacion = () => {
                               {guest && ticketsConfirmados?.length != 0 && (
                                 <div className="w-100 justify-content-center d-flex align-items-center mb-4">
                                   <button
-                                    className="btn-descargar btn-agendar"
+                                    className="btn-descargar btn-agendar text-dark"
                                     onClick={handleDownloadPdf}
                                   >
                                     Descargar Tickets{" "}
@@ -736,10 +743,7 @@ const Intivacion = () => {
                                   >
                                     <i className="bi bi-envelope display-5 font-gold mx-2"></i>
                                   </Link>
-                                  <Link
-                                    target="_blank"
-                                    to="tel:+524426147355"
-                                  >
+                                  <Link target="_blank" to="tel:+524426147355">
                                     <i className="bi bi-telephone-forward display-5 font-gold mx-2"></i>
                                   </Link>
                                 </div>

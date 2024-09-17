@@ -19,7 +19,7 @@ const AddToGoogleCalendar = () => {
   };
 
   return (
-    <button className="btn-agendar" onClick={handleAddToCalendar}>
+    <button className="btn-agendar text-dark" onClick={handleAddToCalendar}>
       Agregar a Google Calendar
     </button>
   );

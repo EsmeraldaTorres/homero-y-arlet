@@ -23,8 +23,11 @@ const AddToMobileCalendar = () => {
   };
 
   return (
-    <button className="btn-agendar" onClick={handleAddToMobileCalendar}>
-      Agregar a Calendario del Móvil
+    <button
+      className="btn-agendar text-dark"
+      onClick={handleAddToMobileCalendar}
+    >
+      Agregar a Calendario del celular
     </button>
   );
 };
