@@ -37,15 +37,12 @@ const AllGuestPage = () => {
         const data = JSON.parse(JSON.stringify(doc.data(), null, 2));
         people.push(data);
       });
-      console.log(people, "people");
       setGuests(people);
       const groups = people?.map((gruop) => gruop?.acompanist);
-      console.log(groups, "groups");
       let allPeople = [];
       const sacar = groups?.forEach((gruop) => {
         gruop?.map((person) => allPeople.push(person));
       });
-      console.log(allPeople, "allPeople");
       allPeople.sort((a, b) => {
         if (a.principalName < b.principalName) {
           return -1;
@@ -59,11 +56,6 @@ const AllGuestPage = () => {
       let confirmados = allPeople?.filter((person) => person?.asist === true);
       let noConfirm = allPeople?.filter((person) => person?.asist === null);
       let noAsist = allPeople?.filter((person) => person?.asist === false);
-
-      let confirmadosNovia = confirmados?.filter(
-        (person) => person?.etiqueta === "novia"
-      );
-      console.log(confirmadosNovia.length, "confirmadosNovia");
 
       setArrayPeople(allPeople);
       setConfirmedPeople(confirmados);
@@ -82,63 +74,119 @@ const AllGuestPage = () => {
     setEtiqueta(value);
   };
 
-  // FUNCION PRIMERA
+  // const handleAssignTables = async () => {
+  //   try {
+  //     const batch = writeBatch(db);
+
+  //     // Recorrer la lista de invitados confirmados (confirmedPeople)
+  //     confirmedPeople.forEach((simpleObj) => {
+  //       console.log(`Procesando: ${simpleObj.name}, Table: ${simpleObj.table}`);
+
+  //       // Recorrer los invitados (guests) para buscar el invitado correcto
+  //       guests.forEach((nestedObj) => {
+  //         if (Array.isArray(nestedObj.acompanist)) {
+  //           // Buscar al invitado o acompañante que coincide con el nombre en confirmedPeople
+  //           let found = false;
+  //           nestedObj.acompanist = nestedObj.acompanist.map((acompanistObj) => {
+  //             if (acompanistObj.name === simpleObj.name) {
+  //               console.log(`Coincidencia encontrada: ${acompanistObj.name}`);
+  //               found = true;
+  //               return {
+  //                 ...acompanistObj,
+  //                 asist:
+  //                   simpleObj.asist !== undefined
+  //                     ? simpleObj.asist
+  //                     : acompanistObj.asist,
+  //                 table:
+  //                   simpleObj.table !== undefined
+  //                     ? simpleObj.table
+  //                     : acompanistObj.table || null,
+  //               };
+  //             }
+  //             return acompanistObj;
+  //           });
+
+  //           // Si se encontró una coincidencia y hay cambios, actualizar el documento
+  //           if (found && nestedObj.id) {
+  //             const guestRef = doc(db, "people", nestedObj.id);
+  //             console.log(
+  //               `Actualizando documento ${nestedObj.id} en Firestore`
+  //             );
+
+  //             batch.update(guestRef, { acompanist: nestedObj.acompanist });
+  //           }
+  //         } else {
+  //           console.error(
+  //             `nestedObj.acompanist no es un arreglo o es undefined. Invitado: ${nestedObj.name}`
+  //           );
+  //         }
+  //       });
+  //     });
+
+  //     // Commit de los cambios
+  //     await batch.commit();
+  //     console.log("Documentos actualizados correctamente en Firestore.");
+  //     setOpenModal(true);
+  //   } catch (error) {
+  //     console.error("Error actualizando documentos: ", error);
+  //   }
+  // };
   const handleAssignTables = async () => {
     try {
       const batch = writeBatch(db);
 
-      console.log(confirmedPeople, "confirmedPeople");
-      console.log(guests, "guests");
-
+      // Recorrer la lista de invitados confirmados (confirmedPeople)
       confirmedPeople.forEach((simpleObj) => {
+        console.log(`Procesando: ${simpleObj.name}, Table: ${simpleObj.table}`);
+
+        // Recorrer los invitados (guests) para buscar el invitado correcto
         guests.forEach((nestedObj) => {
-          console.log(nestedObj, "nestedObj");
-
-          // Verifica si nestedObj.acompanist existe y es un arreglo
           if (Array.isArray(nestedObj.acompanist)) {
+            // Buscar al invitado o acompañante que coincide con el nombre en confirmedPeople
+            let found = false;
             nestedObj.acompanist = nestedObj.acompanist.map((acompanistObj) => {
-              console.log(acompanistObj, "acompanistObj");
+              console.log(acompanistObj, "acompanistObjet que viene de Guest");
+              console.log(simpleObj, "acompanistObjet que viene de Confirmed");
 
-              if (acompanistObj.name === simpleObj.name) {
-                console.log("Match found for:", acompanistObj.name);
+              if (
+                acompanistObj.name === simpleObj.name &&
+                acompanistObj.principalName === simpleObj.principalName
+              ) {
+                console.log(`Coincidencia encontrada: ${acompanistObj.name}`);
+                found = true;
                 return {
                   ...acompanistObj,
-                  asist: simpleObj.asist !== undefined ? simpleObj.asist : null,
-                  table: simpleObj.table !== undefined ? simpleObj.table : null,
+                  asist:
+                    simpleObj.asist !== undefined
+                      ? simpleObj.asist
+                      : acompanistObj.asist,
+                  table:
+                    simpleObj.table !== undefined
+                      ? simpleObj.table
+                      : acompanistObj.table || null,
                 };
-              } else {
-                return acompanistObj;
               }
+              return acompanistObj;
             });
 
-            // Filtra cualquier campo undefined en nestedObj
-            const updatedAcompanist = nestedObj.acompanist.map((obj) => {
-              return Object.fromEntries(
-                Object.entries(obj).filter(
-                  ([key, value]) => value !== undefined
-                )
-              );
-            });
-
-            // Prepara la actualización en el batch
-            if (nestedObj.id) {
-              console.log(nestedObj.id, "nestedObj.id");
+            // Si se encontró una coincidencia y hay cambios, actualizar el documento
+            if (found && nestedObj.id) {
               const guestRef = doc(db, "people", nestedObj.id);
-              console.log(guestRef, "guestRef");
-              batch.update(guestRef, { acompanist: updatedAcompanist });
-            } else {
-              console.error("nestedObj.id is undefined");
+              console.log(
+                `Actualizando documento ${nestedObj.id} en Firestore`
+              );
+
+              batch.update(guestRef, { acompanist: nestedObj.acompanist });
             }
           } else {
             console.error(
-              `nestedObj.acompanist is not an array or is undefined. Object: ${JSON.stringify(
-                nestedObj
-              )}`
+              `nestedObj.acompanist no es un arreglo o es undefined. Invitado: ${nestedObj.name}`
             );
           }
         });
       });
 
+      // Commit de los cambios
       await batch.commit();
       console.log("Documentos actualizados correctamente en Firestore.");
       setOpenModal(true);
@@ -148,11 +196,9 @@ const AllGuestPage = () => {
   };
 
   const handleTableChange = (index, table) => {
-    console.log(index);
     const updatedAccompanist = [...confirmedPeople];
-    console.log(updatedAccompanist, "updatedAccompanist");
     updatedAccompanist[index].table = table;
-    console.log(updatedAccompanist, "updatedAccompanist");
+    console.log(updatedAccompanist, "updateAcompanist");
     setConfirmedPeople(updatedAccompanist);
   };
 
@@ -215,13 +261,13 @@ const AllGuestPage = () => {
                     .length}
             </h3>
             <p className="display-4 font-paris text-center">
-              {etiqueta != "Todos" && etiqueta}
+              {etiqueta != "Todos" && `de ${etiqueta}`}
             </p>
           </>
         ) : menu === "no asistira" ? (
           <>
             <h3 className=" display-4 font-gold font-paris text-center">
-              Invitados que {menu}n{" "}
+              Invitados que {menu}{" "}
               {etiqueta === "Todos"
                 ? noAsistiran.length
                 : etiqueta === "novia"
@@ -397,6 +443,7 @@ const AllGuestPage = () => {
               <table id="pdf-table" className="mt-4">
                 <thead>
                   <tr>
+                    <th>id</th>
                     <th>Familia</th>
                     <th>Invitado</th>
                     {addTable && <th>Mesa</th>}
@@ -411,6 +458,7 @@ const AllGuestPage = () => {
                         confirmedPeople?.map((person, key) => (
                           <>
                             <tr key={key}>
+                              <td>{key + 1}</td>
                               <td>{person.principalName}</td>
                               <td>{person.name}</td>
                               {addTable && (

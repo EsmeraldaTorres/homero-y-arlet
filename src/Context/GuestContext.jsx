@@ -26,9 +26,6 @@ export const GuestProvider = ({ children }) => {
       if (notConfirmation && notConfirmation.length != 0) {
         setReservationDone(false);
       } else setReservationDone(true);
-      console.log(person[0], "person");
-      console.log(Number(uniquecode), "uniquecode");
-      console.log(code, "code");
 
       if (uniquecode === code) {
         setGuest(person[0]);

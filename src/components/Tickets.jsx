@@ -73,15 +73,12 @@ const Tickets = () => {
   };
 
   useEffect(() => {
-    console.log(id, "id");
     if (id) {
       fetchDataByGuest(id, code);
     }
-    console.log(guest, "guest desde Tickets");
   }, [id]);
 
   useEffect(() => {
-    console.log(guest, "guest desde Tickets");
 
     if (guest) {
       const filteredAcompanist = guest?.acompanist.filter(

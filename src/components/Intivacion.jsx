@@ -89,11 +89,8 @@ const Intivacion = () => {
 
   const togglePlayPause = () => {
     if (isPlaying) {
-      console.log("Entro a este");
       audioRef.current.audioEl.current.pause();
     } else {
-      console.log("Entro a este otro");
-
       audioRef.current.audioEl.current.play();
     }
     setIsPlaying(!isPlaying);
@@ -265,7 +262,6 @@ const Intivacion = () => {
     };
   };
   useEffect(() => {
-    console.log(guest, "gurst ");
     const filterGuestNull = guest?.acompanist?.filter((g) => g.asist === null);
     const filterGuestFalse = guest?.acompanist?.filter(
       (g) => g.asist === false
@@ -300,8 +296,6 @@ const Intivacion = () => {
 
   useEffect(() => {
     AOS.init();
-    console.log(id, "id");
-    console.log(code, "code");
 
     if (id) {
       fetchDataByGuest(id, code);

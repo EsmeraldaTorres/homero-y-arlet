@@ -68,16 +68,8 @@ const InviteForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData, "formData en el submit");
-    // setFormData({
-    //   ...formData,
-    //   qrUrl: `pases-boda-arturo-y-noemi/${
-    //     formData?.id
-    //   }/${formData?.principalName.replace("", "%20")}/${formData?.code}`,
-    // });
     try {
       const docRef = doc(db, "people", formData.id);
-      console.log(formData, "formData en el try");
       await setDoc(docRef, {
         ...formData,
         qrUrl: `pases-boda-arturo-y-noemi/${formData?.id}/${formData?.principalName}/${formData?.code}`,
