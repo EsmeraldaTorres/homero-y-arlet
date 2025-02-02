@@ -66,6 +66,10 @@ const Intivacion = () => {
   const [loading, setLoading] = useState(false);
   const [reservationDeny, setReservationDeny] = useState(false);
   const [ticketsConfirmados, setTicketsConfirmados] = useState();
+  const [confirmAsistence, setConfirmAsistence] = useState(false);
+  const [cancelAsistence, setCancelAsistence] = useState(false);
+  const [continuar, setContinuar] = useState(false);
+
   const printRef = useRef();
 
   const [timeLeft, setTimeLeft] = useState({
@@ -78,7 +82,7 @@ const Intivacion = () => {
 
   const [text, setText] = useState({
     firstText:
-      " Por favor confirma tu asistencia al evento antes del 15 de Junio, después de esta fecha la confirmación no podrá realizarse.",
+      " Por favor confirma tu asistencia al evento antes del 15 de Octubre, después de esta fecha la confirmación no podrá realizarse.",
     secondText:
       "En caso de que no puedan asistir, por favor, también háznoslo saber.",
     thirdText:
@@ -111,86 +115,18 @@ const Intivacion = () => {
     setGuest({ ...guest, acompanist: updatedAccompanist });
   };
 
-  const handleSubmit = async (event, boolean) => {
-    event.preventDefault();
-    let invitados;
-
-    if (boolean) {
-      const denyAsistence = guest?.acompanist.map((person) => ({
-        ...person,
-        asist: false,
-      }));
-
-      invitados = { ...guest, acompanist: denyAsistence };
-    }
-
-    // Guardar los datos actualizados en Firestore
+  const handleContinuar = (e) => {
+    e.preventDefault();
+    console.log("hola");
     setLoading(true);
-    const guestDoc = doc(db, "people", id);
-    await updateDoc(guestDoc, boolean ? invitados : guest)
-      .then(() => {
-        if (boolean) {
-          setOpenModal(true);
-          setReservationDone(true);
-          setReservationDeny(true);
-          setLoading(false);
-        } else
-          setTimeout(() => {
-            setLoading(false);
-            setReservationDone(true);
-          }, 4000);
-      })
-      .catch((error) => {
-        console.error("Error actualizando los datos: ", error);
-      });
+    setContinuar(true);
+    setConfirmAsistence(false);
+    setTimeout(() => {
+      setLoading(false);
+      setContinuar(false);
+      setReservationDone(true);
+    }, 4000);
   };
-
-  // FUNCION NOMBRE DE DOCUMENTO DIFERENTE A ID
-  // const handleSubmit = async (event, boolean) => {
-  //   event.preventDefault();
-  //   let invitados;
-
-  //   if (boolean) {
-  //     const denyAsistence = guest?.acompanist.map((person) => ({
-  //       ...person,
-  //       asist: false,
-  //     }));
-
-  //     invitados = { ...guest, acompanist: denyAsistence };
-  //   }
-
-  //   setLoading(true);
-
-  //   try {
-  //     // Hacer una consulta para obtener el documento basado en el campo 'id'
-  //     const q = query(collection(db, "people"), where("id", "==", id));
-  //     const querySnapshot = await getDocs(q);
-
-  //     if (!querySnapshot.empty) {
-  //       // Si se encuentra el documento, actualízalo
-  //       querySnapshot.forEach(async (docSnapshot) => {
-  //         const guestDoc = docSnapshot.ref;
-  //         await updateDoc(guestDoc, boolean ? invitados : guest);
-  //       });
-
-  //       if (boolean) {
-  //         setOpenModal(true);
-  //         setReservationDone(true);
-  //         setReservationDeny(true);
-  //         setLoading(false);
-  //       } else {
-  //         setTimeout(() => {
-  //           setLoading(false);
-  //           setReservationDone(true);
-  //         }, 4000);
-  //       }
-  //     } else {
-  //       console.error("No se encontró un documento con ese id");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error actualizando los datos: ", error);
-  //   }
-  // };
 
   useEffect(() => {
     if (openModal) {
@@ -205,21 +141,6 @@ const Intivacion = () => {
       // document.body.classList.remove("postion-fixed");
     };
   }, [openModal]);
-
-  // useEffect(() => {
-  //   if (  id && reservationDone && reservationDeny === false
-  //     ) {
-  //     document.body.classList.add("overflow-hidden");
-  //     // document.body.classList.add("postion-fixed");
-  //   } else {
-  //     document.body.classList.remove("overflow-hidden");
-  //     // document.body.classList.remove("postion-fixed");
-  //   }
-  //   return () => {
-  //     document.body.classList.remove("overflow-hidden");
-  //     // document.body.classList.remove("postion-fixed");
-  //   };
-  // }, [reservationDone, reservationDeny]);
 
   const qrRef = useRef(null);
 
@@ -262,6 +183,7 @@ const Intivacion = () => {
     };
   };
   useEffect(() => {
+    console.log(guest, "guest");
     const filterGuestNull = guest?.acompanist?.filter((g) => g.asist === null);
     const filterGuestFalse = guest?.acompanist?.filter(
       (g) => g.asist === false
@@ -300,7 +222,7 @@ const Intivacion = () => {
     if (id) {
       fetchDataByGuest(id, code);
     }
-    const countDownDate = new Date("Dec 26, 2024 09:30").getTime();
+    const countDownDate = new Date("Dec 26, 2025 09:30").getTime();
     const updateCountdown = () => {
       const now = new Date().getTime();
       const distance = countDownDate - now;
@@ -329,7 +251,7 @@ const Intivacion = () => {
   }, []);
 
   useEffect(() => {
-    const countDownDateAsistence = new Date("Dec 15, 2024 09:31").getTime();
+    const countDownDateAsistence = new Date("Dec 15, 2025 09:31").getTime();
 
     const countdownAsistence = () => {
       const now = new Date().getTime();
@@ -417,17 +339,11 @@ const Intivacion = () => {
             data-aos="zoom-out"
             data-aos-duration="2000"
           >
-            {guest?.principalName}
+            Familia Silván
           </h3>
-          {guest?.acompanist?.length === 1 ? (
-            <p>Hemos reservado {guest?.acompanist?.length} lugar para ti</p>
-          ) : (
-            <>
-              <p>
-                Hemos reservado {guest?.acompanist?.length} lugares para ustedes
-              </p>
-            </>
-          )}
+
+          <p>Hemos reservado 3 lugares para ustedes</p>
+
           <div className={`${text.firstText === "" && "mb-4"}`}>
             {guest?.acompanist?.map((person, key) => (
               <p
@@ -492,7 +408,7 @@ const Intivacion = () => {
             </div>
           </div>
           <div className="d-flex flex-column overflow-hidden">
-            {reservationDone && reservationDeny === false ? (
+            {reservationDone ? (
               <>
                 <div className="d-flex justify-content-center">
                   <button
@@ -505,7 +421,7 @@ const Intivacion = () => {
                   </button>
                 </div>
               </>
-            ) : reservationDone && reservationDeny ? (
+            ) : reservationDeny ? (
               <div className="overflow-hidden">
                 <p data-aos="fade-right" data-aos-duration="2000">
                   Haz confirmado que no podrás acompañarnos
@@ -521,6 +437,7 @@ const Intivacion = () => {
                     className="mb-3 btn-save "
                     onClick={() => {
                       setOpenModal(true);
+                      setConfirmAsistence(true);
                     }}
                   >
                     <p className="animate__animated animate__pulse animate__infinite mb-0">
@@ -531,7 +448,8 @@ const Intivacion = () => {
                 <div className="d-flex justify-content-center">
                   <button
                     onClick={(event) => {
-                      handleSubmit(event, true);
+                      setOpenModal(true);
+                      setCancelAsistence(true);
                     }}
                     className="text-white btn-no-asistir"
                   >
@@ -540,6 +458,20 @@ const Intivacion = () => {
                       ? "No podré asistir"
                       : "No podremos asistir "}
                   </button>
+                </div>
+                <div className="display-6 mt-4">
+                  <p>
+                    Querida bride, esta es una invitación muestra genérica del
+                    sistema de confirmación de asistencia.
+                  </p>
+                  <p>
+                    Tenemos más funcionalidades PRECISAS que puedes ver en
+                    nuestra página web o puedes solicitarla directamente con
+                    Esmeralda
+                  </p>
+                  <p>
+                    Te atenderemos con gusto
+                  </p>
                 </div>
               </>
             ) : (
@@ -570,30 +502,28 @@ const Intivacion = () => {
                 >
                   <Modal.Body
                     className={`${
-                      id &&
                       reservationDone &&
                       reservationDeny === false &&
                       "p-1 w-90v"
                     }`}
                   >
                     <div className="d-flex flex-column justify-content-center align-items-center">
-                      {reservationDeny === false ? (
+                      {confirmAsistence ? (
                         <p className="font-paris display-3 text-center padding-4-rem pt-4 px-0">
                           ¡Gracias por darnos el sí!
                         </p>
                       ) : (
-                        <p className="font-paris display-3 text-center mt-4">
-                          ¡Te extrañaremos!
-                        </p>
+                        cancelAsistence && (
+                          <p className="font-paris display-3 text-center mt-4">
+                            ¡Te extrañaremos!
+                          </p>
+                        )
                       )}
-                      {id && loading && reservationDeny === false ? (
+                      {continuar ? (
                         <>
                           <p>Tus pases se están generando</p>
                         </>
-                      ) : id &&
-                        loading === false &&
-                        !reservationDone &&
-                        reservationDeny === false ? (
+                      ) : confirmAsistence ? (
                         <div className="padding-4-rem text-center">
                           <p>
                             Por favor, marca una respuesta por cada invitado y
@@ -602,52 +532,49 @@ const Intivacion = () => {
                             puedas generar tu pase al evento .
                           </p>
                         </div>
-                      ) : id && reservationDone && reservationDeny === false ? (
-                        <>
-                          <div className="">
-                            <div className="justify-content-center mt-4">
-                              <div className="text-center">
-                                <h2 className="font-paris font-gold mb-4 ">
-                                  Tickets {guest?.principalName}
-                                </h2>
-                                <h3 className="mb-4 ">
-                                  Favor de no escanear con ningún dispositivo
-                                </h3>
-                                <div ref={printRef}>
-                                  <div
-                                    ref={qrRef}
-                                    className="d-flex justify-content-center mt-4 mb-4"
-                                  >
-                                    <QRCode
-                                      value={
-                                        "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
-                                        guest?.qrUrl
-                                      }
-                                    />
-                                  </div>
-                                  {guest?.acompanist?.map(
-                                    (acomp, index) =>
-                                      acomp?.asist === true && (
-                                        <div
-                                          key={index}
-                                          className="w-100 d-flex justify-content-center flex-column"
-                                        >
-                                          <p className="mb-1 display-6 ">
-                                            {acomp.name}
-                                          </p>
-                                        </div>
-                                      )
-                                  )}
+                      ) : reservationDone ? (
+                        <div>
+                          <div className="justify-content-center mt-4">
+                            <div className="text-center">
+                              <h2 className="font-paris font-gold mb-4 ">
+                                Tickets {guest?.principalName}
+                              </h2>
+                              <h3 className="mb-4 ">
+                                Favor de no escanear con ningún dispositivo
+                              </h3>
+                              <div ref={printRef}>
+                                <div
+                                  ref={qrRef}
+                                  className="d-flex justify-content-center mt-4 mb-4"
+                                >
+                                  <QRCode
+                                    value={
+                                      "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
+                                      guest?.qrUrl
+                                    }
+                                  />
                                 </div>
+                                {guest?.acompanist?.map((acomp, index) => (
+                                  <div
+                                    key={index}
+                                    className="w-100 d-flex justify-content-center flex-column"
+                                  >
+                                    <p className="mb-1 display-6 ">
+                                      {acomp.name}
+                                    </p>
+                                  </div>
+                                ))}
                               </div>
                             </div>
-                            <div className="mb-4 mt-4">
+                          </div>
+                          {/* <div className="mb-4 mt-4">
                               <h3 className="font-gold text-center">
                                 Muestra tu CÓDIGO QR{" "}
                                 <span className="font-weigth-bold">solo</span> a
                                 los recepcionistas del evento para entrar al
                                 salón.
                               </h3>
+                              
                               <p className="display-6 text-center my-4 p-0">
                                 No compartas ésta invitación con nadie más ni
                                 tus códigos QR.
@@ -685,20 +612,6 @@ const Intivacion = () => {
                                   </button>
                                 </div>
                               )}
-                              {/* <p className="mb-2 text-center">
-                                Si te gustó nuestra invitación, puedes compartir
-                                el siguiente enlace sin riesgo de que otros
-                                tomen tus pases:
-                              </p> */}
-                              {/* <div className="d-flex justify-content-center align-items-center">
-                                <Link
-                                  className="text-center"
-                                  target="_blank"
-                                  to="https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/"
-                                >
-                                  https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/{" "}
-                                </Link>
-                              </div> */}
 
                               <p className="mt-4 text-center">
                                 Invitación hecha por{" "}
@@ -743,10 +656,10 @@ const Intivacion = () => {
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </>
+                           */}
+                        </div>
                       ) : (
-                        reservationDeny && (
+                        cancelAsistence && (
                           <div className="text-center">
                             <h3 className="text-center">
                               Lamentamos que no puedas acompañarnos en este
@@ -761,17 +674,9 @@ const Intivacion = () => {
                         )
                       )}
                     </div>
-                    {id &&
-                    loading === false &&
-                    reservationDone === false &&
-                    reservationDeny === false ? (
+                    {confirmAsistence ? (
                       <>
-                        <form
-                          className="d-flex flex-column align-items-center"
-                          onSubmit={(event) => {
-                            handleSubmit(event, false);
-                          }}
-                        >
+                        <form className="d-flex flex-column align-items-center">
                           {guest?.acompanist?.map((accomp, index) => (
                             <>
                               <p
@@ -825,6 +730,9 @@ const Intivacion = () => {
                           <div className="d-flex flex-column">
                             <div className="d-flex justify-content-center w-100">
                               <button
+                                onClick={(e) => {
+                                  handleContinuar(e);
+                                }}
                                 disabled={disabledBtn}
                                 className={`${
                                   disabledBtn
@@ -853,15 +761,13 @@ const Intivacion = () => {
                           </div>
                         </div>
                       </>
-                    ) : id && loading ? (
+                    ) : loading ? (
                       <div className="d-flex justify-content-center align-items-center">
                         <div className="spinner-grow" role="status">
                           <span className="sr-only"></span>
                         </div>
                       </div>
-                    ) : id &&
-                      reservationDone === true &&
-                      reservationDeny === false ? (
+                    ) : (
                       <>
                         <div className="modal-foote mb-4 d-flex flex-column align-items-center justify-content-between">
                           <button
@@ -876,325 +782,10 @@ const Intivacion = () => {
                           </button>
                         </div>
                       </>
-                    ) : (
-                      id &&
-                      reservationDeny && (
-                        <>
-                          <div className="modal-foote align-items-center justify-content-center d-flex">
-                            <div className="d-flex justify-content-center mb-4">
-                              <button
-                                onClick={() => {
-                                  setOpenModal(false);
-                                }}
-                                type="button"
-                                className="btn-cerrar justify-content-center w-5 "
-                                data-bs-dismiss="modal"
-                              >
-                                Cerrar
-                              </button>
-                            </div>
-                          </div>
-                        </>
-                      )
                     )}
                   </Modal.Body>
                 </div>
               </Modal>
-              {/* <div className="modal-pases" tabindex="-1">
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header"></div>
-                    <div className="modal-body">
-                      <div>
-                        {reservationDeny === false ? (
-                          <p className="font-paris display-3">
-                            ¡Gracias por darnos el sí!
-                          </p>
-                        ) : (
-                          <p className="font-paris display-3">
-                            ¡Te extrañaremos!
-                          </p>
-                        )}
-                        {id && loading && reservationDeny === false ? (
-                          <>
-                            <p>Tus pases se están generando</p>
-                          </>
-                        ) : id &&
-                          loading === false &&
-                          !reservationDone &&
-                          reservationDeny === false ? (
-                          <>
-                            <p>
-                              Por favor, marca una respuesta por cada invitado y
-                              después presiona en el botón{" "}
-                              <span className="f-w-700">Continuar</span> para
-                              que puedas generar tu pase al evento .
-                            </p>
-                          </>
-                        ) : id &&
-                          reservationDone &&
-                          reservationDeny === false ? (
-                          <>
-                            <div className="">
-                              <div className="justify-content-center mt-4">
-                                <div className="text-center">
-                                  <h2 className="font-paris font-gold mb-4 display-5">
-                                    Tickets {guest?.principalName}
-                                  </h2>
-                                  <h3 className="mb-4 ">
-                                    Favor de no escanear con ningún dispositivo
-                                  </h3>
-                                  <div ref={printRef}>
-                                    <div
-                                      ref={qrRef}
-                                      className="d-flex justify-content-center mt-4 mb-4"
-                                    >
-                                      <QRCode
-                                        value={
-                                          "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
-                                          guest?.qrUrl
-                                        }
-                                      />
-                                    </div>
-                                    {guest?.acompanist?.map(
-                                      (acomp, index) =>
-                                        acomp?.asist === true && (
-                                          <div
-                                            key={index}
-                                            className="w-100 d-flex justify-content-center flex-column"
-                                          >
-                                            <p className="mb-1 display-6 ">
-                                              {acomp.name}
-                                            </p>
-                                          </div>
-                                        )
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="mb-4 mt-4">
-                                <h3 className="font-gold">
-                                  Muestra tu CÓDIGO QR{" "}
-                                  <span className="font-weigth-bold">solo</span>{" "}
-                                  a los recepcionistas del evento para entrar al
-                                  salón.
-                                </h3>
-                                <p className="display-6 text-center my-4 p-0">
-                                  No compartas ésta invitación con nadie más ni
-                                  tus códigos QR.
-                                </p>
-                                <h1>Agendar Evento</h1>
-                                <AddToGoogleCalendar />
-                                <AddToMobileCalendar />
-                                <div className="pb-4 d-flex justify-content-center align-items-center">
-                                  <img
-                                    loading="lazy"
-                                    className="line"
-                                    src={decoration}
-                                    alt="linea"
-                                  />
-                                </div>
-                                <p className="lead text-center ">
-                                  Puedes descargar tus tickets o tomar una
-                                  captura de pantalla el día del evento para
-                                  tenerlos a la mano, también puedes acceder a
-                                  ellos desde el botón "ver mis pases" dentro de
-                                  ésta invitación.
-                                </p>
-                                <p className="lead text-center ">
-                                  No escanees los códigos antes del evento, solo
-                                  los recepcionistas del salón podrán hacerlo.
-                                </p>
-                                {guest && ticketsConfirmados?.length != 0 && (
-                                  <div className="w-100 justify-content-center d-flex align-items-center mb-4">
-                                    <button
-                                      className="btn-descargar btn-agendar"
-                                      onClick={handleDownloadPdf}
-                                    >
-                                      Descargar Tickets{" "}
-                                    </button>
-                                  </div>
-                                )}
-                                <p className="mb-2">
-                                  Si te gustó nuestra invitación, puedes
-                                  compartir el siguiente enlace sin riesgo de
-                                  que otros tomen tus pases:
-                                </p>
-                                <Link
-                                  target="_blank"
-                                  to="https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/"
-                                >
-                                  https://arturo-y-noemi-nuestra-boda-muestra.vercel.app/{" "}
-                                </Link>
-                                <p className="mt-4">
-                                  Hecha por{" "}
-                                  <Link
-                                    target="_blank"
-                                    to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio"
-                                  >
-                                    Digital Invite by Esmeralda{" "}
-                                    <i className="bi bi-whatsapp"></i>
-                                  </Link>
-                                </p>
-                              </div>
-                            </div>
-                          </>
-                        ) : (
-                          reservationDeny && (
-                            <div>
-                              <h3>
-                                Lamentamos que no puedas acompañarnos en este
-                                momento
-                              </h3>
-                              <p></p>
-                              Entendemos si no te es posible asistir y te
-                              agradecemos tu honestidad. Esperamos celebrar
-                              contigo o con ustedes en otro momento.
-                              <p className="mt-3">
-                                Tus pases serán reasignados.
-                              </p>
-                            </div>
-                          )
-                        )}
-                      </div>
-                      {id &&
-                      loading === false &&
-                      reservationDone === false &&
-                      reservationDeny === false ? (
-                        <>
-                          <form
-                            onSubmit={(event) => {
-                              handleSubmit(event, false);
-                            }}
-                          >
-                            {guest?.acompanist?.map((accomp, index) => (
-                              <>
-                                <p
-                                  id={index}
-                                  className="mb-0 font-paris display-5"
-                                >
-                                  {accomp.name}
-                                </p>
-                                <div className="d-flex mb-4 justify-content-center">
-                                  <div
-                                    key={index}
-                                    className="checkbox-wrapper-53"
-                                  >
-                                    <label className="container">
-                                      <div className="d-flex">
-                                        <p className="mb-0">sí asistiré</p>
-                                        <input
-                                          id={index}
-                                          type="checkbox"
-                                          checked={accomp.asist}
-                                          onChange={() =>
-                                            handleCheckboxChange(index, true)
-                                          }
-                                        />
-                                        <div className="checkmark"></div>
-                                      </div>
-                                    </label>
-                                  </div>
-                                  <div
-                                    key={index}
-                                    className="checkbox-wrapper-53"
-                                  >
-                                    <label className="container">
-                                      <div className="d-flex">
-                                        <p className="mb-0">no podré asistir</p>
-                                        <input
-                                          id={index}
-                                          type="checkbox"
-                                          checked={accomp.asist === false}
-                                          onChange={() =>
-                                            handleCheckboxChange(index, false)
-                                          }
-                                        />
-                                        <div className="checkmark"></div>
-                                      </div>
-                                    </label>
-                                  </div>
-                                </div>
-                              </>
-                            ))}
-                            <div className="d-flex flex-column">
-                              <div className="d-flex justify-content-center w-100">
-                                <button
-                                  disabled={disabledBtn}
-                                  className={`${
-                                    disabledBtn
-                                      ? "btn-save-disabled w-50"
-                                      : "btn-save w-50"
-                                  }`}
-                                  type="submit"
-                                >
-                                  Continuar
-                                </button>
-                              </div>
-                            </div>
-                          </form>
-                          <div className="modal-footer justify-content-between">
-                            <div className="d-flex justify-content-center w-100">
-                              <button
-                                onClick={() => {
-                                  setOpenModal(false);
-                                }}
-                                type="button"
-                                className="btn-cerrar justify-content-center w-50"
-                                data-bs-dismiss="modal"
-                              >
-                                Confirmar más tarde
-                              </button>
-                            </div>
-                          </div>
-                        </>
-                      ) : id && loading ? (
-                        <div className="spinner-grow" role="status">
-                          <span className="sr-only"></span>
-                        </div>
-                      ) : id &&
-                        reservationDone === true &&
-                        reservationDeny === false ? (
-                        <>
-                          <div className="modal-footer justify-content-between">
-                            <button
-                              onClick={() => {
-                                setOpenModal(false);
-                              }}
-                              type="button"
-                              className="btn-cerrar justify-content-center"
-                              data-bs-dismiss="modal"
-                            >
-                              Cerrar
-                            </button>
-                          </div>
-                        </>
-                      ) : (
-                        id &&
-                        reservationDeny && (
-                          <>
-                            <div className="modal-footer justify-content-center d-flex">
-                              <div className="d-flex justify-content-center">
-                                <button
-                                  onClick={() => {
-                                    setOpenModal(false);
-                                  }}
-                                  type="button"
-                                  className="btn-cerrar justify-content-center w-50"
-                                  data-bs-dismiss="modal"
-                                >
-                                  Cerrar
-                                </button>
-                              </div>
-                            </div>
-                          </>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            */}
             </div>
           )}
         </section>

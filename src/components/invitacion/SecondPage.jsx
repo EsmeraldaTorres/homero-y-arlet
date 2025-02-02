@@ -39,7 +39,7 @@ const SecondPage = ({ timeLeft }) => {
                   Viernes
                 </p>
                 <p className="text-white text-center font-paris display-4">
-                  22 <span>de</span> Noviembre <span>de</span> 2024
+                  22 <span>de</span> Diciembre <span>de</span> 2025
                 </p>
               </div>
             </div>
