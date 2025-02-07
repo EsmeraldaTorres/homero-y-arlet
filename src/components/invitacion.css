@@ -284,12 +284,17 @@ a {
   align-items: center;
   width: 100%;
 }
+.text-blue{
+  color: #7d7dd7;
+}
 .padding-4-rem {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 .modal-body {
   display: flex !important;
+  overflow-y: scroll;
+
   height: 100% !important;
   flex-direction: column;
 }

@@ -246,6 +246,9 @@ const AllGuestPage = () => {
 
   return (
     <div className="p-4">
+      <div className="text-blue">
+        Esta es una muestra del panel de control que se les entregará a ustedes, los novios, para que tengan status de cada invitado. Pueden asignar mesa y descargar el pdf para probar la funcionalidad.
+      </div>
       <div>
         {menu === "Todos" ? (
           <>
@@ -314,6 +317,7 @@ const AllGuestPage = () => {
             <p className="display-4  font-paris text-center">{etiqueta}</p>
           </>
         )}
+        <div className="text-blue">Para asignar mesa coloca el filtro en Status Confirmados y Etiqueta Todos</div>
         <div className="label-and-select">
           <span className="display-6 p-1">Filtrar por status</span>
           <select
@@ -423,7 +427,7 @@ const AllGuestPage = () => {
         ) : menu === "confirmados" ? (
           <>
             {etiqueta === "Todos" && (
-              // arrayPeople.filter((person) => person.table).length === 0 && (
+              <>
               <div className="d-flex align-items-center box-add-table">
                 <p className="mt-4 mr-4 mb-0">
                   Para organizar a los invitados en mesas, da click en el
@@ -438,7 +442,10 @@ const AllGuestPage = () => {
                   Agregar mesa
                 </button>
               </div>
-            )}
+              <div className="text-blue">
+                Para guardar cambios de las mesas asignadas, da click en el botón del final que dice Guardar y espera a que salga el mensaje de "Datos actualizados"
+              </div>
+           </> )}
             <div style={{ overflowX: "auto" }}>
               <table id="pdf-table" className="mt-4">
                 <thead>

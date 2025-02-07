@@ -405,6 +405,7 @@ const Intivacion = () => {
                   </p>
                 </>
               )}
+              <p className="text-blue"> Una vez pasado el tiempo de confirmación de asistencia, los invitados que NO dieron respuesta, no podrán ver los botones de Confirmar, Ver mis pases o No podré asistir. En su lugar, verán un mensaje que les informe que sus pases han sido cancelados</p>
             </div>
           </div>
           <div className="d-flex flex-column overflow-hidden">
@@ -459,20 +460,6 @@ const Intivacion = () => {
                       : "No podremos asistir "}
                   </button>
                 </div>
-                <div className="display-6 mt-4">
-                  <p>
-                    Querida bride, esta es una invitación muestra genérica del
-                    sistema de confirmación de asistencia.
-                  </p>
-                  <p>
-                    Tenemos más funcionalidades PRECISAS que puedes ver en
-                    nuestra página web o puedes solicitarla directamente con
-                    Esmeralda
-                  </p>
-                  <p>
-                    Te atenderemos con gusto
-                  </p>
-                </div>
               </>
             ) : (
               text.firstText === "" && (
@@ -496,12 +483,11 @@ const Intivacion = () => {
                 aria-labelledby="example-custom-modal-styling-title"
               >
                 <div
-                  className={`modal-content ${
-                    id && reservationDone && reservationDeny === false && "h-80"
-                  }`}
+                  className={"modal-content" }
                 >
                   <Modal.Body
-                    className={`${
+                    className={` 
+${
                       reservationDone &&
                       reservationDeny === false &&
                       "p-1 w-90v"
@@ -545,7 +531,7 @@ const Intivacion = () => {
                               <div ref={printRef}>
                                 <div
                                   ref={qrRef}
-                                  className="d-flex justify-content-center mt-4 mb-4"
+                                  className="d-flex flex-column text-center align-items-center justify-content-center mt-4 mb-4"
                                 >
                                   <QRCode
                                     value={
@@ -553,6 +539,9 @@ const Intivacion = () => {
                                       guest?.qrUrl
                                     }
                                   />
+                                  <div className="text-blue">
+                                    Al escanear el QR, el invitado verá los nombres de las personas que confirmó y posteriormente, el número de mesa asignado para cada uno. Esto es una muestra genérica.
+                                  </div>
                                 </div>
                                 {guest?.acompanist?.map((acomp, index) => (
                                   <div
@@ -567,7 +556,7 @@ const Intivacion = () => {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="mb-4 mt-4">
+                            <div className="mb-4 mt-4">
                               <h3 className="font-gold text-center">
                                 Muestra tu CÓDIGO QR{" "}
                                 <span className="font-weigth-bold">solo</span> a
@@ -656,7 +645,7 @@ const Intivacion = () => {
                                 </div>
                               </div>
                             </div>
-                           */}
+                         
                         </div>
                       ) : (
                         cancelAsistence && (
@@ -788,6 +777,17 @@ const Intivacion = () => {
               </Modal>
             </div>
           )}
+                          <div className="display-6 mt-4 text-blue">
+                  <p>
+                    Querida bride, esta es una invitación muestra genérica del
+                    sistema de confirmación de asistencia.
+                  </p>
+                  <p>
+                    Puedes solicitar una muestra con Esmeralda a través de <Link to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20podrías%20dar%20una%20muestra%20específica%20de%20la%20invitación%20diamante,%20mi%20nombre%20es">whatsapp</Link> o <Link to="https://www.facebook.com/digitalInviteByEsmeralda">messenger</Link>
+                  </p>
+                  <p>
+Mira también nuestro ejemplo de     <Link to="https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/all-guests-page-arturo-y-noemi-boda/j13kl">Panel de Control</Link>, este link, no aparecerá en la invitación de los invitados ya que solo ustedes, los novios, tendrán acceso             </p>
+                </div>
         </section>
         <LastPage reservationDeny={reservationDeny} />
       </div>
