@@ -1,6 +1,6 @@
 import React from "react";
 import ReactAudioPlayer from "react-audio-player";
-import audioFile from "../../assets/audio/musica-lewis-coffee-at-midnight.mp3";
+// import audioFile from "../../assets/audio/musica-lewis-coffee-at-midnight.m";
 import { PlayCircle, PauseCircle, Coin } from "react-bootstrap-icons";
 import nameImg from "../../assets/img/arturo-y-noemi.png";
 
@@ -32,7 +32,7 @@ const FirstPage = ({ isPlaying, togglePlayPause, audioRef }) => {
 
           <p>audio</p>
         </div>
-        <div className="player-audio">
+        {/* <div className="player-audio">
           <ReactAudioPlayer
             ref={audioRef}
             id="audio"
@@ -40,7 +40,7 @@ const FirstPage = ({ isPlaying, togglePlayPause, audioRef }) => {
             loop={true}
             src={audioFile}
           />
-        </div>
+        </div> */}
       </section>
     </>
   );

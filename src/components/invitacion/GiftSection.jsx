@@ -6,19 +6,43 @@ import lineaAlReves from "../../assets/img/lineaalreves.png";
 const GiftSection = () => {
   return (
     <>
-      <section className="p-4" data-aos="zoom-in" data-aos-duration="2000">
-        <div className="py-4 d-flex justify-content-center align-items-center">
-          <img loading="lazy" className="line" src={lineaAlReves} alt="linea" />
-        </div>
-        <div className="py-4 d-flex justify-content-center">
-          <p className="text2 text-center lead">
-            ¡Que nos acompañes es lo más importante! Y sí está en tu disposición
-            realizar una muestra de cariño estaremos muy agradecidos
-          </p>
-        </div>
-        <div className="pb-4 d-flex justify-content-center align-items-center">
-          <img loading="lazy" className="line" src={decoration} alt="linea" />
-        </div>
+        <section className="ribbon bg-white d-flex flex-column justify-content-center align-items-center text-center pt-4 pb-4">
+        <p         data-aos="zoom-in"
+        data-aos-duration="3000" class="m-0 display-6 font-kala pt-4 pb-4 principal-text">
+        Ya tenemos preparado el viaje, las maletas y el compañero, lo único que nos falta es el dinero...
+
+        </p>
+                 <div className="d-flex justify-content-around align-items-center">
+          <img
+            loading="lazy"
+            className="decoration"
+            src={decoration}
+            alt="linea"
+          />
+        </div> 
+        <p          data-aos="zoom-in"
+        data-aos-duration="3000" className="m-0 display-6 font-kala pt-4 pb-4 principal-text">
+          Si quieres tener un detalle con nosotros, que mejor que nos apoyes con nuestra Luna de Miel.
+
+        </p>
+        <div className="d-flex justify-content-center w-100">
+          <hr className="text-center" />
+        </div> 
+        <p      className="display-6 mb-1"           data-aos="flip-down"
+        data-aos-duration="3500" >Para transferencia
+        </p> <p className="display-number"                 data-aos="flip-down"
+        data-aos-duration="3500">
+
+          <span >4027</span>
+          <span>6653</span>
+          <span>0576</span>
+          <span>7718</span>
+        </p>
+        <p       className="display-6 mb-0"            data-aos="flip-down"
+        data-aos-duration="3500" >Jorge González Luna
+        </p>
+        <p     className="pb-4 mb-4 display-6"            data-aos="flip-down"
+        data-aos-duration="3500"> Banamex</p>
       </section>
       <section className="window-regalos d-flex justify-content-center align-items-center">
         <div className="w-80 h-80 d-flex justify-content-center">
@@ -69,28 +93,14 @@ const GiftSection = () => {
           </div>
         </div>
       </section>
-      <section className="d-flex justify-content-center align-items-center">
-        <div className="w-80 py-4 text-center mt-4">
-          <p className="display-6" data-aos="flip-up" data-aos-duration="2000">
-            ¡Gracias por tus muestras de cariño!
-          </p>
-          <div>
-            <p
-              className="display-6"
-              data-aos="flip-up"
-              data-aos-duration="2000"
-            >
-              Si así lo prefieres, también puedes hacer transferencia
-            </p>
-            <div className="d-flex justify-content-center">
-              <hr />
-            </div>
-            <p className="display-number">4027 6653 0576 7718</p>
-            <p>Arturo Jiménez Díaz</p>
-            <p>BBVA</p>
-          </div>
-        </div>
+      <section className="ribbon ">
+              <p  className="text-main"        
+                  data-aos="flip-down"
+              data-aos-duration="3500" >
+                ¡Gracias por tus muestras de cariño!
+              </p>
       </section>
+  
     </>
   );
 };

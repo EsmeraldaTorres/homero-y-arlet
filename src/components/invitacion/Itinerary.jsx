@@ -1,100 +1,72 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import iconFiesta from "../../assets/img/fiesta.png";
+import iconFiesta from "../../assets/img/dinner-icon.png";
 import iconComida from "../../assets/img/comida.png";
 import iconIglesia from "../../assets/img/iglesia.png";
-import iconRecepcion from "../../assets/img/Recepcion (1).png";
+import iconMariachi from "../../assets/img/mariachi-icon.png";
 const Itinerary = () => {
   return (
     <>
-      <section className="itinerario">
-        <p className="text-center display-4 font-paris text-white m-0 pt-4">
-          Itinerario
-        </p>
-        <div className="App">
-          <Carousel>
-            <Carousel.Item>
-              <div className="card d-flex justify-content-center align-items-center">
-                <div className="w-100 d-flex justify-content-center w-100 flex-column align-items-center">
-                  <div className="d-flex align-items-center justify-content-center">
-                    <img
-                      loading="lazy"
-                      className="card-img animate__animated animate__pulse animate__repeat-2 animate_slower"
-                      src={iconIglesia}
-                      alt="Card image cap"
-                    />
-                  </div>
-                  <p className="card-text text-white text-center p-0 font-paris display-5">
-                    Ceremonia religiosa
-                  </p>
-                  <p className="card-text text-shadow text-white font-weight-bold text-center display-5">
-                    5:00pm
-                  </p>
-                </div>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div className="card d-flex justify-content-center align-items-center">
-                <div className="w-100 d-flex justify-content-center w-100 flex-column align-items-center">
-                  <div className="d-flex align-items-center justify-content-center">
-                    <img
-                      loading="lazy"
-                      className="card-img animate__animated animate__pulse animate__repeat-2 animate_slower"
-                      src={iconRecepcion}
-                      alt="Card image cap"
-                    />
-                  </div>
-                  <p className="card-text text-white text-center p-0 font-paris display-5">
-                    Recepción
-                  </p>
-                  <p className="card-text text-shadow text-white font-weight-bold text-center display-5">
-                    6:00pm
-                  </p>
-                </div>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div className="card d-flex justify-content-center align-items-center">
-                <div className="w-100 d-flex justify-content-center w-100 flex-column align-items-center">
-                  <div className="d-flex align-items-center justify-content-center">
-                    <img
-                      loading="lazy"
-                      className="card-img animate__animated animate__pulse animate__repeat-2 animate_slower"
-                      src={iconComida}
-                      alt="Card image cap"
-                    />
-                  </div>
-                  <p className="card-text text-white text-center p-0 font-paris display-5">
-                    Fiesta
-                  </p>
-                  <p className="card-text text-shadow text-white font-weight-bold text-center display-5">
-                    7:00pm
-                  </p>
-                </div>
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div className="card d-flex justify-content-center align-items-center">
-                <div className="w-100 d-flex justify-content-center w-100 flex-column align-items-center">
-                  <div className="d-flex align-items-center justify-content-center">
-                    <img
-                      loading="lazy"
-                      className="card-img animate__animated animate__pulse animate__repeat-2 animate_slower"
-                      src={iconFiesta}
-                      alt="Card image cap"
-                    />
-                  </div>
-                  <p className="card-text text-white text-center p-0 font-paris display-5">
-                    Fiesta
-                  </p>
-                  <p className="card-text text-shadow text-white font-weight-bold text-center display-5">
-                    9:00pm
-                  </p>
-                </div>
-              </div>
-            </Carousel.Item>
-          </Carousel>
+      <section className="window-back">
+        <div
+          className="window-itinerary"
+          data-aos="fade-right"
+          data-aos-easing="linear"
+          data-aos-duration="500"
+          data-aos-offset="200"
+        >
+          <div className="d-flex justify-content-center align-items-center">
+            <p className="display-3 text-center font-paris text-shadow2 pl-4 pr-4">Itinerario</p>
+          </div>
         </div>
+      </section>
+      <section
+        className="recepcion-information d-flex align-items-center justify-content-center"
+      >
+        <div className="timeline">
+          <ul>
+            <li>
+              <div className="text-center" data-aos="fade-up" data-aos-duration="3000">
+                <time className="time-itinerario">2:00pm</time>
+                <i class="bi bi-bookmark-plus f-5"></i><span className="font-paris display-5"> Misa</span>
+              </div>
+            </li>
+            <li>
+              <div className="text-center" data-aos="fade-down" data-aos-duration="3000">
+
+                  <time class="time-itinerario">7:00pm 
+                  </time>
+                  <i class="bi bi-ticket f-5"></i><span class="font-paris display-5"> Recepción </span>                  </div>
+            </li>
+            <li>
+              <div className="text-center" data-aos="fade-up" data-aos-duration="3000">
+                <time className="time-itinerario mb-4">8:00pm
+                 </time>
+                 <img src={iconFiesta}  className="icon-img" alt=""/> <span className="font-paris display-5"> Comida</span>
+                 </div>
+            </li>
+            <li>
+              <div className="d-flex flex-column text-center" data-aos="fade-down" data-aos-duration="3000">
+              <time class="time-itinerario">10:00pm</time><i class="bi bi-music-note-beamed f-5"></i><span class="font-paris display-5">Baile</span>
+              </div>
+            </li>
+            <li>
+              <div className="d-flex flex-column d-none" data-aos="fade-down" data-aos-duration="3000">
+                <time className="time-itinerario text-center">2:00am </time>
+                <img src={iconMariachi}  className="icon-img" alt=""/> <span className="font-paris display-5"> Mariachi</span>
+              </div>
+            </li>
+          </ul>
+          </div>
+      </section>
+      <section className="window-photo">
+        <div
+          className="window-parents"
+          data-aos="fade-down"
+          data-aos-easing="linear"
+          data-aos-duration="500"
+          data-aos-offset="800"
+        ></div>
       </section>
     </>
   );

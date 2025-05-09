@@ -76,6 +76,11 @@ const DinamicGallerySection = () => {
           </div>
         </div>
       </section>
+      <section className="ribbon">
+      <p className="m-0 display-6">
+          ¡Esta noche es especial y que nos acompañes la hace aún más!
+      </p>
+    </section>
     </>
   );
 };
