@@ -60,7 +60,10 @@ const Intivacion = () => {
   const [loading, setLoading] = useState(false);
   const [reservationDeny, setReservationDeny] = useState(false);
   const [ticketsConfirmados, setTicketsConfirmados] = useState();
-  const [loadingPdf, setLoadingPdf] = useState(false);
+  const [confirmAsistence, setConfirmAsistence] = useState(false);
+  const [cancelAsistence, setCancelAsistence] = useState(false);
+  const [continuar, setContinuar] = useState(false);
+
   const printRef = useRef();
 
   const [timeLeft, setTimeLeft] = useState({
@@ -73,7 +76,7 @@ const Intivacion = () => {
 
   const [text, setText] = useState({
     firstText:
-      " Por favor confirma tu asistencia al evento antes del 30 de Abril, después de esta fecha la confirmación no podrá realizarse.",
+      " Por favor confirma tu asistencia al evento antes del 15 de Octubre, después de esta fecha la confirmación no podrá realizarse.",
     secondText:
       "En caso de que no puedan asistir, por favor, también háznoslo saber.",
     thirdText:
@@ -90,23 +93,14 @@ const Intivacion = () => {
     }
     setIsPlaying(!isPlaying);
   };
-  const handleVisibilityChange = () => {
-    if (document.hidden && isPlaying) {
-      // Si la página ya no está visible y el audio está sonando, pausarlo
-      audioRef.current.audioEl.current.pause();
-      setIsPlaying(false);
-    }
-  };
-
 
   function abrir() {
     setOpenInvitation(true);
-    setHide(false);
-
     window.scrollTo(0, 0);
-    // setTimeout(function () {
-    //   togglePlayPause();
-    // }, 1400);
+    setTimeout(function () {
+      setHide(false);
+      togglePlayPause();
+    }, 2500);
   }
 
   const handleCheckboxChange = (index, boolean) => {
@@ -115,38 +109,17 @@ const Intivacion = () => {
     setGuest({ ...guest, acompanist: updatedAccompanist });
   };
 
-  const handleSubmit = async (event, boolean) => {
-    event.preventDefault();
-    let invitados;
-
-    if (boolean) {
-      const denyAsistence = guest?.acompanist.map((person) => ({
-        ...person,
-        asist: false,
-      }));
-
-      invitados = { ...guest, acompanist: denyAsistence };
-    }
-
-    // Guardar los datos actualizados en Firestore
+  const handleContinuar = (e) => {
+    e.preventDefault();
+    console.log("hola");
     setLoading(true);
-    const guestDoc = doc(db, "people", id);
-    await updateDoc(guestDoc, boolean ? invitados : guest)
-      .then(() => {
-        if (boolean) {
-          setOpenModal(true);
-          setReservationDone(true);
-          setReservationDeny(true);
-          setLoading(false);
-        } else
-          setTimeout(() => {
-            setLoading(false);
-            setReservationDone(true);
-          }, 4000);
-      })
-      .catch((error) => {
-        console.error("Error actualizando los datos: ", error);
-      });
+    setContinuar(true);
+    setConfirmAsistence(false);
+    setTimeout(() => {
+      setLoading(false);
+      setContinuar(false);
+      setReservationDone(true);
+    }, 4000);
   };
 
   useEffect(() => {
@@ -162,88 +135,49 @@ const Intivacion = () => {
       // document.body.classList.remove("postion-fixed");
     };
   }, [openModal]);
-  useEffect(() => {
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [isPlaying]);
 
   const qrRef = useRef(null);
 
   const handleDownloadPdf = async () => {
-    setLoadingPdf(true);
-  
-    const doc = new jsPDF({
+    const pdf = new jsPDF({
       orientation: "portrait",
       unit: "pt",
       format: "a4",
     });
-  
-    const pdfWidth = doc.internal.pageSize.getWidth();
-    const pdfHeight = doc.internal.pageSize.getHeight();
-    const marginTop = 100; // Mayor margen arriba para el título
-  
-    const imageUrl = "/images/pareja-7.jpg"; // Imagen en la carpeta public
-  
-    try {
-      // Convertir la imagen de fondo a Base64
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const reader = new FileReader();
-  
-      reader.readAsDataURL(blob);
-      reader.onloadend = async () => {
-        const base64data = reader.result;
-  
-        // Añadir imagen de fondo al PDF
-        doc.addImage(base64data, "JPEG", 0, 0, pdfWidth, pdfHeight);
-  
-        // Renderizar el QR con html2canvas
-        const canvas = await html2canvas(qrRef.current, {
-          useCORS: true,
-          backgroundColor: null,
-          scale: 2, // Mejor calidad
-        });
-  
-        // Ajustar tamaño exacto del canvas para que sea cuadrado
-        const qrSize = 200; // El QR debe ser cuadrado (200x200)
-        const tempCanvas = document.createElement("canvas");
-        tempCanvas.width = qrSize;
-        tempCanvas.height = qrSize;
-        const ctx = tempCanvas.getContext("2d");
-  
-        // Dibujar el QR en el nuevo canvas cuadrado
-        ctx.drawImage(canvas, 0, 0, qrSize, qrSize);
-  
-        const imgData = tempCanvas.toDataURL("image/png");
-        const qrXPosition = (pdfWidth - qrSize) / 2;
-        const qrYPosition = marginTop + 40; // Espacio entre título y QR
-  
-        // Añadir título en letras blancas
-        doc.setFontSize(36);
-        doc.text("Ticket Boda Arturo & Noemi", pdfWidth / 2, marginTop, { align: "center" });
-  
-        // Añadir QR cuadrado al PDF
-        doc.addImage(imgData, "PNG", pdfWidth / 2 - 300 / 2, 120, 300, qrSize);
-        // doc.addImage(backgroundImage, "JPEG", 0, 0, pdfWidth, pdfHeight);
 
-  
-        // Guardar el PDF
-        doc.save("Ticket_QR_Arturo_y_Noemi.pdf");
-        setLoadingPdf(false);
-      };
-    } catch (error) {
-      console.error("Error cargando la imagen:", error);
-      setLoadingPdf(false);
-    }
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    // Cargar la imagen de fondo
+    const backgroundImageUrl =
+      "https://images.pexels.com/photos/27060172/pexels-photo-27060172/free-photo-of-blanco-y-negro-naturaleza-pareja-amor.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
+    const backgroundImage = new Image();
+    backgroundImage.src = backgroundImageUrl;
+
+    backgroundImage.onload = () => {
+      // Agregar la imagen de fondo en todo el tamaño de la hoja
+      pdf.addImage(backgroundImage, "JPEG", 0, 0, pdfWidth, pdfHeight);
+
+      // Posicionar el título encima de la imagen
+      pdf.setFontSize(24);
+      pdf.setTextColor(255, 255, 255); // Color blanco para el texto
+      pdf.text("Tickets Boda Arturo y Noemí", pdfWidth / 2, 100, {
+        align: "center",
+      });
+
+      // Renderizar el QR desde el canvas y agregarlo al PDF
+      const qrCanvas = qrRef.current.querySelector("canvas");
+      if (qrCanvas) {
+        const qrImageData = qrCanvas.toDataURL("image/png");
+        pdf.addImage(qrImageData, "PNG", pdfWidth / 2 - 50, 120, 100, 100);
+      }
+
+      // Guardar el PDF
+      pdf.save("tickets_boda_arturo_noemi.pdf");
+    };
   };
-  
-
-  
-  
   useEffect(() => {
+    console.log(guest, "guest");
     const filterGuestNull = guest?.acompanist?.filter((g) => g.asist === null);
     const filterGuestFalse = guest?.acompanist?.filter(
       (g) => g.asist === false
@@ -282,7 +216,7 @@ const Intivacion = () => {
     if (id) {
       fetchDataByGuest(id, code);
     }
-    const countDownDate = new Date("Jul 12, 2025 13:00").getTime();
+    const countDownDate = new Date("Dec 26, 2025 09:30").getTime();
     const updateCountdown = () => {
       const now = new Date().getTime();
       const distance = countDownDate - now;
@@ -311,7 +245,7 @@ const Intivacion = () => {
   }, []);
 
   useEffect(() => {
-    const countDownDateAsistence = new Date("May 16, 2025 00:00").getTime();
+    const countDownDateAsistence = new Date("Dec 15, 2025 09:31").getTime();
 
     const countdownAsistence = () => {
       const now = new Date().getTime();
@@ -360,37 +294,34 @@ const Intivacion = () => {
         </section>
         <HotelSection/>
         <DinamicGallerySection/>
+
         <section className="text-center p-4 lead overflow-hidden bg-white">
           <h3
             className="font-paris principal-name-guest "
-           data-aos="zoom-in"
+            data-aos="zoom-out"
             data-aos-duration="2000"
           >
-            {guest?.principalName}
+            Familia Silván
           </h3>
-          {guest?.code === "320922" || guest?.acompanist?.length === 1 ? (
-            <p>Hemos reservado {guest?.acompanist?.length} lugar para ti</p>
-          ) : (
-            <>
-              <p>
-                Hemos reservado {guest?.acompanist?.length} lugares para ustedes
-              </p>
-            </>
-          )}
+
+          <p>Hemos reservado 3 lugares para ustedes</p>
+
           <div className={`${text.firstText === "" && "mb-4"}`}>
             {guest?.acompanist?.map((person, key) => (
               <p
                 key={key}
                 className="mb-0 display-6"
-                data-aos="zoom-in"                data-aos-duration="1000"
+                data-aos="fade-up"
+                data-aos-duration="1000"
               >
-             {key + 1}.-   {person.name}
+                {person.name}
               </p>
             ))}
           </div>
+
           {text.firstText != "" && (
             <p
-              className="display-4 font-paris mt-4"
+              className="display-4 mt-4"
               data-aos="zoom-in"
               data-aos-duration="2000"
             >
@@ -412,20 +343,23 @@ const Intivacion = () => {
           >
             <div
               className="w-80 py-4"
-              data-aos="zoom-in"              data-aos-duration="3000"
+              data-aos="fade-in"
+              data-aos-duration="3000"
             >
               Gracias por ayudarnos con la organización de nuestro evento.
               {text?.firstText != "" && (
                 <>
                   <p
                     className="pt-2"
-                    data-aos="zoom-in"                    data-aos-duration="2500"
+                    data-aos="fade-in"
+                    data-aos-duration="2500"
                   >
                     {text.firstText}
                   </p>
                   <p
                     className="pt-2"
-                    data-aos="zoom-in"                    data-aos-duration="3000"
+                    data-aos="fade-in"
+                    data-aos-duration="3000"
                   >
                     {guest?.acompanist?.length === 1
                       ? text.thirdText
@@ -433,10 +367,11 @@ const Intivacion = () => {
                   </p>
                 </>
               )}
+              <p className="text-blue"> Una vez pasado el tiempo de confirmación de asistencia, los invitados que NO dieron respuesta, no podrán ver los botones de Confirmar, Ver mis pases o No podré asistir. En su lugar, verán un mensaje que les informe que sus pases han sido cancelados</p>
             </div>
           </div>
           <div className="d-flex flex-column overflow-hidden">
-            {reservationDone && reservationDeny === false ? (
+            {reservationDone ? (
               <>
                 <div className="d-flex justify-content-center">
                   <button
@@ -449,12 +384,12 @@ const Intivacion = () => {
                   </button>
                 </div>
               </>
-            ) : reservationDone && reservationDeny ? (
+            ) : reservationDeny ? (
               <div className="overflow-hidden">
-                <p data-aos="zoom-in" data-aos-duration="2000">
+                <p data-aos="fade-right" data-aos-duration="2000">
                   Haz confirmado que no podrás acompañarnos
                 </p>
-                <p data-aos="zoom-in" data-aos-duration="2000">
+                <p data-aos="fade-left" data-aos-duration="2000">
                   Gracias por darnos tu respuesta
                 </p>
               </div>
@@ -465,6 +400,7 @@ const Intivacion = () => {
                     className="mb-3 btn-save "
                     onClick={() => {
                       setOpenModal(true);
+                      setConfirmAsistence(true);
                     }}
                   >
                     <p className="animate__animated animate__pulse animate__infinite mb-0">
@@ -472,10 +408,11 @@ const Intivacion = () => {
                     </p>
                   </button>
                 </div>
-                <div className="d-flex justify-content-center pb-4">
+                <div className="d-flex justify-content-center">
                   <button
                     onClick={(event) => {
-                      handleSubmit(event, true);
+                      setOpenModal(true);
+                      setCancelAsistence(true);
                     }}
                     className="text-white btn-no-asistir"
                   >
@@ -489,10 +426,10 @@ const Intivacion = () => {
             ) : (
               text.firstText === "" && (
                 <div>
-                  <p data-aos="zoom-in" data-aos-duration="2000">
+                  <p data-aos="zoom-out" data-aos-duration="2000">
                     El tiempo de confirmación de asistencia ha pasado.
                   </p>
-                  <p data-aos="zoom-in" data-aos-duration="2000">
+                  <p data-aos="zoom-out" data-aos-duration="2000">
                     Tus pases han sido cancelados.
                   </p>
                 </div>
@@ -508,36 +445,33 @@ const Intivacion = () => {
                 aria-labelledby="example-custom-modal-styling-title"
               >
                 <div
-                  className={`modal-content ${
-                    id && reservationDone && reservationDeny === false && "h-80"
-                  }`}
+                  className={"modal-content" }
                 >
                   <Modal.Body
-                    className={`${
-                      id &&
+                    className={` 
+${
                       reservationDone &&
                       reservationDeny === false &&
-                      "p-1 "
+                      "p-1 w-90v"
                     }`}
                   >
                     <div className="d-flex flex-column justify-content-center align-items-center">
-                      {reservationDeny === false ? (
+                      {confirmAsistence ? (
                         <p className="font-paris display-3 text-center padding-4-rem pt-4 px-0">
                           ¡Gracias por darnos el sí!
                         </p>
                       ) : (
-                        <p className="font-paris display-3 text-center mt-4">
-                          ¡Te extrañaremos!
-                        </p>
+                        cancelAsistence && (
+                          <p className="font-paris display-3 text-center mt-4">
+                            ¡Te extrañaremos!
+                          </p>
+                        )
                       )}
-                      {id && loading && reservationDeny === false ? (
+                      {continuar ? (
                         <>
-                          <p className="text-center">Tus pases se están generando</p>
+                          <p>Tus pases se están generando</p>
                         </>
-                      ) : id &&
-                        loading === false &&
-                        !reservationDone &&
-                        reservationDeny === false ? (
+                      ) : confirmAsistence ? (
                         <div className="padding-4-rem text-center">
                           <p>
                             Por favor, marca una respuesta por cada invitado y
@@ -546,53 +480,52 @@ const Intivacion = () => {
                             puedas generar tu pase al evento .
                           </p>
                         </div>
-                      ) : id && reservationDone && reservationDeny === false ? (
-                        <>
-                          <div className="">
-                            <div className="justify-content-center mt-4">
-                              <div className="text-center">
-                                <h2 className="font-pari font-olive mb-4 display-6">
-                                  Tickets {guest?.principalName}
-                                </h2>
-                                <h3 className="mb-4 ">
-                                  Favor de no escanear con ningún dispositivo
-                                </h3>
-                                <div ref={printRef}>
-                                  <div
-                                    ref={qrRef}
-                                    className="d-flex justify-content-center mt-4 mb-4"
-                                  >
-                                    <QRCode
-                                      value={
-                                        "https://muestra-paquete-e-portada.netlify.app/" +
-                                        guest?.qrUrl
-                                      }
-                                      className="w-50"
-                                    />
+                      ) : reservationDone ? (
+                        <div>
+                          <div className="justify-content-center mt-4">
+                            <div className="text-center">
+                              <h2 className="font-paris font-gold mb-4 ">
+                                Tickets {guest?.principalName}
+                              </h2>
+                              <h3 className="mb-4 ">
+                                Favor de no escanear con ningún dispositivo
+                              </h3>
+                              <div ref={printRef}>
+                                <div
+                                  ref={qrRef}
+                                  className="d-flex flex-column text-center align-items-center justify-content-center mt-4 mb-4"
+                                >
+                                  <QRCode
+                                    value={
+                                      "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
+                                      guest?.qrUrl
+                                    }
+                                  />
+                                  <div className="text-blue">
+                                    Al escanear el QR, el invitado verá los nombres de las personas que confirmó y posteriormente, el número de mesa asignado para cada uno. Esto es una muestra genérica.
                                   </div>
-                                  {guest?.acompanist?.map(
-                                    (acomp, index) =>
-                                      acomp?.asist === true && (
-                                        <div
-                                          key={index}
-                                          className="w-100 d-flex justify-content-center flex-column"
-                                        >
-                                          <p className="mb-1 display-6 ">
-                                            {acomp.name}
-                                          </p>
-                                        </div>
-                                      )
-                                  )}
                                 </div>
+                                {guest?.acompanist?.map((acomp, index) => (
+                                  <div
+                                    key={index}
+                                    className="w-100 d-flex justify-content-center flex-column"
+                                  >
+                                    <p className="mb-1 display-6 ">
+                                      {acomp.name}
+                                    </p>
+                                  </div>
+                                ))}
                               </div>
                             </div>
+                          </div>
                             <div className="mb-4 mt-4">
-                              <h3 className="font-olive text-center">
+                              <h3 className="font-gold text-center">
                                 Muestra tu CÓDIGO QR{" "}
                                 <span className="font-weigth-bold">solo</span> a
                                 los recepcionistas del evento para entrar al
                                 salón.
                               </h3>
+                              
                               <p className="display-6 text-center my-4 p-0">
                                 No compartas ésta invitación con nadie más ni
                                 tus códigos QR.
@@ -605,7 +538,7 @@ const Intivacion = () => {
                               <div className="pb-4 d-flex justify-content-center align-items-center">
                                 <img
                                   loading="lazy"
-                                  className="decoration pt-3"
+                                  className="line"
                                   src={decoration}
                                   alt="linea"
                                 />
@@ -620,9 +553,7 @@ const Intivacion = () => {
                                 No escanees los códigos antes del evento, solo
                                 los recepcionistas del salón podrán hacerlo.
                               </p>
-                              {guest &&
-                              ticketsConfirmados?.length != 0 &&
-                              loadingPdf === false ? (
+                              {guest && ticketsConfirmados?.length != 0 && (
                                 <div className="w-100 justify-content-center d-flex align-items-center mb-4">
                                   <button
                                     className="btn-descargar btn-agendar text-dark"
@@ -631,16 +562,6 @@ const Intivacion = () => {
                                     Descargar Tickets{" "}
                                   </button>
                                 </div>
-                              ) : (
-                                guest &&
-                                ticketsConfirmados?.length != 0 &&
-                                loadingPdf && (
-                                  <div className="btn-descargar btn-agendar text-dark text-center">
-                                    <div className="spinner-grow" role="status">
-                                      <span className="sr-only"></span>
-                                    </div>
-                                  </div>
-                                )
                               )}
 
                               <p className="mt-4 text-center">
@@ -648,7 +569,7 @@ const Intivacion = () => {
                                 <Link
                                   className="font-gold"
                                   target="_blank"
-                                  to="https://digital-invite-by-esmeralda.netlify.app/"
+                                  to="https://digital-invite-by-esmeralda.vercel.app/"
                                 >
                                   Digital Invite by Esmeralda{" "}
                                 </Link>
@@ -686,10 +607,10 @@ const Intivacion = () => {
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </>
+                         
+                        </div>
                       ) : (
-                        reservationDeny && (
+                        cancelAsistence && (
                           <div className="text-center">
                             <h3 className="text-center">
                               Lamentamos que no puedas acompañarnos en este
@@ -704,17 +625,9 @@ const Intivacion = () => {
                         )
                       )}
                     </div>
-                    {id &&
-                    loading === false &&
-                    reservationDone === false &&
-                    reservationDeny === false ? (
+                    {confirmAsistence ? (
                       <>
-                        <form
-                          className="d-flex flex-column align-items-center"
-                          onSubmit={(event) => {
-                            handleSubmit(event, false);
-                          }}
-                        >
+                        <form className="d-flex flex-column align-items-center">
                           {guest?.acompanist?.map((accomp, index) => (
                             <>
                               <p
@@ -768,6 +681,9 @@ const Intivacion = () => {
                           <div className="d-flex flex-column">
                             <div className="d-flex justify-content-center w-100">
                               <button
+                                onClick={(e) => {
+                                  handleContinuar(e);
+                                }}
                                 disabled={disabledBtn}
                                 className={`${
                                   disabledBtn
@@ -796,15 +712,13 @@ const Intivacion = () => {
                           </div>
                         </div>
                       </>
-                    ) : id && loading ? (
+                    ) : loading ? (
                       <div className="d-flex justify-content-center align-items-center">
                         <div className="spinner-grow" role="status">
                           <span className="sr-only"></span>
                         </div>
                       </div>
-                    ) : id &&
-                      reservationDone === true &&
-                      reservationDeny === false ? (
+                    ) : (
                       <>
                         <div className="modal-foote mb-4 d-flex flex-column align-items-center justify-content-between">
                           <button
@@ -819,32 +733,23 @@ const Intivacion = () => {
                           </button>
                         </div>
                       </>
-                    ) : (
-                      id &&
-                      reservationDeny && (
-                        <>
-                          <div className="modal-foote align-items-center justify-content-center d-flex">
-                            <div className="d-flex justify-content-center mb-4">
-                              <button
-                                onClick={() => {
-                                  setOpenModal(false);
-                                }}
-                                type="button"
-                                className="btn-cerrar justify-content-center w-5 "
-                                data-bs-dismiss="modal"
-                              >
-                                Cerrar
-                              </button>
-                            </div>
-                          </div>
-                        </>
-                      )
                     )}
                   </Modal.Body>
                 </div>
               </Modal>
             </div>
           )}
+                          <div className="display-6 mt-4 text-blue">
+                  <p>
+                    Querida bride, esta es una invitación muestra genérica del
+                    sistema de confirmación de asistencia.
+                  </p>
+                  <p>
+                    Puedes solicitar una muestra con Esmeralda a través de <Link to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20podrías%20dar%20una%20muestra%20específica%20de%20la%20invitación%20diamante,%20mi%20nombre%20es">whatsapp</Link> o <Link to="https://www.facebook.com/digitalInviteByEsmeralda">messenger</Link>
+                  </p>
+                  <p>
+Mira también nuestro ejemplo de     <Link to="https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/all-guests-page-arturo-y-noemi-boda/j13kl">Panel de Control</Link>, este link, no aparecerá en la invitación de los invitados ya que solo ustedes, los novios, tendrán acceso             </p>
+                </div>
         </section>
     <LastPage/>
       </div>
