@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../assets/img/logo.png";
 
 const Sobre = ({ abrir, openInvitation, hide, openModal }) => {
   return (
@@ -19,7 +18,6 @@ const Sobre = ({ abrir, openInvitation, hide, openModal }) => {
           </p>
             <p               id="logo"
               loading="lazy"
-              src={logo}
               className={`animate__animated animate__pulse  text-center text-white ${
                 !openInvitation && "animate__infinite"
               } ${!hide && "hide"}`}

@@ -2,6 +2,9 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  /* font-family: "Ephesis", cursive; */
+  font-family: "Cormorant", serif;
+
 }
 a{
   text-decoration: none;
@@ -11,7 +14,7 @@ a{
   height: 100vh;
   align-items: center;
   background-image: linear-gradient(rgb(5 7 12 / 32%), rgb(5 7 12 / 29%)),
-    url("../assets/img/pareja-1.jpg");
+    url("../assets/img/foto-3.jpg");
   padding: 0;
   margin: 0;
   background-size: cover;
@@ -49,7 +52,9 @@ a{
 }
 .font-paris {
   /* font-family: "Parisienne", cursive; */
-  font-family: "Gwendolyn", cursive;
+  font-family: "Cormorant", serif;
+  font-family: "Ephesis", cursive;
+
   /* font-family: "Lily Script One", system-ui; */
 }
 .font-dancing {
@@ -156,7 +161,7 @@ a{
       rgba(5, 7, 12, 0.393),
       rgba(5, 7, 12, 0.462)
     ),
-    url("./../assets/img/bg-wedding-2.png");
+    url("./../assets/img/foto-1.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -340,7 +345,7 @@ button:focus {
   margin: 0;
   padding: 2rem 2rem;
   background-image: linear-gradient(rgb(5 7 12 / 57%), rgb(5 7 12 / 62%)),
-    url("../assets/img/galeria-dinamica.png");
+    url("../assets/img/pareja-5.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -491,7 +496,7 @@ button:focus {
 .home{
   height: 100vh;
   background-image: linear-gradient(rgb(5 7 12 / 0%), rgb(12 5 5 / 58%)),
-    url("../assets/img/pexels-photography-maghradze-ph-1659410-31953114.jpg");
+    url("../assets/img/foto-2.jpg");
   padding: 0;
   margin: 0;
   background-size: cover;
@@ -916,11 +921,20 @@ a:hover {
   height: 100vh;
   margin: 0;
   padding: 0;
-  background-image: url("../assets/img/foto-6.jpg");
+  background-image: url("../assets/img/foto-5.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
+}
+.window-photo2{
+  height: 100vh;
+  max-width: 100%;
+  background-image: url("../assets/img/pareja-8.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 .window-photo-family{
   height: 100vh;
@@ -985,9 +999,7 @@ h3 {
   height: 25%;
 }
 .card {
-  background-color: rgba(137, 43, 226, 0);
-  width: 100vw;
-  height: 50vh;
+  background-color:rgb(115 143 167 / 51%);
   border: none;
 }
 .card-img {
@@ -1100,7 +1112,7 @@ button:hover {
       rgba(5, 7, 12, 0.274),
       rgba(5, 7, 12, 0.171)
     ),
-    url("../assets/img/bg-recepcion.png");
+    url("../assets/img/foto-7.jpg");
 }
 .window-itinerary {
   color: white;
@@ -1116,7 +1128,7 @@ button:hover {
       rgba(5, 7, 12, 0.527),
       rgba(5, 7, 12, 0.514)
     ),
-    url("../assets/img/bg-regalos.png");
+    url("../assets/img/foto-6.jpg");
 }
 .itinerario {
   height: 60vh;
@@ -1191,11 +1203,8 @@ button:hover {
 .window-regalos {
   height: min-content;
   max-width: 100%;
-  background-image: linear-gradient(
-      rgba(5, 7, 12, 0.277),
-      rgba(5, 7, 12, 0.277)
-    ),
-    url("../assets/img/bg-wedding.png");
+  color: black;
+  background: white;
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -1222,7 +1231,7 @@ a:hover {
   transform: rotate(180deg);
 }
 .icon-sobre {
-  font-size: 5.5rem;
+  font-size: 3.5rem;
 }
 .text-window {
   margin: 2rem;
@@ -1281,7 +1290,7 @@ a:hover {
       rgba(5, 7, 12, 0.212),
       rgba(5, 7, 12, 0.322)
     ),
-    url("../assets/img/foto-6.jpg");
+    url("../assets/img/pareja-6.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -1360,12 +1369,11 @@ a:hover {
   /* background-image: url("./assets/img/pexels-madison-inouye-1831234.jpg"); */
 }
 .card {
-  width: 80%;
+  margin: 2rem;
   padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(240, 248, 255, 0.325);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .h-80 {
@@ -1432,7 +1440,7 @@ a:hover {
     height: 350px;
   }
   .icon-sobre {
-    font-size: 7rem;
+    font-size: 5rem;
   }
   .card-img {
     height: 200px;
@@ -1562,9 +1570,9 @@ a:hover {
     height: 20%;
     width: 20%;
   }
-  .card {
+  /* .card {
     height: 45vh;
-  }
+  } */
   .logo-liverpool {
     width: 250px;
   }

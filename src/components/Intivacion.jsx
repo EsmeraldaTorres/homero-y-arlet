@@ -97,10 +97,10 @@ const Intivacion = () => {
   function abrir() {
     setOpenInvitation(true);
     window.scrollTo(0, 0);
-    setTimeout(function () {
+    // setTimeout(function () {
       setHide(false);
       togglePlayPause();
-    }, 2500);
+    // }, 2500);
   }
 
   const handleCheckboxChange = (index, boolean) => {
@@ -274,6 +274,8 @@ const Intivacion = () => {
       {/* <!-- Invitacion --> */}
       <div className={`invitacion ${hide && "hide"}`}>
         <FirstPage
+                  hide={hide}
+
           isPlaying={isPlaying}
           togglePlayPause={togglePlayPause}
           audioRef={audioRef}
@@ -297,7 +299,7 @@ const Intivacion = () => {
 
         <section className="text-center p-4 lead overflow-hidden bg-white">
           <h3
-            className="font-paris principal-name-guest "
+            className="font-pari principal-name-guest "
             data-aos="zoom-out"
             data-aos-duration="2000"
           >
@@ -314,7 +316,7 @@ const Intivacion = () => {
                 data-aos="fade-up"
                 data-aos-duration="1000"
               >
-                {person.name}
+               {key + 1}.- {person.name}
               </p>
             ))}
           </div>
@@ -497,7 +499,7 @@ ${
                                 >
                                   <QRCode
                                     value={
-                                      "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/" +
+                                      "https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/pases-boda" +
                                       guest?.qrUrl
                                     }
                                   />
@@ -519,7 +521,7 @@ ${
                             </div>
                           </div>
                             <div className="mb-4 mt-4">
-                              <h3 className="font-gold text-center">
+                              <h3 className="font-gol text-center">
                                 Muestra tu CÓDIGO QR{" "}
                                 <span className="font-weigth-bold">solo</span> a
                                 los recepcionistas del evento para entrar al
@@ -761,16 +763,7 @@ Mira también nuestro ejemplo de     <Link to="https://arturo-y-noemi-nuestra-bo
       {/* <!-- google fonts --> */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Charmonman:wght@400;700&family=Edu+QLD+Beginner:wght@400;500;600&family=Great+Vibes&family=Pinyon+Script&family=Tangerine:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap"
-      rel="stylesheet"
-    />
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet"></link>
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Ephesis&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Scope+One&family=Tangerine:wght@400;700&display=swap" rel="stylesheet"/>
     </div>
   );
 };

@@ -161,7 +161,7 @@ Jorge Alberto Ruiz Álvarez            </p>
           />
         </div>
       </section>
-      <section
+      {/* <section
         class="window-photo-family d-flex justify-content-center align-items-center"
       >
         <p
@@ -171,7 +171,7 @@ Jorge Alberto Ruiz Álvarez            </p>
         >
           El inicio de la familia González Ruiz
         </p>
-      </section>
+      </section> */}
     </>
   );
 };
