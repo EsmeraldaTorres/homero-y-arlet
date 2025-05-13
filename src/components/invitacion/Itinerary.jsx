@@ -4,6 +4,7 @@ import iconFiesta from "../../assets/img/dinner-icon.png";
 import iconComida from "../../assets/img/comida.png";
 import iconIglesia from "../../assets/img/iglesia.png";
 import iconMariachi from "../../assets/img/mariachi-icon.png";
+import img2 from "../../assets/img/foto-5.jpg"
 const Itinerary = () => {
   return (
     <>
@@ -60,6 +61,7 @@ const Itinerary = () => {
           </div>
       </section>
       <section className="window-photo">
+      <img src={img2} alt="Imagen ventana" />
         <div
           className="window-parents"
           data-aos="fade-down"
