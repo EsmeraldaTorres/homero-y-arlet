@@ -1,9 +1,10 @@
-html, body {
-  margin: 0;
+* {
   padding: 0;
-  overflow-x: hidden;
-  height: 100%;
-  -webkit-overflow-scrolling: touch;
+  margin: 0;
+  box-sizing: border-box;
+  /* font-family: "Ephesis", cursive; */
+  font-family: "Cormorant", serif;
+
 }
 
 
@@ -919,18 +920,15 @@ a:hover {
   background-position: bottom;
 }
 .window-photo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
   height: 100vh;
-  z-index: 999;
-  background-color: rgba(0, 0, 0, 0.7); /* ejemplo de fondo */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: auto;
-  touch-action: none; /* útil en Safari */
+  margin: 0;
+  padding: 0;
+  background-image: url("../assets/img/foto-5.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: sticky;
+  top: 0;
+  background-position: center;
 }
 .window-photo2{
   height: 100vh;

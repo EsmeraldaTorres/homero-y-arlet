@@ -61,7 +61,6 @@ const Itinerary = () => {
           </div>
       </section>
       <section className="window-photo">
-      <img src={img2} alt="Imagen ventana" />
         <div
           className="window-parents"
           data-aos="fade-down"
