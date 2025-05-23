@@ -27,20 +27,20 @@ const Itinerary = () => {
         <div className="timeline">
           <ul>
             <li>
-              <div className="text-center" data-aos="fade-up" data-aos-duration="3000">
+              <div className="text-center d-flex flex-column" data-aos="fade-up" data-aos-duration="3000">
                 <time className="time-itinerario">2:00pm</time>
                 <i class="bi bi-bookmark-plus f-5"></i><span className="font-paris display-5"> Misa</span>
               </div>
             </li>
             <li>
-              <div className="text-center" data-aos="fade-down" data-aos-duration="3000">
+              <div className="text-center d-flex flex-column" data-aos="fade-down" data-aos-duration="3000">
 
                   <time class="time-itinerario">7:00pm 
                   </time>
                   <i class="bi bi-ticket f-5"></i><span class="font-paris display-5"> Recepción </span>                  </div>
             </li>
             <li>
-              <div className="text-center" data-aos="fade-up" data-aos-duration="3000">
+              <div className="text-center d-flex flex-column" data-aos="fade-up" data-aos-duration="3000">
                 <time className="time-itinerario mb-4">8:00pm
                  </time>
                  <img src={iconFiesta}  className="icon-img" alt=""/> <span className="font-paris display-5"> Comida</span>
@@ -52,7 +52,7 @@ const Itinerary = () => {
               </div>
             </li>
             <li>
-              <div className="d-flex flex-column d-none" data-aos="fade-down" data-aos-duration="3000">
+              <div className="d-flex flex-column " data-aos="fade-down" data-aos-duration="3000">
                 <time className="time-itinerario text-center">2:00am </time>
                 <img src={iconMariachi}  className="icon-img" alt=""/> <span className="font-paris display-5"> Mariachi</span>
               </div>
