@@ -91,17 +91,23 @@ const Intivacion = () => {
     } else {
       audioRef.current.audioEl.current.play();
     }
+    console.log(isPlaying, "isPlaying")
     setIsPlaying(!isPlaying);
   };
 
   function abrir() {
     setOpenInvitation(true);
     window.scrollTo(0, 0);
-    // setTimeout(function () {
       setHide(false);
       togglePlayPause();
-    // }, 2500);
   }
+  const handleVisibilityChange = () => {
+    if (document.hidden && isPlaying) {
+      // Si la página ya no está visible y el audio está sonando, pausarlo
+      audioRef.current.audioEl.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
   const handleCheckboxChange = (index, boolean) => {
     const updatedAccompanist = [...guest.acompanist];
@@ -209,6 +215,12 @@ const Intivacion = () => {
       setTicketsConfirmados(filteredAcompanist);
     }
   }, [guest]);
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [isPlaying]);
 
   useEffect(() => {
     AOS.init();

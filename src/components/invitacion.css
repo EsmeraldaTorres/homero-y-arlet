@@ -526,6 +526,9 @@ button:focus {
 .font-gold-transparent {
   color: rgba(168, 143, 105, 0.705);
 }
+.text-audio{
+  font-size: .7rem;
+}
 .player-btn {
   bottom: 1%;
   right: 0.5rem;

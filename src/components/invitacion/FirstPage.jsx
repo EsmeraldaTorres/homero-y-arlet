@@ -28,7 +28,7 @@ const FirstPage = ({ isPlaying, togglePlayPause, audioRef, hide }) => {
             Noemi
           </div>
         </div>
-        <div className="text-white text-center player-btn" id="play">
+        <div className="text-white text-center player-btn d-flex flex-column" id="play">
           {isPlaying ? (
             <PauseCircle
               className={` play-btn player-icon `}
@@ -40,8 +40,8 @@ const FirstPage = ({ isPlaying, togglePlayPause, audioRef, hide }) => {
               onClick={togglePlayPause}
             />
           )}
-
-          <p>audio</p>
+          <p className="d-flex font-gold text-audio">audio         <i class="bi bi-music-note-beamed "></i>
+          </p>
         </div>
         <div className="player-audio">
           <ReactAudioPlayer
