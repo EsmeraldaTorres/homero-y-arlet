@@ -742,15 +742,10 @@ ${
             </div>
           )}
                           <div className="display-6 mt-4 text-blue">
+
                   <p>
-                    Querida bride, esta es una invitación muestra genérica del
-                    sistema de confirmación de asistencia.
-                  </p>
-                  <p>
-                    Puedes solicitar una muestra con Esmeralda a través de <Link to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20podrías%20dar%20una%20muestra%20específica%20de%20la%20invitación%20diamante,%20mi%20nombre%20es">whatsapp</Link> o <Link to="https://www.facebook.com/digitalInviteByEsmeralda">messenger</Link>
-                  </p>
-                  <p>
-Mira también nuestro ejemplo de     <Link to="https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/all-guests-page-arturo-y-noemi-boda/j13kl">Panel de Control</Link>, este link, no aparecerá en la invitación de los invitados ya que solo ustedes, los novios, tendrán acceso             </p>
+Mira el ejemplo de tu     <Link className="display-5 text-decoration-underline" to="https://arturo-y-noemi-nuestra-boda-muestra.netlify.app/all-guests-page-arturo-y-noemi-boda/j13kl">Panel de Control                      <i className="bi bi-box-arrow-up-right"></i>
+</Link>, este link, no aparecerá en la invitación de los invitados ya que solo ustedes, los novios, tendrán acceso.            </p>
                 </div>
         </section>
     <LastPage/>
