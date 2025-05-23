@@ -934,7 +934,7 @@ a:hover {
   background-image: url("../assets/img/foto-5.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: sticky;
+  /* background-attachment: sticky;/ */
   top: 0;
   background-position: center;
 }
@@ -1177,7 +1177,9 @@ button:hover {
   border-radius: 50%;
   background: inherit;
 }
-
+ul{
+  padding:  0;
+}
 .timeline ul li div {
   position: relative;
   bottom: 0;
@@ -1282,7 +1284,7 @@ a:hover {
       rgba(5, 7, 12, 0.277)
     ),
     url("../assets/img/foto-3.jpg");
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
