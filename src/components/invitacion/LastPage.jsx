@@ -30,7 +30,7 @@ const LastPage = () => {
             Invitación Hecha por Digital Invite
             <a
               target="_blank"
-              href="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio"
+              to="https://wa.me/522281080685?text=Hola%20Me%20gustaría%20una%20invitación%20para%20mi%20boda%20como%20esta%20(paquete%20diamante%20efecto%20portada)"
               className="marca"
             >
               {""} by Esmeralda<i className="bi bi-whatsapp"></i>

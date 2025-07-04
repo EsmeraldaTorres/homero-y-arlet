@@ -516,7 +516,7 @@ ${
                                     }
                                   />
                                   <div className="text-blue">
-                                    Al escanear el QR, el invitado verá los nombres de las personas que confirmó y posteriormente, el número de mesa asignado para cada uno. Esto es una muestra genérica.
+                                    Al escanear el QR, el invitado verá los nombres de las personas que confirmó y posteriormente, el número de mesa que ustedes los novios les asignen desde su Panel de Control.
                                   </div>
                                 </div>
                                 {guest?.acompanist?.map((acomp, index) => (
@@ -593,7 +593,7 @@ ${
                                 <div className="d-flex justify-content-evenly w-80">
                                   <Link
                                     target="_blank"
-                                    to="https://wa.me/524426147355?text=Hola%20Esmeralda!%20Me%20interesa%20contratar%20tu%20servicio. Necesito una invitación para (especifica tu evento)"
+                                    to="https://wa.me/522281080685?text=Hola%20Me%20gustaría%20una%20invitación%20para%20mi%20boda%20como%20esta%20(paquete%20diamante%20efecto%20portada)"
                                   >
                                     <i className="bi bi-whatsapp display-5 font-gold mx-2"></i>
                                   </Link>
@@ -615,7 +615,7 @@ ${
                                   >
                                     <i className="bi bi-envelope display-5 font-gold mx-2"></i>
                                   </Link>
-                                  <Link target="_blank" to="tel:+524426147355">
+                                  <Link target="_blank" to="tel:+522281080685">
                                     <i className="bi bi-telephone-forward display-5 font-gold mx-2"></i>
                                   </Link>
                                 </div>
