@@ -1,17 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import {
   collection,
-  query,
-  where,
   getDocs,
   writeBatch,
   doc,
-  updateDoc,
 } from "firebase/firestore";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import "jspdf-autotable";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 import "./invitacion.css";
 
@@ -26,8 +24,7 @@ const AllGuestPage = () => {
   const [menu, setMenu] = useState("Todos");
   const [guests, setGuests] = useState([]);
   const mesas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  const tableRef = useRef(null);
-  const pdfContentRef = useRef(null);
+
 
   const fetchData = async () => {
     try {
@@ -74,63 +71,7 @@ const AllGuestPage = () => {
     setEtiqueta(value);
   };
 
-  // const handleAssignTables = async () => {
-  //   try {
-  //     const batch = writeBatch(db);
 
-  //     // Recorrer la lista de invitados confirmados (confirmedPeople)
-  //     confirmedPeople.forEach((simpleObj) => {
-  //       console.log(`Procesando: ${simpleObj.name}, Table: ${simpleObj.table}`);
-
-  //       // Recorrer los invitados (guests) para buscar el invitado correcto
-  //       guests.forEach((nestedObj) => {
-  //         if (Array.isArray(nestedObj.acompanist)) {
-  //           // Buscar al invitado o acompañante que coincide con el nombre en confirmedPeople
-  //           let found = false;
-  //           nestedObj.acompanist = nestedObj.acompanist.map((acompanistObj) => {
-  //             if (acompanistObj.name === simpleObj.name) {
-  //               console.log(`Coincidencia encontrada: ${acompanistObj.name}`);
-  //               found = true;
-  //               return {
-  //                 ...acompanistObj,
-  //                 asist:
-  //                   simpleObj.asist !== undefined
-  //                     ? simpleObj.asist
-  //                     : acompanistObj.asist,
-  //                 table:
-  //                   simpleObj.table !== undefined
-  //                     ? simpleObj.table
-  //                     : acompanistObj.table || null,
-  //               };
-  //             }
-  //             return acompanistObj;
-  //           });
-
-  //           // Si se encontró una coincidencia y hay cambios, actualizar el documento
-  //           if (found && nestedObj.id) {
-  //             const guestRef = doc(db, "people", nestedObj.id);
-  //             console.log(
-  //               `Actualizando documento ${nestedObj.id} en Firestore`
-  //             );
-
-  //             batch.update(guestRef, { acompanist: nestedObj.acompanist });
-  //           }
-  //         } else {
-  //           console.error(
-  //             `nestedObj.acompanist no es un arreglo o es undefined. Invitado: ${nestedObj.name}`
-  //           );
-  //         }
-  //       });
-  //     });
-
-  //     // Commit de los cambios
-  //     await batch.commit();
-  //     console.log("Documentos actualizados correctamente en Firestore.");
-  //     setOpenModal(true);
-  //   } catch (error) {
-  //     console.error("Error actualizando documentos: ", error);
-  //   }
-  // };
   const handleAssignTables = async () => {
     try {
       const batch = writeBatch(db);
@@ -239,6 +180,55 @@ const AllGuestPage = () => {
 
     doc.save("table.pdf");
   };
+
+  const handleDownloadExcel = () => {
+    // Filtramos según el estado actual
+    let dataToExport = [];
+  
+    const fuente =
+      menu === "confirmados"
+        ? confirmedPeople
+        : menu === "no asistira"
+        ? noAsistiran
+        : menu === "sin confirmar"
+        ? noConfirmados
+        : arrayPeople;
+  
+    dataToExport =
+      etiqueta === "Todos"
+        ? fuente
+        : fuente.filter((person) => person.etiqueta === etiqueta);
+  
+    // Mapeamos los datos para exportar
+    const excelData = dataToExport.map((person, index) => ({
+      ID: index + 1,
+      Familia: person.principalName,
+      Invitado: person.name,
+      Estado: person.asist
+        ? "Confirmado"
+        : person.asist === null
+        ? "Sin confirmar"
+        : "No asistirá",
+      Etiqueta: person.etiqueta || "",
+      Mesa: person.table || "",
+    }));
+  
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Invitados");
+  
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+  
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+  
+    saveAs(blob, `invitados_${menu}_${etiqueta}.xlsx`);
+  };
+  
 
   useEffect(() => {
     fetchData();
@@ -422,6 +412,12 @@ const AllGuestPage = () => {
                 Faltan por confirmar:{" "}
                 <span className="f-w-700">{noConfirmados.length}</span>
               </div>
+              <button
+  className="btn-download mt-4 w-100 btn-no-asistir btn-min-w ml-4 p-3"
+  onClick={handleDownloadExcel}
+>
+  Descargar Excel
+</button>
             </div>
           </>
         ) : menu === "confirmados" ? (
@@ -434,7 +430,7 @@ const AllGuestPage = () => {
                   siguiente botón:
                 </p>
                 <button
-                  className="mx-2 btn "
+                  className="mx-2 btn btn-download"
                   onClick={() => {
                     setAddTable(true);
                   }}
@@ -450,7 +446,7 @@ const AllGuestPage = () => {
               <table id="pdf-table" className="mt-4">
                 <thead>
                   <tr>
-                    <th>id</th>
+                    <th>No.</th>
                     <th>Familia</th>
                     <th>Invitado</th>
                     {addTable && <th>Mesa</th>}
@@ -502,8 +498,8 @@ const AllGuestPage = () => {
                           person.etiqueta === etiqueta && (
                             <>
                               <tr key={person.id}>
+                              <td>{key + 1}</td>
                                 <td>{person.principalName}</td>
-
                                 <td>{person.name}</td>
                                 <td>{person.asist && "confirmado"}</td>
                                 <td>{person.etiqueta}</td>
@@ -529,6 +525,13 @@ const AllGuestPage = () => {
                 >
                   Descargar PDF
                 </button>
+                <button
+  className="btn-download mt-4 w-100 btn-no-asistir btn-min-w ml-4 p-3"
+  onClick={handleDownloadExcel}
+>
+  Descargar Excel
+</button>
+
               </>
             )}
           </>
@@ -583,7 +586,6 @@ const AllGuestPage = () => {
                 <thead>
                   <tr>
                     <th>Familia</th>
-
                     <th>Invitado</th>
                     <th>Status</th>
                     <th>Etiqueta</th>

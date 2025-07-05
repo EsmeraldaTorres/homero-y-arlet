@@ -211,10 +211,10 @@ a{
   vertical-align: middle;
   border-style: none;
 }
-button {
+/* button {
   box-shadow: none !important;
   transition: none !important;
-}
+} */
 button:focus {
   outline: none;
 }
@@ -289,6 +289,17 @@ button:focus {
 .rotate-180{
   transform: rotate(180deg);
 
+}
+.table-width {
+  font-size: 0.9rem;
+}
+.select-mesas {
+  border: solid 1px #a5a5a5;
+  padding: 0.2rem;
+  text-align: center;
+  color: #7d775a;
+  font-weight: 600;
+  border-radius: 7px;
 }
 .btn-save {
   width: max-content;
@@ -419,6 +430,11 @@ button:focus {
   margin: 0;
   background-size: cover;
   background-position: center;
+}
+td {
+  border-bottom: solid 1px;
+  padding: 0.5rem;
+  border-color: inherit;
 }
 .text-main {
   font-size: 1.5rem;
@@ -1050,7 +1066,7 @@ h3 {
 }
 button {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: ease-out 2s;
 }
 button:hover {
@@ -1410,6 +1426,10 @@ a:hover {
   background-position: center;
   z-index: 9;
 }
+.box-add-table {
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
 .display-2 {
   font-size: 2.8rem;
 }
@@ -1429,6 +1449,9 @@ a:hover {
 }
 .marca {
   color: rgba(244, 244, 248, 0.873);
+}
+.btn-min-w {
+  margin-right: 1rem;
 }
 @media (min-width: 470px) {
   .name {
@@ -1481,6 +1504,13 @@ a:hover {
   .name {
     width: 60%;
     padding-right: 0 !important;
+  }
+  .btn-min-w {
+    max-width: 200px;
+  }
+  .table-width {
+    font-size: 1.1rem;
+    width: 100%;
   }
   .list {
     width: 50%;
@@ -1548,6 +1578,9 @@ a:hover {
     width: 50%;
     padding-right: 0 !important;
   }
+  .box-add-table {
+    flex-direction: row;
+  }
   .hora {
     font-size: 3.5rem;
   }
@@ -1566,6 +1599,9 @@ a:hover {
     vertical-align: middle;
     border-style: none;
     background-position: center;
+  }
+  .box-add-table {
+    flex-direction: row;
   }
   .z-index-2 {
     position: absolute;
