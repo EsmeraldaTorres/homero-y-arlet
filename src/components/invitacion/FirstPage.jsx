@@ -1,6 +1,6 @@
 import React from "react";
 import ReactAudioPlayer from "react-audio-player";
-import audioFile from "../../assets/audio/i-choose-you-sara.mp3";
+import audioFile from "../../assets/audio/burning-love-elvis-presley.mp3";
 import { PlayCircle, PauseCircle, Coin } from "react-bootstrap-icons";
 import nameImg from "../../assets/img/arturo-y-noemi.png";
 

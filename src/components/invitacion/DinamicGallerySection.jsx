@@ -42,7 +42,7 @@ const DinamicGallerySection = () => {
                   <span>
                     {" "}
                     <a
-                      href="https://www.wedshoots.com/mx?albumId=MX883b4adb"
+                      href="https://www.wedshoots.com/mx?albumId="
                       className=" ml-2 font-gold d-flex align-items-center animate__animated animate__pulse animate__infinite"
                     >
                       Click aquí.
@@ -65,7 +65,7 @@ const DinamicGallerySection = () => {
                 {" "}
                 Introduce nuestro código{" "}
                 <span className="text-underline font-weight-bold font-gold">
-                  MX883b4adb
+                  02 02 02 02
                 </span>
               </li>
               <li data-aos="fade-down" data-aos-duration="3000">

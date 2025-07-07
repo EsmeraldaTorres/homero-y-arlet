@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
 import "firebase/database";
 
 const firebaseConfig = {
@@ -15,10 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore
-const db = getFirestore(app);
+// Inicializar Firestore y Storage
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 
-export { db };
-
-const firebaseUrl = "https://invitaciones-55c1a.firebaseio.com"; // Reemplaza con tu URL de Firebase
-const apiKey = "AIzaSyDKoJ7TPLSXJGM5zr19LnTmgRiCxKLU4PI"; // Reemplaza con tu API Key de Firebase
