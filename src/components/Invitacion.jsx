@@ -111,12 +111,6 @@ const Invitacion = () => {
     return () => clearInterval(asistInterval);
   }, []);
 
-  // const renderForm = () => {
-  //   if (guests === "1") return <FormOne />;
-  //   if (guests === "2") return <FormTwo />;
-  //   return <FormThree num={guests} />;
-  // };
-
   const renderReservationText = () => {
     const extra = guests - 1;
     if (guests === "1")
