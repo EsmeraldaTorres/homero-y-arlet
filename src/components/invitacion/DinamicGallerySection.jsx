@@ -1,6 +1,9 @@
 import React from "react";
-import lineDecoration from "../../assets/img/line2.png"
+import lineDecoration from "../../assets/img/line2.png";
+import { useGuest } from "../../Context/GuestContext";
+
 const DinamicGallerySection = () => {
+  const { eventData } = useGuest();
   return (
     <>
       <section className="window-back2">
@@ -24,11 +27,7 @@ const DinamicGallerySection = () => {
             en una misma galería!
           </h3>
           <div className="d-flex justify-content-around align-items-center">
-            <img
-              className="decoration  "
-              src={lineDecoration}
-              alt="linea"
-            />
+            <img className="decoration  " src={lineDecoration} alt="linea" />
           </div>
           <div className="p-3">
             <ol className="    text-left">
@@ -39,10 +38,10 @@ const DinamicGallerySection = () => {
               >
                 <div className="d-flex ">
                   Descarga la app
-                  <span>
+                  <span className="mx-2">
                     {" "}
                     <a
-                      href="https://www.wedshoots.com/mx?albumId="
+                      href={`https://www.wedshoots.com/mx?albumId=${eventData.code}`}
                       className=" ml-2 font-gold d-flex align-items-center animate__animated animate__pulse animate__infinite"
                     >
                       Click aquí.
@@ -65,7 +64,7 @@ const DinamicGallerySection = () => {
                 {" "}
                 Introduce nuestro código{" "}
                 <span className="text-underline font-weight-bold font-gold">
-                  02 02 02 02
+                  {eventData.code}
                 </span>
               </li>
               <li data-aos="fade-down" data-aos-duration="3000">
@@ -77,10 +76,10 @@ const DinamicGallerySection = () => {
         </div>
       </section>
       <section className="ribbon">
-      <p className="m-0 display-6">
+        <p className="m-0 display-6">
           ¡Esta noche es especial y que nos acompañes la hace aún más!
-      </p>
-    </section>
+        </p>
+      </section>
     </>
   );
 };
