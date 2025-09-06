@@ -19,6 +19,7 @@ import DinamicGallerySection from "./invitacion/DinamicGallerySection";
 import DressCode from "./invitacion/DressCode";
 import PhotoGallerySection from "./invitacion/PhotoGallerySection";
 import GuestForm from "./invitacion/GuestForm";
+import InvitacionesNavbar from "./invitacion/InvitacionesNavbar";
 
 const Invitacion = () => {
   const { guests } = useParams();
@@ -142,6 +143,7 @@ const Invitacion = () => {
       />
 
       <div className={`invitacion ${hide ? "hide" : ""}`}>
+        <InvitacionesNavbar />
         <FirstPage
           hide={hide}
           isPlaying={isPlaying}
@@ -185,8 +187,7 @@ const Invitacion = () => {
               llenen todos los campos del formulario. (Este mensaje no saldrá en
               su invitación)
             </p>
-            {renderReservationText()}
-
+            <div id="confirmar">{renderReservationText()}</div>
             {text.firstText ? (
               <>
                 <p

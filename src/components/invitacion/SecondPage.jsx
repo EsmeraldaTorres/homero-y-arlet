@@ -11,7 +11,10 @@ const SecondPage = () => {
 
   return (
     <>
-      <section className="fecha-foto p-4 d-flex flex-column justify-content-around  pt-4">
+      <section
+        id="fecha"
+        className="fecha-foto p-4 d-flex flex-column justify-content-around  pt-4"
+      >
         <div className="d-flex justify-content-around align-items-center">
           <img
             loading="lazy"

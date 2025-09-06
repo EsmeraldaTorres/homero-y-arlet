@@ -36,7 +36,10 @@ const Itinerary = () => {
         </div>
       </section>
 
-      <section className="recepcion-information d-flex align-items-center justify-content-center">
+      <section
+        id="itinerario"
+        className="recepcion-information d-flex align-items-center justify-content-center"
+      >
         <div className="timeline">
           <ul>
             {eventData.itineraryData.map((item, idx) => (

@@ -3,7 +3,10 @@ import lineaAlReves from "../../assets/img/lineaalreves.png";
 
 const Lugar = ({ title, name, imgSrc, hour, address, mapUrl }) => {
   return (
-    <section className="recepcion-information d-flex align-items-center justify-content-center">
+    <section
+      id={`ubicaciones-${title}`}
+      className="recepcion-information d-flex align-items-center justify-content-center"
+    >
       <div>
         <h2
           data-aos="zoom-in-up"

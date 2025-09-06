@@ -5,7 +5,10 @@ import decoration from "../../assets/img/Untitled design (3).png";
 const GiftSection = () => {
   return (
     <>
-      <section className="ribbon bg-white d-flex flex-column justify-content-center align-items-center text-center pt-4 pb-4">
+      <section
+        id="mesa"
+        className="ribbon bg-white d-flex flex-column justify-content-center align-items-center text-center pt-4 pb-4"
+      >
         <p
           className="m-0 display-6 font-kala pt-4 pb-4 principal-text"
           data-aos="zoom-in"
