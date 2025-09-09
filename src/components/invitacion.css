@@ -5,7 +5,15 @@
   /* font-family: "Ephesis", cursive; */
   font-family: "Cormorant", serif;
 }
-
+html,
+body {
+  overflow-x: hidden; /* quita scroll horizontal */
+  overflow-y: hidden; /* quita scroll vertical */
+  height: 100%;
+}
+.over-y-hidden {
+  overflow: hidden;
+}
 /* -------------------- */
 /* Estilo para checkbox */
 .checkbox-wrapper-24 {
