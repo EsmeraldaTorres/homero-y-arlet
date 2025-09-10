@@ -7,11 +7,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import DataPage from "./components/invitacion/DataPage";
 import HomePage from "./components/invitacion/HomePage";
+import ScrollManager from "./components/invitacion/ScrollManager";
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollManager />
+
         <Routes>
           <Route path="/:guests" element={<Invitacion />} />
           <Route path="/data-page" element={<DataPage />} />
