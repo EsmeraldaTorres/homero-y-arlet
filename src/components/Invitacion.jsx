@@ -29,6 +29,7 @@ const Invitacion = () => {
   const [openInvitation, setOpenInvitation] = useState(false);
   const [hide, setHide] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(false);
 
   const [timeCountDown, setTimeCountDown] = useState({
     days: 0,
@@ -57,6 +58,7 @@ const Invitacion = () => {
 
   const abrir = () => {
     setOpenInvitation(true);
+    setShowNavbar(false);
     window.scrollTo(0, 0);
     setHide(false);
     togglePlayPause();
@@ -146,8 +148,11 @@ const Invitacion = () => {
         openModal={openModal}
       />
 
-      <div className={`invitacion ${hide ? "hide" : ""}`}>
-        <InvitacionesNavbar />
+      <div className={`invitacion ${hide ? "hide d-none" : ""}`}>
+        <InvitacionesNavbar
+          showNavbar={showNavbar}
+          setShowNavbar={setShowNavbar}
+        />
         <FirstPage
           hide={hide}
           isPlaying={isPlaying}

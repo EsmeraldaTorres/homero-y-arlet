@@ -5,12 +5,7 @@
   /* font-family: "Ephesis", cursive; */
   font-family: "Cormorant", serif;
 }
-html,
-body {
-  overflow-x: hidden; /* quita scroll horizontal */
-  overflow-y: hidden; /* quita scroll vertical */
-  height: 100%;
-}
+
 .over-y-hidden {
   overflow: hidden;
 }
@@ -1053,13 +1048,7 @@ a:hover {
 .overflow-hidden {
   overflow: hidden;
 }
-.test-class {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-}
+
 /* recepcion */
 .recepcion-img {
   overflow: hidden;

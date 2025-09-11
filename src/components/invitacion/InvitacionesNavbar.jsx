@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 
-const InvitacionesNavbar = () => {
-  const [showNavbar, setShowNavbar] = useState(false);
+const InvitacionesNavbar = ({ showNavbar, setShowNavbar }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [expanded, setExpanded] = useState(false);
 

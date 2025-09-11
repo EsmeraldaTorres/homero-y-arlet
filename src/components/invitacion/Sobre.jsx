@@ -9,9 +9,11 @@ const Sobre = ({ abrir, openInvitation, hide, openModal }) => {
   `.trim();
 
   const pulseClasses = `
-    animate__animated animate__pulse text-center text-white
+    animate__animated animate__pulse text-center text-white overflow-hidden
     ${!openInvitation ? "animate__infinite" : ""}
-    ${!hide ? "hide" : ""}
+    ${!hide ? "hide test-class" : ""}
+             
+
   `.trim();
 
   return (
