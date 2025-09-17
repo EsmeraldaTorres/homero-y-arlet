@@ -63,7 +63,7 @@ const ParentsSection = () => {
         <div className="d-flex justify-content-center">
           <div className="row m-0">
             <PersonGroup
-              names={["Jorge Alberto Ruiz Álvarez", "María Sánchez Romero"]}
+              names={["Homero Ramirez Bencomo", "Elsa Isis Vergara Hernández "]}
             />
           </div>
         </div>
@@ -71,7 +71,10 @@ const ParentsSection = () => {
         <div className="d-flex justify-content-center font-gold">
           <div className="row m-0">
             <PersonGroup
-              names={["Alejandro López Roca", "María de Jesús Juárez Sandoval"]}
+              names={[
+                "Jesus Alberto Lehovec Guerrero",
+                "Norma Angélica Barragán Ávalos",
+              ]}
             />
           </div>
         </div>
