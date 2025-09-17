@@ -28,6 +28,9 @@
   background-color: #909090;
   border-radius: 50%;
 }
+.parents .carousel {
+  height: 40vh;
+}
 .checkbox-wrapper-24 label {
   display: flex;
   align-items: center;
@@ -1625,6 +1628,11 @@ a:hover {
 }
 .btn-min-w {
   margin-right: 1rem;
+}
+@media (min-width: 350px) {
+  .parents .carousel {
+    height: 30vh;
+  }
 }
 @media (min-width: 470px) {
   .name {

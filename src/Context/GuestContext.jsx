@@ -65,7 +65,7 @@ export const GuestProvider = ({ children }) => {
       {
         icon: iconVelacion,
         title: "Velación",
-        names: ["Carlos Angel Esteban", "Mónica Contreras "],
+        names: ["Carlos Angel Esteban", "Mónica Contreras Sánchez"],
       },
     ],
     // godparents: {
