@@ -20,8 +20,13 @@
 .carousel-indicators button {
   box-shadow: none !important;
 }
-.nuestros-padrinos .carousel-indicators {
-  display: none;
+.parents .carousel-indicators {
+  bottom: -4rem;
+  /* display: none; */
+}
+.parents .carousel-dark .carousel-indicators [data-bs-target] {
+  background-color: #909090;
+  border-radius: 50%;
 }
 .checkbox-wrapper-24 label {
   display: flex;

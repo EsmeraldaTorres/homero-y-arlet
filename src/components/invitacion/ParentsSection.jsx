@@ -60,16 +60,6 @@ const ParentsSection = () => {
         >
           Agradecemos a nuestros padres
         </p>
-
-        <div className="d-flex justify-content-center">
-          <div className="row m-0">
-            <div className="text-center mt-4 font-gold">Padres del novio:</div>
-            <PersonGroup
-              names={["Homero Ramírez Bencomo", "Elsa Isis Vergara Hernández "]}
-            />
-          </div>
-        </div>
-
         <div className="d-flex justify-content-center font-gol">
           <div className="row m-0">
             <div className="text-center mb-0 mt-4 font-gold">
@@ -81,6 +71,14 @@ const ParentsSection = () => {
                 "Jesus Alberto Lehovec Guerrero",
                 "Norma Angélica Barragán Ávalos",
               ]}
+            />
+          </div>
+        </div>
+        <div className="d-flex justify-content-center">
+          <div className="row m-0">
+            <div className="text-center mt-4 font-gold">Padres del novio:</div>
+            <PersonGroup
+              names={["Homero Ramírez Bencomo", "Elsa Isis Vergara Hernández "]}
             />
           </div>
         </div>
