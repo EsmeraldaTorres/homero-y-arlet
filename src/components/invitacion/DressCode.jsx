@@ -1,5 +1,5 @@
 import React from "react";
-import lineDecoration from "../../assets/img/lineaalreves.png";
+import lineDecoration from "../../assets/img/linea3.png";
 import { useGuest } from "../../Context/GuestContext";
 
 const DressCode = () => {
@@ -34,10 +34,11 @@ const DressCode = () => {
         <p
           data-aos="zoom-in-up"
           data-aos-duration="1000"
-          className="font-paris display-4 p-4 "
+          className="font-paris display-4 px-4 pb-0 mb-0 pt-4 "
         >
           {eventData?.dressCode?.name}
         </p>
+        <p> Mujeres: NO colores Blanco, Beige o Dorado. </p>
       </section>
     </>
   );

@@ -5,13 +5,13 @@ import { getStorage } from "firebase/storage";
 import "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDKoJ7TPLSXJGM5zr19LnTmgRiCxKLU4PI",
-  authDomain: "invitaciones-55c1a.firebaseapp.com",
-  projectId: "invitaciones-55c1a",
-  storageBucket: "invitaciones-55c1a.appspot.com",
-  messagingSenderId: "673447605232",
-  appId: "1:673447605232:web:470f34d96576c11ddca335",
-  measurementId: "G-8QXEG9TV1Q",
+  apiKey: "AIzaSyAfv3dTFyHPtTGMjBjJIeQCawYC6wZX4qc",
+  authDomain: "homero-y-arlet.firebaseapp.com",
+  projectId: "homero-y-arlet",
+  storageBucket: "homero-y-arlet.firebasestorage.app",
+  messagingSenderId: "469331497114",
+  appId: "1:469331497114:web:7642ad3209fd4449aa4f23",
+  measurementId: "G-GNBTKBGWNN",
 };
 
 // Initialize Firebase
@@ -20,4 +20,3 @@ const app = initializeApp(firebaseConfig);
 // Inicializar Firestore y Storage
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-

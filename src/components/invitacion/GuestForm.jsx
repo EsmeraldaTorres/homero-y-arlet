@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { db } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Spinner } from "react-bootstrap";
-import lineDecoration from "../../assets/img/line2.png";
+import lineDecoration from "../../assets/img/linea3.png";
 import { Link } from "react-router-dom";
 import AddToCalendar from "./AddToCalendar";
 import { motion } from "framer-motion"; // Importa Framer Motion
 import { useGuest } from "../../Context/GuestContext";
+import { span } from "framer-motion/client";
 
 const GuestForm = ({ tickets, acompNames = [] }) => {
   const { eventData } = useGuest();
@@ -28,33 +29,24 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
   const spinnerRef = useRef(null);
   const mensajeRef = useRef(null);
 
+  const date = new Date().toISOString().split("T")[0];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    {
-      console.log(formData.acompanist.length, "lengt");
-    }
-    {
-      console.log(formData.acompanist, "lengt");
-    }
     const finalData = {
       ...formData,
       date: new Date().toISOString(),
     };
-
     setSend(true);
-    {
-      console.log(formData.acompanist.length, "lengt");
-    }
 
-    spinnerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     setTimeout(() => setIsSubmitting(true), 500);
 
     try {
-      await addDoc(collection(db, "save-the-date"), finalData);
+      await addDoc(collection(db, "people"), finalData);
       setTimeout(() => {
         setIsSubmitting(false);
         setSubmitted(true);
-      }, 1000);
+      }, 5000);
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -65,9 +57,6 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
     newAcompanist[index] = value; // Actualiza el valor en la posición correspondiente
     setFormData({ ...formData, acompanist: newAcompanist });
   };
-  // const handleAcompananteChange = (value) => {
-  //   setAcompanante((prev) => (prev === value ? "" : value));
-  // };
 
   const handleAcompananteChange = (value) => {
     if (acompanante === value) {
@@ -75,14 +64,6 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
     } else {
       setAcompanante(value);
       setSoltero(""); // Reiniciar la segunda pregunta
-    }
-  };
-
-  const handleSolteroChange = (value) => {
-    if (soltero === value) {
-      setSoltero(""); // Si vuelve a hacer click, deselecciona
-    } else {
-      setSoltero(value);
     }
   };
 
@@ -96,11 +77,39 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
   }, [submitted]);
 
   useEffect(() => {
+    if (isSubmitting && spinnerRef.current) {
+      console.log(send, "send");
+      spinnerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [isSubmitting]);
+
+  useEffect(() => {
     console.log(tickets, "tickets");
   }, []);
 
   return (
     <div className="d-flex flex-column justify-content-center container-1">
+      {!isSubmitting && !submitted && (
+        <div className="text-center mb-4 mt-4 display-5 f-w-700 font-gold1">
+          ASISTENCIA PARA
+          {tickets === 1 ? (
+            <>
+              {" "}
+              <span className="display-2"> 1 </span> <span>PERSONA</span>{" "}
+            </>
+          ) : (
+            <>
+              <span className="display-2"> {tickets}</span>{" "}
+              <span>PERSONAS</span>
+            </>
+          )}
+          {/* {tickets === 1 ? "1 PERSONA" : `${tickets} PERSONAS`}{" "} */}
+        </div>
+      )}
+
       {!isSubmitting && !submitted && (
         <form
           onSubmit={handleSubmit}
@@ -116,13 +125,13 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
             required
             placeholder="Tu nombre completo aquí"
           />
-          {tickets === "2" && (
+          {/* {tickets === 2 && (
             <>
-              <p className="mb-0 mt-4 text-center display-5 font-paris">
+              <p className="mb-0 mt-4  display-5 font-paris">
                 ¿Tienes acompañante?
               </p>
               <div>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex ">
                   <div className="checkbox-wrapper-25">
                     <input
                       type="checkbox"
@@ -155,7 +164,6 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
                     transition={{ duration: 0.4, ease: "easeOut" }} // Duración de la animación
                   >
                     <div className="text-center">
-                      {/* <label className="lead">Nombre:</label> */}
                       <input
                         type="text"
                         className="w-100 p-2 mb-4 mt-1 text-centr"
@@ -172,8 +180,7 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
                     </div>
                   </motion.div>
                 )}
-                {/* Segunda pregunta si el usuario responde "No" */}
-                {acompanante === "no" && (
+               {acompanante === "no" && (
                   <motion.div
                     className="text-center"
                     initial={{ opacity: 0, scale: 0.8 }} // Empieza pequeño y transparente
@@ -215,7 +222,7 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
                           </label>
                         </div>
                       </div>
-                      {/* Si elige "No" en la segunda pregunta */}
+                       Si elige "No" en la segunda pregunta 
                       {soltero === "no" && (
                         <>
                           <motion.div
@@ -234,10 +241,10 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
                             </p>
                           </motion.div>{" "}
                         </>
-                      )}
+                      )} 
 
-                      {/* Si elige "Sí" en la segunda pregunta */}
-                      {soltero === "si" && (
+                       Si elige "Sí" en la segunda pregunta 
+                       {soltero === "si" && (
                         <motion.div
                           className="text-center"
                           initial={{ opacity: 0, scale: 0.8 }} // Empieza pequeño y transparente
@@ -308,7 +315,6 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
                       )}
                     </div>
                   </motion.div>
-                )}
                 {acompanist && (
                   <div
                     className={`mt-1 animate__animated ${
@@ -353,8 +359,8 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
                 )}
               </div>
             </>
-          )}
-          {tickets > 2 && (
+          )} */}
+          {tickets > 1 && (
             <>
               <div>
                 <p className="mb-0  display-5 font-paris mt-4">
@@ -383,7 +389,11 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
                             key={index}
                             type="text"
                             className="w-100 p-2 mb-3 mt-0"
-                            placeholder={`Nombre de acompañante ${index + 1}`}
+                            placeholder={`${
+                              tickets === 2
+                                ? "Nombre de tu acompañante"
+                                : `Nombre de acompañante ${index + 1}`
+                            }`}
                             value={formData.acompanist[index] || ""} // Evita valores undefined
                             onChange={(e) =>
                               handleInputChange(index, e.target.value)
@@ -494,9 +504,23 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
               Enviar
             </button>
           </div>
+          <div className="d-flex justify-content-around align-items-center">
+            <img
+              className="decoration mt-4 rotate-180"
+              src={lineDecoration}
+              alt="linea"
+            />
+          </div>
           <p className="mt-4 text-center mb-0 lead">
-            Este registro sólo es válido si {eventData.groom} o{" "}
-            {eventData.bride} te enviamos esta invitación por mensaje.
+            Este registro sólo es válido si {eventData.bride} o{" "}
+            {eventData.groom} te enviamos esta invitación por mensaje.
+          </p>
+          <div className="d-flex justify-content-center mb-0">
+            <hr className="text-center" />
+          </div>
+          <p className=" text-center mb-0 mt-2 lead">
+            Cada asiento está pensado con cariño, así que te pedimos respetar la
+            cantidad de invitados asignada.
           </p>
         </form>
       )}
@@ -506,7 +530,11 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
           ref={spinnerRef}
           className="loading-container animate__animated animate__zoomIn d-flex flex-column justify-content-center align-items-center"
         >
-          <Spinner animation="border" color="gray" />
+          <div className="mt-4 display-6 text-center">
+            Tu registro se está completando...{" "}
+          </div>
+          <Spinner animation="border" className="my-4" color="gray" />
+          <div className=" display-6 text-center">No cierres la página.</div>
         </div>
       )}
 
@@ -515,10 +543,11 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
           ref={mensajeRef}
           className="success-message d-flex flex-column justify-content-center align-items-center text-center animate__animated animate__bounce"
         >
-          <div className="d-flex justify-content-center my-4">
-            <img src={lineDecoration} alt="" className="decoration" />
-          </div>
-          <h2 className="font-paris mt-3 title2">¡Gracias por darnos el Sí!</h2>
+          <p className="text-center mb-4 mt-4 display-5 f-w-700 font-gold1">
+            ¡Gracias por darnos el Sí!
+          </p>
+          <p className="lead">Fecha de registro: {date}</p>
+
           {typeof formData.acompanist === "string" &&
           formData.acompanist != "" ? (
             <>
@@ -538,18 +567,19 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
               boda.
             </p>
           )}
+          <p>
+            <div className="d-flex justify-content-center">
+              <hr className="text-center w-75" />
+            </div>
+            Te recomendamos tomar una captrua de pantalla de esta respuesta{" "}
+            <i class="bi bi-fullscreen"></i>
+          </p>
           <div className="text-center d-flex lead flex-column">
-            Agenda nuestro evento en tus calendarios
+            <p className="text-center mb-4 mt-4 display-5  font-gold1">
+              ¡Agenda nuestro evento en tus calendarios!
+            </p>
             <AddToCalendar type="google" />
             <AddToCalendar type="mobile" />
-          </div>
-          <div>
-            <p className="color-in text-center mb-0">
-              (Este mensaje no aparecerá en tu invitación.) Para ver el
-              funcionamiento del registro de asistencia den click en el
-              siguiente enlace:
-            </p>
-            <Link to="/data-page">Ir a página de registro</Link>
           </div>
         </div>
       )}

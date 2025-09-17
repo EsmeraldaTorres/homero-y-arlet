@@ -7,16 +7,6 @@ const HotelSection = () => {
 
   return (
     <>
-      <section className="window-photo-phrase d-flex justify-content-center align-items-center">
-        <p
-          className="text-window text-shadow font-paris p-4 display-4 f-w-700"
-          data-aos="fade-up"
-          data-aos-duration="3000"
-        >
-          La medida del amor es amar sin medida
-        </p>
-      </section>
-
       <section id="hoteles" className="p-4 bg-white">
         <div className="w-100">
           <p
@@ -41,6 +31,15 @@ const HotelSection = () => {
             </div>
           </div>
         </div>
+      </section>
+      <section className="window-photo-phrase d-flex justify-content-center align-items-center">
+        <p
+          className="text-window text-shadow font-paris p-4 display-4 f-w-700"
+          data-aos="fade-up"
+          data-aos-duration="3000"
+        >
+          La medida del amor es amar sin medida
+        </p>
       </section>
     </>
   );

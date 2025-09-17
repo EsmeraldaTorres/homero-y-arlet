@@ -1,11 +1,11 @@
 import React from "react";
-import lineaAlReves from "../../assets/img/lineaalreves.png";
+import lineaAlReves from "../../assets/img/linea3.png";
 
 const Lugar = ({ title, name, imgSrc, hour, address, mapUrl }) => {
   return (
     <section
       id={`ubicaciones-${title}`}
-      className="recepcion-information d-flex align-items-center justify-content-center"
+      className="recepcion-information2 d-flex align-items-center justify-content-center"
     >
       <div>
         <h2

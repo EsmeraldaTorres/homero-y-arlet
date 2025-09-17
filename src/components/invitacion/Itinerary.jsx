@@ -20,7 +20,7 @@ const Itinerary = () => {
 
   return (
     <>
-      <section className="window-back">
+      {/* <section className="window-back">
         <div
           className="window-itinerary"
           data-aos="fade-right"
@@ -34,13 +34,18 @@ const Itinerary = () => {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section
         id="itinerario"
-        className="recepcion-information d-flex align-items-center justify-content-center"
+        className="recepcion-information overflow-hidden d-flex flex-column align-items-center justify-content-center"
       >
-        <div className="timeline">
+        <div className="d-flex justify-content-center align-items-center">
+          <p className="display-3 text-center font-paris text-white px-4">
+            Itinerario
+          </p>
+        </div>
+        <div className="timeline text-white">
           <ul>
             {eventData.itineraryData.map((item, idx) => (
               <ItineraryItem key={idx} {...item} />
@@ -49,7 +54,7 @@ const Itinerary = () => {
         </div>
       </section>
 
-      <section className="window-photo">
+      {/* <section className="window-photo">
         <div
           className="window-parents"
           data-aos="fade-down"
@@ -57,7 +62,7 @@ const Itinerary = () => {
           data-aos-duration="500"
           data-aos-offset="800"
         />
-      </section>
+      </section> */}
     </>
   );
 };

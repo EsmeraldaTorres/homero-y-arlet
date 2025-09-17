@@ -1,5 +1,5 @@
 import React from "react";
-import line2 from "../../assets/img/line2.png";
+import line2 from "../../assets/img/linea2.png";
 import { useGuest } from "../../Context/GuestContext";
 
 // Componente reutilizable para mostrar nombres de personas
@@ -98,10 +98,10 @@ const ParentsSection = () => {
         <div className="d-flex justify-content-center flex-column">
           <div className="row m-0 mb-4 pb-4">
             <SponsorGroup
-              title="Lazo"
+              title="Velación"
               sponsors={[
-                eventData.godparents.lazo.first,
-                eventData.godparents.lazo.second,
+                eventData.godparents.velacion.first,
+                eventData.godparents.velacion.second,
               ]}
             />
             <SponsorGroup

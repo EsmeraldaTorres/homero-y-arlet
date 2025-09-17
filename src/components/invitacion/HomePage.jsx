@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import line from "../../assets/img/lineaalreves.png";
-import line2 from "../../assets/img/line2.png";
+import line from "../../assets/img/linea2.png";
+import line2 from "../../assets/img/linea3.png";
 
 const invitations = [
   {
@@ -47,14 +47,6 @@ const HomePage = () => {
     <div className="d-flex justify-content-center">
       <div className="container-1 p-4">
         <h2 className="text-center">DEMO 2 PAQUETE PLATINO</h2>
-        <p className="mb-0 lead display-6 text-center">
-          Queridos novios, en tu paquete platino recibirás 6 URL, es decir, 6
-          invitaciones.
-        </p>
-        <p className="display-6 text-center">
-          Este es 1 demo que incluye 6 URL. A continuación, te mostramos cada
-          una:
-        </p>
 
         <div className="d-flex w-100 mb-3 justify-content-center">
           <img src={line} className="w-75" alt="" />

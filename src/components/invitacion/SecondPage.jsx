@@ -1,7 +1,7 @@
 import React from "react";
-import decoration from "../../assets/img/Untitled design (3).png";
-import lineaAlReves from "../../assets/img/lineaalreves.png";
-import fechaImg from "../../assets/img/fecha-jorge.png";
+import decoration from "../../assets/img/linea3.png";
+import lineaAlReves from "../../assets/img/linea4.png";
+import fechaImg from "../../assets/img/4.png";
 import { useGuest } from "../../Context/GuestContext";
 import useCountdown from "../../hooks/useCountDown";
 
@@ -13,40 +13,58 @@ const SecondPage = () => {
     <>
       <section
         id="fecha"
-        className="fecha-foto p-4 d-flex flex-column justify-content-around  pt-4"
+        className="fecha-foto  p-4 d-flex flex-column justify-content-around  pt-4"
       >
-        <div className="d-flex justify-content-around align-items-center">
-          <img
-            loading="lazy"
-            className="w-100 width-30"
-            src={fechaImg}
-            alt="linea"
-          />
+        <div>
+          <div className="d-flex justify-content-around align-items-center">
+            <img
+              loading="lazy"
+              className="w-100 width-30 my-4"
+              src={fechaImg}
+              alt="linea"
+            />
+          </div>
         </div>
-        <div className="d-flex justify-content-around align-items-center">
+        {/* <div className="d-flex justify-content-around align-items-center">
           <img
             loading="lazy"
             className="decoration pb-4 "
             src={lineaAlReves}
             alt="linea"
           />
-        </div>
-        <div className="d-flex flex-column">
+        </div> */}
+        <div className="d-flex flex-column mt-4 ">
           <div
             className="d-flex flex-column justify-content-center align-items-center"
             data-aos="zoom-in"
-            data-aos-duration="1000"
-            data-aos-delay="1000"
           >
             <p className="display-5 font-paris text-dark">Faltan</p>
             <div id="demo" className="cuenta-regresiva m-0">
               {timeCountDown.expired ? (
                 <p>EXPIRED</p>
               ) : (
-                <p>
-                  {timeCountDown.days}d {timeCountDown.hours}h{" "}
-                  {timeCountDown.minutes}m {timeCountDown.seconds}s
-                </p>
+                <div className="d-flex justify-content-between">
+                  <span className="px-2">
+                    <p className="display-5 px-0 mx-0">{timeCountDown.days}</p>
+                    <p className="display-6 px-0 mx-0">DIAS</p>
+                  </span>
+                  <span className="px-2">
+                    <p className="display-5 px-0 mx-0">{timeCountDown.hours}</p>
+                    <p className="display-6 px-0 mx-0">HRS</p>
+                  </span>
+                  <span className="px-2">
+                    <p className="display-5 px-0 mx-0">
+                      {timeCountDown.minutes}
+                    </p>
+                    <p className="display-6 px-0 mx-0">MIN</p>
+                  </span>
+                  <span className="px-2">
+                    <p className="display-5 px-0 mx-0">
+                      {timeCountDown.seconds}
+                    </p>
+                    <p className="display-6 px-0 mx-0">SEG</p>
+                  </span>
+                </div>
               )}
             </div>
           </div>
@@ -67,7 +85,7 @@ const SecondPage = () => {
             data-aos-duration="1000"
             className="mb-0 display-6 text-center"
           >
-            SAVE THE DATE
+            ¡Aparta la fecha!
           </p>
         </div>
       </section>
@@ -104,9 +122,8 @@ const SecondPage = () => {
               data-aos="fade-up"
               data-aos-duration="3000"
             >
-              Hay momentos en la vida que son especiales por si solos, pero
-              compartirlos con las personas que quieres los convierte en
-              momentos inolvidables.
+              El amor nos unió en un solo camino, y queremos recorrerlo junto a
+              ti en este día especial.
             </p>
             <p
               className="principal-text"
@@ -119,7 +136,7 @@ const SecondPage = () => {
             <div className="d-flex justify-content-around align-items-center">
               <img
                 loading="lazy"
-                className="decoration mb-4 pb-4 rotated-element"
+                className="decoration mb-4 pb-4 mt-4"
                 src={lineaAlReves}
                 alt="linea"
               />
@@ -130,13 +147,13 @@ const SecondPage = () => {
               data-aos-duration="3000"
             >
               Nos encantaría que nos acompañaras y nos llenaras de alegría en
-              nuestro día tan especial.
+              nuestro día tan especial para nosotros… el día de nuestra boda.
             </p>
           </div>
           <div className="d-flex justify-content-center">
             <img
               loading="lazy"
-              className="decoration"
+              className="decoration rotate-180"
               src={decoration}
               alt="decoration"
             />

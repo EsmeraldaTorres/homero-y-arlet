@@ -20,6 +20,8 @@ import DressCode from "./invitacion/DressCode";
 import PhotoGallerySection from "./invitacion/PhotoGallerySection";
 import GuestForm from "./invitacion/GuestForm";
 import InvitacionesNavbar from "./invitacion/InvitacionesNavbar";
+import lineDecoration from "../assets/img/linea3.png";
+import linea from "../assets/img/linea2.png";
 
 const Invitacion = () => {
   const { guests } = useParams();
@@ -41,7 +43,7 @@ const Invitacion = () => {
 
   const [text, setText] = useState({
     firstText:
-      " Por favor, apoyanos con la organización de nuestro evento y confirma tu asistencia registrandote en el siguiente formulario antes del 25 de Octubre.",
+      " Por favor, apoyanos con la organización de nuestro evento y confirma tu asistencia registrandote en el siguiente formulario antes del 5 de Noviembre.",
     secondText:
       "En caso de que no puedan asistir, no es necesario completar el formulario.",
     thirdText:
@@ -83,7 +85,7 @@ const Invitacion = () => {
 
   // General countdown (for the wedding)
   useEffect(() => {
-    const countDownDate = new Date("Jul 05, 2026 00:00").getTime();
+    const countDownDate = new Date("Nov 29, 2025 16:30").getTime();
 
     const interval = setInterval(() => {
       const now = Date.now();
@@ -106,7 +108,7 @@ const Invitacion = () => {
 
   // Deadline to fill attendance form
   useEffect(() => {
-    const asistDate = new Date("Jun 30, 2026 00:00").getTime();
+    const asistDate = new Date("Nov 06, 2025 00:00").getTime();
 
     const asistInterval = setInterval(() => {
       if (Date.now() > asistDate) {
@@ -122,19 +124,21 @@ const Invitacion = () => {
     const extra = guests - 1;
     if (guests === "1")
       return (
-        <p className="text-center pt-4 font-paris title2">
-          Hemos reservado 1 lugar para ti
+        <p className="text-center mb-4 mt-4 display-5 f-w-700 font-gold1">
+          HEMOS RESERVADO <span className="display-2">1</span> LUGAR PARA TI
         </p>
       );
     if (guests === "2")
       return (
-        <p className="text-center pt-4 font-paris title2 mb-0">
-          Hemos reservado 1 lugar para ti y para 1 acompañante.
+        <p className="text-center mb-4 mt-4 display-5 f-w-700 font-gold1">
+          HEMOS RESERVADO <span className="display-2">1</span> LUGAR PARA TI Y
+          PARA <span className="display-2">1</span> ACOMPAÑANTE
         </p>
       );
     return (
-      <p className="text-center pt-4 font-paris title2 mb-0">
-        Hemos reservado 1 lugar para ti y para {extra} acompañantes.
+      <p className="text-center mb-4 mt-4 display-5 f-w-700 font-gold1">
+        HEMOS RESERVADO <span className="display-2">1</span> LUGAR PARA TI Y
+        PARA <span className="display-2">{extra}</span> ACOMPAÑANTES{" "}
       </p>
     );
   };
@@ -169,16 +173,15 @@ const Invitacion = () => {
 
         <section className="ribbon">
           <p className="m-0 display-6">
-            Niños buenas noches,
+            Para la fiesta: Tragos
             <br />
-            adultos ¡buena noche!
-            <br />
+            Para los niños: Dulces Sueños. <br />
             (No niños)
           </p>
         </section>
 
         <HotelSection />
-        <DinamicGallerySection />
+        {/* <DinamicGallerySection /> */}
 
         {/* Confirmación de asistencia */}
         <div
@@ -191,11 +194,13 @@ const Invitacion = () => {
             data-aos="fade-in"
             data-aos-duration="3000"
           >
-            <p className="color-in text-center">
-              Queridos novios, para ver el funcionamiento de tu invitación,
-              llenen todos los campos del formulario. (Este mensaje no saldrá en
-              su invitación)
-            </p>
+            <div className="d-flex justify-content-around align-items-center">
+              <img
+                className="decoration mt-4 rotate-0"
+                src={lineDecoration}
+                alt="linea"
+              />
+            </div>
             <div id="confirmar">{renderReservationText()}</div>
             {text.firstText ? (
               <>
@@ -213,13 +218,21 @@ const Invitacion = () => {
                 >
                   {guests === "1" ? text.thirdText : text.secondText}
                 </p>
-                <div className="d-flex justify-content-center font w-100 align-items">
+                <div className="d-flex flex-column  justify-content-center font w-100 align-items">
+                  <div className="d-flex justify-content-around align-items-center">
+                    <img
+                      className="decoration mt-4 rotate-0"
+                      src={linea}
+                      alt="linea"
+                    />
+                  </div>
                   <GuestForm tickets={guests} />
                 </div>
               </>
             ) : (
-              <p className="text-center">
-                El tiempo de registro de asistencia ha pasado
+              <p className="text-center display-6">
+                El tiempo de registro de asistencia ha pasado. Solo los
+                invitados que se registraron podrán asistir a nuestro evento.
               </p>
             )}
           </div>

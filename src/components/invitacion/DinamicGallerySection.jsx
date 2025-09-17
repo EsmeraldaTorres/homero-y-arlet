@@ -1,5 +1,5 @@
 import React from "react";
-import lineDecoration from "../../assets/img/line2.png";
+import lineDecoration from "../../assets/img/linea2.png";
 import { useGuest } from "../../Context/GuestContext";
 
 const DinamicGallerySection = () => {

@@ -1,16 +1,17 @@
 // components/HotelCard.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import lineDecoration from "../../assets/img/linea4.png";
 
 const HotelCard = ({ name, image, distance, address, mapUrl }) => {
   return (
-    <div className="d-flex p-3 justify-content-center align-items-center">
+    <div className="d-flex p-3 mb-4 justify-content-center align-items-center">
       <div className="d-flex justify-content-center align-items-center flex-column">
         <h2
           data-aos="zoom-in-up"
           data-aos-easing="linear"
           data-aos-duration="1500"
-          className="txt-pink-dark pr-4 pl-4 mb-4 display-5 title2 text-center font-paris"
+          className="txt-pink-dark pr-4 pl-4 mb-4 display-4 title2 text-center font-paris"
         >
           {name}
         </h2>
@@ -29,10 +30,13 @@ const HotelCard = ({ name, image, distance, address, mapUrl }) => {
           data-aos="fade-down"
           data-aos-easing="linear"
           data-aos-duration="1500"
-          className="txt-pink-dark font-paris display-5 pl-2 pr-2 text-center"
+          className="txt-pink-dark mt-4 mb-0 font-paris display-5 pl-2 pr-2 text-center"
         >
           <i className="bi bi-car-front-fill"></i> {distance}
         </p>
+        <div className="d-flex justify-content-around align-items-center">
+          <img className="decoration mt-4 " src={lineDecoration} alt="linea" />
+        </div>
         <p
           data-aos="zoom-in-up"
           data-aos-easing="linear"

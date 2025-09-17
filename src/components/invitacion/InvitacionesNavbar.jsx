@@ -42,7 +42,7 @@ const InvitacionesNavbar = ({ showNavbar, setShowNavbar }) => {
           href="#inicio"
           className="text-white text-shadow fw-bold font-paris d-flex display-5"
         >
-          Arturo & Noemi
+          Arlet & Homero
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
@@ -58,7 +58,7 @@ const InvitacionesNavbar = ({ showNavbar, setShowNavbar }) => {
               Itinerario
             </Nav.Link>
             <Nav.Link href="#ubicaciones-Misa" className="text-white display-5">
-              Misa
+              Ceremonia Religiosa
             </Nav.Link>
             <Nav.Link
               href="#ubicaciones-Recepción"

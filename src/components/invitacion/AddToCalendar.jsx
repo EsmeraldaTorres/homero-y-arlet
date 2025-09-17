@@ -7,20 +7,22 @@ const AddToCalendar = ({ type }) => {
   const handleClick = () => {
     if (type === "google") {
       const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-        event.title
-      )}&dates=${event.startDate}/${event.endDate}&details=${encodeURIComponent(
-        event.description
-      )}&location=${encodeURIComponent(event.location)}`;
+        eventData.event.title
+      )}&dates=${eventData.event.startDate}/${
+        eventData.event.endDate
+      }&details=${encodeURIComponent(
+        eventData.event.description
+      )}&location=${encodeURIComponent(eventData.event.location)}`;
       window.open(googleCalendarUrl, "_blank");
     } else if (type === "mobile") {
       const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-SUMMARY:${event.title}
-DESCRIPTION:${event.description}
-LOCATION:${event.location}
-DTSTART:${event.startDate}
-DTEND:${event.endDate}
+SUMMARY:${eventData.event.title}
+DESCRIPTION:${eventData.event.description}
+LOCATION:${eventData.event.location}
+DTSTART:${eventData.event.startDate}
+DTEND:${eventData.event.endDate}
 END:VEVENT
 END:VCALENDAR`;
 
@@ -45,7 +47,10 @@ END:VCALENDAR`;
 
   return (
     <button className="btn-agendar text-dark" onClick={handleClick}>
-      {type === "google" ? "En Google Calendar" : "En Calendario de mi celular"}
+      {type === "google"
+        ? "En Google Calendar "
+        : "En Calendario de mi celular"}
+      <i className="bi bi-box-arrow-up-right"></i>
     </button>
   );
 };

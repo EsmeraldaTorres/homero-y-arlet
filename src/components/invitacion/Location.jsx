@@ -17,7 +17,7 @@ const Location = () => {
         >
           <div className="d-flex justify-content-center align-items-center">
             <p className="display-3 text-center text-shadow2 text-white font-paris pl-4 pr-4">
-              Misa
+              Ceremonia Religiosa
             </p>
           </div>
         </div>
