@@ -21,7 +21,7 @@ const Lugar = ({ title, name, imgSrc, hour, address, mapUrl }) => {
             data-aos="fade-down"
             data-aos-easing="linear"
             data-aos-duration="1500"
-            loading="lazy"
+            // loading="lazy"
             className="img-ubicaciones"
             src={imgSrc}
             alt={name}

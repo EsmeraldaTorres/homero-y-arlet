@@ -20,7 +20,7 @@ const HotelCard = ({ name, image, distance, address, mapUrl }) => {
             data-aos="fade-down"
             data-aos-easing="linear"
             data-aos-duration="1500"
-            loading="lazy"
+            // loading="lazy"
             className="img-ubicaciones"
             src={image}
             alt={name}

@@ -19,7 +19,7 @@ const PhotoSection = () => {
         <p className="text-center text-white pt-4 display-6">Así empezamos</p>
         <div className="d-flex justify-content-center align-items-center">
           <div className="w-100 d-flex justify-content-center">
-            <img loading="lazy" src={fotoCuadro} alt="foto" />
+            <img src={fotoCuadro} alt="foto" />
           </div>
         </div>
         <div className="d-flex pt-4 justify-content-center align-items-center">

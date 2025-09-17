@@ -18,7 +18,7 @@ const SecondPage = () => {
         <div>
           <div className="d-flex justify-content-around align-items-center">
             <img
-              loading="lazy"
+              // loading="lazy"
               className="w-100 width-30 my-4"
               src={fechaImg}
               alt="linea"
@@ -104,7 +104,7 @@ const SecondPage = () => {
         <div className="w-75">
           <div className="d-flex justify-content-center pb-4rem">
             <img
-              loading="lazy"
+              // loading="lazy"
               className="decoration"
               src={decoration}
               alt="decoration"
@@ -135,7 +135,7 @@ const SecondPage = () => {
             </p>
             <div className="d-flex justify-content-around align-items-center">
               <img
-                loading="lazy"
+                // loading="lazy"
                 className="decoration mb-4 pb-4 mt-4"
                 src={lineaAlReves}
                 alt="linea"
@@ -152,7 +152,7 @@ const SecondPage = () => {
           </div>
           <div className="d-flex justify-content-center">
             <img
-              loading="lazy"
+              // loading="lazy"
               className="decoration rotate-180"
               src={decoration}
               alt="decoration"

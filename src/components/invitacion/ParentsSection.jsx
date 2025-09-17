@@ -78,7 +78,7 @@ const ParentsSection = () => {
 
         <div className="d-flex justify-content-around align-items-center">
           <img
-            loading="lazy"
+            // loading="lazy"
             className="decoration mt-4 pt-4"
             src={line2}
             alt="linea"

@@ -24,7 +24,7 @@ const GiftSection = () => {
 
         <div className="d-flex justify-content-around align-items-center">
           <img
-            loading="lazy"
+            // loading="lazy"
             className="decoration pb-4"
             src={decoration}
             alt="Decoración"
@@ -62,7 +62,7 @@ const GiftSection = () => {
             <div className="row d-flex justify-content-around align-items-center">
               <div className="col-md-6 text-center d-flex flex-column align-items-center">
                 <img
-                  loading="lazy"
+                  // loading="lazy"
                   className="logo-liverpool"
                   src={logoLiverpool}
                   alt="Logo Liverpool"
@@ -80,7 +80,7 @@ const GiftSection = () => {
               </div>
               <div className="col-md-6 text-center d-flex flex-column align-items-center">
                 <img
-                  loading="lazy"
+                  // loading="lazy"
                   className="logo-liverpool mt-4"
                   src={logoSear}
                   alt="Logo Sears"
