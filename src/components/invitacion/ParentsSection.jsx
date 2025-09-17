@@ -20,32 +20,32 @@ const PersonGroup = ({ names = [] }) => (
 );
 
 // Componente para mostrar padrinos con título
-const SponsorGroup = ({ title, sponsors = [] }) => (
-  <div className="col-12 mt-4">
-    <p
-      className="text-center display-6 font-gold font-kala"
-      data-aos="flip-down"
-      data-aos-duration="1450"
-    >
-      {title}
-    </p>
-    {sponsors.map((name, index) => (
-      <p
-        key={index}
-        className={`text-center display-6 ${
-          index % 2 ? "font-kalm" : "font-kala"
-        }`}
-        data-aos="flip-down"
-        data-aos-duration="1450"
-      >
-        {name}
-      </p>
-    ))}
-    <div className="d-flex justify-content-center">
-      <hr className="text-center" />
-    </div>
-  </div>
-);
+// const SponsorGroup = ({ title, sponsors = [] }) => (
+//   <div className="col-12 mt-4">
+//     <p
+//       className="text-center display-6 font-gold font-kala"
+//       data-aos="flip-down"
+//       data-aos-duration="1450"
+//     >
+//       {title}
+//     </p>
+//     {sponsors.map((name, index) => (
+//       <p
+//         key={index}
+//         className={`text-center display-6 ${
+//           index % 2 ? "font-kalm" : "font-kala"
+//         }`}
+//         data-aos="flip-down"
+//         data-aos-duration="1450"
+//       >
+//         {name}
+//       </p>
+//     ))}
+//     <div className="d-flex justify-content-center">
+//       <hr className="text-center" />
+//     </div>
+//   </div>
+// );
 
 const ParentsSection = () => {
   const { eventData } = useGuest();
@@ -104,26 +104,49 @@ const ParentsSection = () => {
           </p>
 
           <Carousel className="mb-4" variant="dark">
-            {eventData.padrinos.map(({ icon, title, names }, index) => (
-              <Carousel.Item key={index}>
-                <div className="d-flex p-3 justify-content-center align-items-center">
-                  <div className="text-center">
-                    <img
-                      loading="lazy"
-                      className="icon-img mb-2"
-                      src={icon}
-                      alt={`Ícono de ${title}`}
-                    />
-                    <p className="card-text">{title}</p>
-                    {names.map((name, i) => (
-                      <p className="card-text display-6" key={i}>
-                        {name}
-                      </p>
-                    ))}
+            {eventData.padrinos.map(
+              ({ icon, title, names, name1, name2 }, index) => (
+                <Carousel.Item key={index}>
+                  <div className="d-flex justify-content-center align-items-center">
+                    {title === "Velación" ? (
+                      <div className="text-center">
+                        <img
+                          loading="lazy"
+                          className="icon-img mb-2"
+                          src={icon}
+                          alt={`Ícono de ${title}`}
+                        />
+                        <p className="card-text">{title}</p>
+                        {names.map((name, i) => (
+                          <p className="card-text display-6">{name}</p>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center">
+                        <img
+                          loading="lazy"
+                          className="icon-img mb-2"
+                          src={icon}
+                          alt={`Ícono de ${title}`}
+                        />
+                        <p className="card-text">{title}</p>
+
+                        <p className="card-text display-6 ">
+                          {/* <span className="text-white">hola</span>  */}
+                          {name1}{" "}
+                          {/* <span className="text-white">hoal</span> */}
+                        </p>
+                        <p className="card-text display-6 ">
+                          {/* <span className="text-white">hola</span>  */}
+                          {name2}{" "}
+                          {/* <span className="text-white">hoal</span> */}
+                        </p>
+                      </div>
+                    )}
                   </div>
-                </div>
-              </Carousel.Item>
-            ))}
+                </Carousel.Item>
+              )
+            )}
           </Carousel>
           {/* <div className="d-flex justify-content-center flex-column">
           <div className="row m-0 mb-4 pb-4">

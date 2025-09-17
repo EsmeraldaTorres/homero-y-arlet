@@ -46,22 +46,26 @@ export const GuestProvider = ({ children }) => {
       {
         icon: anillos,
         title: "Anillos",
-        names: ["Isis Karina Ramírez", "Alejandro Lozano"],
+        name1: "Isis Karina Ramírez",
+        name2: "Alejandro Lozano",
       },
       {
         icon: iconCoin,
         title: "Arras",
-        names: ["Héctor Echeverría", "Yanet Guillen"],
+        name1: "Héctor Echeverría",
+        name2: "Yanet Guillen",
       },
       {
         icon: iconLazo,
         title: "Lazo",
-        names: ["Yazminda Loaeza", "Tonatihu Zambrano"],
+        // names: ["Yazminda Loaeza", "Tonatihu Zambrano"],
+        name1: "Yazminda Loaeza",
+        name2: "Tonatihu Zambrano",
       },
       {
         icon: iconVelacion,
         title: "Velación",
-        names: ["Carlos Angel Esteban", "Mónica Contreras Sánchez"],
+        names: ["Carlos Angel Esteban", "Mónica Contreras "],
       },
     ],
     // godparents: {
