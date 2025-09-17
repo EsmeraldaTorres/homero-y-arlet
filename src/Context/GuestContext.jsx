@@ -3,12 +3,16 @@ import iconFiesta from "../assets/img/fiesta.png";
 import iconComida from "../assets/img/comida.png";
 import iconCoctel from "../assets/img/cocktail.png";
 import iconTorna from "../assets/img/torna.png";
-
-import iconMariachi from "../assets/img/mariachi-icon.png";
-import dressCode from "../assets/img/etiqueta rigurosa.png";
 import iconLazo from "../assets/img/lazo.png";
+import iconVelacion from "../assets/img/velacion.png";
+
 import iconCoin from "../assets/img/coin.png";
 import anillos from "../assets/img/anillos.png";
+import iconMariachi from "../assets/img/mariachi-icon.png";
+import dressCode from "../assets/img/etiqueta rigurosa.png";
+// import iconLazo from "../assets/img/lazo.png";
+// import iconCoin from "../assets/img/coin.png";
+// import anillos from "../assets/img/anillos.png";
 import pareja1 from "../assets/img/foto-1.jpeg";
 import pareja2 from "../assets/img/foto-2.jpeg";
 import pareja3 from "../assets/img/foto-4.jpeg";
@@ -38,20 +42,46 @@ export const GuestProvider = ({ children }) => {
     motherShe: "Norma Angélica Barragán Ávalos",
     fatherHe: "Homero Ramirez Bencomo",
     motherHe: "Elsa Isis Vergara Hernández",
-    godparents: {
-      anillos: {
-        first: "Isis Karina Ramírez",
-        second: "Alejandro Lozano",
+    padrinos: [
+      {
+        icon: anillos,
+        title: "Anillos",
+        names: ["Isis Karina Ramírez", "Alejandro Lozano"],
       },
-      arras: {
-        first: "Héctor Echeverría",
-        second: "Yanet Guillen",
+      {
+        icon: iconCoin,
+        title: "Arras",
+        names: ["Héctor Echeverría", "Yanet Guillen"],
       },
-      velacion: {
-        first: " Carlos Angel Esteban ",
-        second: "Mónica Contreras Sánchez ",
+      {
+        icon: iconLazo,
+        title: "Lazo",
+        names: ["Yazminda Loaeza", "Tonatihu Zambrano"],
       },
-    },
+      {
+        icon: iconVelacion,
+        title: "Velación",
+        names: ["Carlos Angel Esteban", "Mónica Contreras Sánchez"],
+      },
+    ],
+    // godparents: {
+    //   anillos: {
+    //     first: "Isis Karina Ramírez",
+    //     second: "Alejandro Lozano",
+    //   },
+    //   arras: {
+    //     first: "Héctor Echeverría",
+    //     second: "Yanet Guillen",
+    //   },
+    //   velacion: {
+    //     first: " Carlos Angel Esteban ",
+    //     second: "Mónica Contreras Sánchez ",
+    //   },
+    //   lazo: {
+    //     first: "Yazminda Loaeza",
+    //     second: "Tonatihu Zambrano",
+    //   },
+    // },
     images: [
       {
         src: pareja1,
@@ -190,7 +220,7 @@ export const GuestProvider = ({ children }) => {
     code: "MXsadfa",
     dressCode: {
       img: dressCode,
-      name: "formal",
+      name: "Formal",
     },
     event: {
       title: "Boda Arlet & Homero",

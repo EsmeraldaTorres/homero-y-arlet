@@ -171,13 +171,12 @@ const Invitacion = () => {
         <GiftSection />
         <DressCode />
 
-        <section className="ribbon">
-          <p className="m-0 display-6">
-            Para la fiesta: Tragos
-            <br />
-            Para los niños: Dulces Sueños. <br />
-            (No niños)
-          </p>
+        <section className="ribbon px-0">
+          <p className="m-0 display-6">Para la fiesta: Tragos</p>
+          <p className="m-0 display-6">Para los niños: Dulces Sueños.</p>
+          {/* <p className="m-0 mb-2 display-6"> Dulces Sueños.</p> */}
+
+          <p className="m-0 display-6">(No niños)</p>
         </section>
 
         <HotelSection />

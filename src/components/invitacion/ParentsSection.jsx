@@ -1,10 +1,11 @@
 import React from "react";
 import line2 from "../../assets/img/linea2.png";
 import { useGuest } from "../../Context/GuestContext";
+import Carousel from "react-bootstrap/Carousel";
 
 // Componente reutilizable para mostrar nombres de personas
 const PersonGroup = ({ names = [] }) => (
-  <div className="col-12 mt-4">
+  <div className="col- mt-2">
     {names.map((name, index) => (
       <p
         key={index}
@@ -62,14 +63,19 @@ const ParentsSection = () => {
 
         <div className="d-flex justify-content-center">
           <div className="row m-0">
+            <div className="text-center mt-4 font-gold">Padres del novio:</div>
             <PersonGroup
-              names={["Homero Ramirez Bencomo", "Elsa Isis Vergara Hernández "]}
+              names={["Homero Ramírez Bencomo", "Elsa Isis Vergara Hernández "]}
             />
           </div>
         </div>
 
-        <div className="d-flex justify-content-center font-gold">
+        <div className="d-flex justify-content-center font-gol">
           <div className="row m-0">
+            <div className="text-center mb-0 mt-4 font-gold">
+              Padres de la novia:
+            </div>
+
             <PersonGroup
               names={[
                 "Jesus Alberto Lehovec Guerrero",
@@ -89,16 +95,39 @@ const ParentsSection = () => {
         </div>
       </section>
 
-      <section className="parents">
-        <p
-          className="text-center mt-4 f-w-700 title2 font-gold font-paris"
-          data-aos="zoom-in-up"
-          data-aos-duration="2000"
-        >
-          Y a nuestros padrinos
-        </p>
+      <section className="parents mb-4 pb-4">
+        <div className="mb-4 pb-4">
+          <p
+            className="text-center mt-4 f-w-700 title2 font-gold font-paris"
+            data-aos="zoom-in-up"
+            data-aos-duration="2000"
+          >
+            Y a nuestros padrinos
+          </p>
 
-        <div className="d-flex justify-content-center flex-column">
+          <Carousel className="mb-4" variant="dark">
+            {eventData.padrinos.map(({ icon, title, names }, index) => (
+              <Carousel.Item key={index}>
+                <div className="d-flex p-3 justify-content-center align-items-center">
+                  <div className="text-center">
+                    <img
+                      loading="lazy"
+                      className="icon-img mb-2"
+                      src={icon}
+                      alt={`Ícono de ${title}`}
+                    />
+                    <p className="card-text">{title}</p>
+                    {names.map((name, i) => (
+                      <p className="card-text display-6" key={i}>
+                        {name}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+          {/* <div className="d-flex justify-content-center flex-column">
           <div className="row m-0 mb-4 pb-4">
             <SponsorGroup
               title="Velación"
@@ -122,16 +151,8 @@ const ParentsSection = () => {
               ]}
             />
           </div>
-        </div>
-
-        {/* <div className="d-flex justify-content-around align-items-center">
-          <img
-            loading="lazy"
-            className="decoration mt-4 pt-4"
-            src={line2}
-            alt="linea"
-          />
         </div> */}
+        </div>
       </section>
     </>
   );

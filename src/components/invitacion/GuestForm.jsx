@@ -95,7 +95,7 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
       {!isSubmitting && !submitted && (
         <div className="text-center mb-4 mt-4 display-5 f-w-700 font-gold1">
           ASISTENCIA PARA
-          {tickets === 1 ? (
+          {tickets === "1" ? (
             <>
               {" "}
               <span className="display-2"> 1 </span> <span>PERSONA</span>{" "}
@@ -513,7 +513,7 @@ const GuestForm = ({ tickets, acompNames = [] }) => {
           </div>
           <p className="mt-4 text-center mb-0 lead">
             Este registro sólo es válido si {eventData.bride} o{" "}
-            {eventData.groom} te enviamos esta invitación por mensaje.
+            {eventData.groom} te enviaron esta invitación por mensaje.
           </p>
           <div className="d-flex justify-content-center mb-0">
             <hr className="text-center" />

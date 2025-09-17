@@ -17,7 +17,12 @@
 .checkbox-wrapper-25 {
   display: inline-block;
 }
-
+.carousel-indicators button {
+  box-shadow: none !important;
+}
+.nuestros-padrinos .carousel-indicators {
+  display: none;
+}
 .checkbox-wrapper-24 label {
   display: flex;
   align-items: center;
