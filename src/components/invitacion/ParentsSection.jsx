@@ -111,7 +111,7 @@ const ParentsSection = () => {
                     {title === "Velación" ? (
                       <div className="text-center">
                         <img
-                          loading="lazy"
+                          // loading="lazy"
                           className="icon-img mb-2"
                           src={icon}
                           alt={`Ícono de ${title}`}
@@ -124,7 +124,7 @@ const ParentsSection = () => {
                     ) : (
                       <div className="text-center">
                         <img
-                          loading="lazy"
+                          // loading="lazy"
                           className="icon-img mb-2"
                           src={icon}
                           alt={`Ícono de ${title}`}
