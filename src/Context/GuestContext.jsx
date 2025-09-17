@@ -138,6 +138,7 @@ export const GuestProvider = ({ children }) => {
     ],
     locations: {
       misa: {
+        id: "Misa",
         title: "Ceremonia Religiosa",
         time: "16:30hrs",
         image: iglesiaUbicacion,
@@ -147,8 +148,10 @@ export const GuestProvider = ({ children }) => {
           "Avenida Fuerza Aérea Mexicana 7A, 39900 Acapulco, Guerrero, México",
         mapUrl: "https://maps.app.goo.gl/j5wc9y2Jxnt4cCRo8",
         delay: 500,
+        zona: "En la playa",
       },
       recepcion: {
+        id: "Recepción",
         title: "Coctel & Recepción",
         time: "18:00hrs",
         image: salonUbicacion,
@@ -158,6 +161,7 @@ export const GuestProvider = ({ children }) => {
           "Avenida Fuerza Aérea Mexicana 7A, 39900 Acapulco, Guerrero, México",
         mapUrl: "https://maps.app.goo.gl/j5wc9y2Jxnt4cCRo8",
         delay: 500,
+        zona: "En el jardín",
       },
     },
     transferDetails: {

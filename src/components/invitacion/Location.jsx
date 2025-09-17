@@ -30,6 +30,8 @@ const Location = () => {
         hour={eventData.locations.misa.time}
         address={eventData.locations.misa.address}
         mapUrl={eventData.locations.misa.mapUrl}
+        id={eventData.locations.misa.id}
+        zona={eventData.locations.misa.zona}
       />
 
       {/* Recepción */}
@@ -50,12 +52,14 @@ const Location = () => {
       </section>
 
       <Lugar
+        id={eventData.locations.recepcion.id}
         title={eventData.locations.recepcion.title}
         name={eventData.locations.recepcion.name}
         imgSrc={eventData.locations.recepcion.image}
         hour={eventData.locations.recepcion.time}
         address={eventData.locations.recepcion.address}
         mapUrl={eventData.locations.recepcion.mapUrl}
+        zona={eventData.locations.recepcion.zona}
       />
     </>
   );

@@ -1,10 +1,10 @@
 import React from "react";
 import lineaAlReves from "../../assets/img/linea3.png";
 
-const Lugar = ({ title, name, imgSrc, hour, address, mapUrl }) => {
+const Lugar = ({ id, name, imgSrc, hour, address, mapUrl, zona }) => {
   return (
     <section
-      id={`ubicaciones-${title}`}
+      id={`ubicaciones-${id}`}
       className="recepcion-information2 d-flex align-items-center justify-content-center"
     >
       <div>
@@ -12,10 +12,11 @@ const Lugar = ({ title, name, imgSrc, hour, address, mapUrl }) => {
           data-aos="zoom-in-up"
           data-aos-easing="linear"
           data-aos-duration="1500"
-          className="txt-green display-3 title2 text-center font-paris font-gold font-aleo display-4 pr-4 pl-4 mb-4"
+          className="txt-green display-3 title2 text-center font-paris font-gold font-aleo display-4 pr-4 pl-4 mb-0"
         >
           {name}
         </h2>
+        <p className="text-center mb-4 lead f-w-700">{zona}</p>
         <div className="d-flex justify-content-center align-items-center">
           <img
             data-aos="fade-down"
